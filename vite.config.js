@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: 'https://ibrahimqudry.github.io',
+  base: 'https://ibrahimqudry.github.io/Pharaohs/',
   plugins: [
     react(),
     tailwindcss(),
