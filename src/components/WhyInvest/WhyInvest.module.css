@@ -1,0 +1,54 @@
+.section {
+  padding: 4rem 0;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.grid {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.reasonCard {
+  text-align: center;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow-lg);
+  transition: box-shadow 0.3s;
+}
+
+.reasonCard:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.reasonIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.reasonTitle {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.reasonDescription {
+  color: #666;
+}
+
+.buttonContainer {
+  text-align: center;
+  margin-top: 3rem;
+}
