@@ -45,16 +45,15 @@ function Hero() {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
-        {
-            breakpoint: 768,
-            settings: {
-                arrows: false,
-                dots: true
-            }
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+          dots: true
         }
+      }
     ]
-};
-
+  };
 
   const slides = [
     {
@@ -73,6 +72,7 @@ function Hero() {
       description: 'فلل مستقلة بتصميم عصري'
     }
   ];
+  
 
   return (
     <section className={`swiper ${styles.heroSwiper}`}>
@@ -81,13 +81,10 @@ function Hero() {
           <div
             key={index}
             className={`swiper-slide ${styles.heroSlide}`}
-            data-currentslide={index} 
-            style={{
-              backgroundImage: `url('${slide.image}')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
-            }}
+            data-currentslide={index}
+            style={{ backgroundImage: `url(${slide.image})`, }}
           >
+
             <div className={styles.heroContent}>
               <h1 className={styles.heroTitle}>{slide.title}</h1>
               <p className={styles.heroDescription}>{slide.description}</p>
