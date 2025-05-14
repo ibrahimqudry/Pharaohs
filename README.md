@@ -1,1 +1,1 @@
-# Pharaoha
+# Pharoahs
