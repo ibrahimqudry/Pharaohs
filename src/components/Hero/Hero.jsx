@@ -1,9 +1,9 @@
 import React from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import styles from './Hero.module.css';
-
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import { Navigation, Autoplay } from 'swiper/modules';
+import 'swiper/css/navigation';
 
 export function NextArrow(props) {
   const { className, style, onClick } = props;
@@ -27,73 +27,66 @@ export function PrevArrow(props) {
   );
 }
 
-function Hero() {
-
-  // Slider settings
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    centerMode: true,
-    centerPadding: '0px',
-    arrows: true,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    cssEase: 'linear',
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
-    responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          arrows: false,
-          dots: true
-        }
-      }
-    ]
-  };
-
+const Hero = () => {
   const slides = [
     {
+      id: 1,
       image: 'https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg',
       title: 'الفراعنة للتطوير العقاري',
-      description: 'نبني مستقبلك في أسوان الجديدة'
+      description: 'نبني مستقبلك في أسوان الجديدة',
+      link: '/projects'
     },
     {
+      id: 2,
       image: 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg',
       title: 'مشروع النيل',
-      description: 'إطلالة مباشرة على النيل'
+      description: 'إطلالة مباشرة على النيل',
+      link: '/projects'
     },
     {
+      id: 3,
       image: 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg',
       title: 'مشروع الفردوس',
-      description: 'فلل مستقلة بتصميم عصري'
+      description: 'فلل مستقلة بتصميم عصري',
+      link: '/projects'
     }
   ];
-  
 
   return (
-    <section className={`swiper ${styles.heroSwiper}`}>
-      <Slider {...settings}>
-        {slides.map((slide, index) => (
-          <div
-            key={index}
-            className={`swiper-slide ${styles.heroSlide}`}
-            data-currentslide={index}
-            style={{ backgroundImage: `url(${slide.image})`, }}
+    <Swiper
+      modules={[Navigation, Autoplay]}
+      spaceBetween={50}
+      slidesPerView={1}
+      autoplay={{
+        delay: 3000, 
+        disableOnInteraction: false
+      }}
+      navigation={{
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      }}
+      loop={true}
+    >
+      {slides.map((slide) => (
+        <SwiperSlide key={slide.id}>
+          <div 
+            className={styles.heroSlide}
+            style={{ backgroundImage: `url(${slide.image})` }}
           >
-
             <div className={styles.heroContent}>
-              <h1 className={styles.heroTitle}>{slide.title}</h1>
-              <p className={styles.heroDescription}>{slide.description}</p>
-              <a href="/projects" className="gold-button">اعرف أكتر</a>
+              <h1 className={styles.title}>{slide.title}</h1>
+              <p className={styles.description}>{slide.description}</p>
+              <a href={slide.link} className={`gold-button`}>اعرف أكتر</a>
             </div>
           </div>
-        ))}
-      </Slider>
-    </section>
+        </SwiperSlide>
+      ))}
+      
+      {/* Navigation buttons */}
+      <div className="swiper-button-next"></div>
+      <div className="swiper-button-prev"></div>
+    </Swiper>
   );
-}
+};
+
 export default Hero;
