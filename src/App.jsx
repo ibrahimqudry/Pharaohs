@@ -1,7 +1,7 @@
 import './App.css';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter , Routes , Route } from 'react-router-dom';
 import Home from './pages/Home';
 import ProjectsPage from './pages/ProjectsPage';
 import ContactPage from './pages/ContactPage';
