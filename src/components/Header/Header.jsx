@@ -32,6 +32,7 @@ function Header() {
         <div className={styles.navLinks}>
           <a href="/">الرئيسية</a>
           <a href="/projects">مشاريعنا</a>
+          <a href="/project-milestones">مشاريعنا خطوة بخطوة</a>
           <a href="/events">فعالياتنا</a>
           <a href="/careers">الوظائف</a>
           <a href="/investment">فرص الاستثمار</a>
