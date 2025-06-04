@@ -2,7 +2,8 @@ import ExclusiveOffers from '../components/ExclusiveOffers/ExclusiveOffers.jsx';
 import Projects from '../components/Projects/Projects.jsx';
 import WhyInvest from '../components/WhyInvest/WhyInvest.jsx';
 import Testimonials from '../components/Testimonials/Testimonials.jsx';
-import  Hero  from '../components/Hero/Hero.jsx';
+import Hero from '../components/Hero/Hero.jsx';
+import PharaohsEvents from '../components/PharaohsEvents/PharaohsEvents.jsx';
 
 function HomePage() {
   return (
@@ -12,6 +13,7 @@ function HomePage() {
       <Projects />
       <WhyInvest />
       <Testimonials />
+      <PharaohsEvents />
     </main>
   );
 }
