@@ -33,6 +33,7 @@ function Header() {
           <a href="/">الرئيسية</a>
           <a href="/projects">مشاريعنا</a>
           <a href="/events">فعالياتنا</a>
+          <a href="/careers">الوظائف</a>
           <a href="/investment">فرص الاستثمار</a>
           <a href="/vip-reviews">آراء العملاء</a>
           <a href="/about">عن الفراعنة</a>
