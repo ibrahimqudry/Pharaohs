@@ -9,6 +9,7 @@ import InvestmentPage from './pages/InvestmentPage';
 import VipReviewsPage from './pages/VipReviewsPage';
 import EventsPage from './pages/EventsPage';
 import CareersPage from './pages/CareersPage';
+import ProjectMilestonesPage from './pages/ProjectMilestonesPage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/vip-reviews" element={<VipReviewsPage />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/careers" element={<CareersPage />} />
+          <Route path="/project-milestones" element={<ProjectMilestonesPage />} />
         </Routes>
       </main>
       <Footer />
