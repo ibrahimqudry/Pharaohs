@@ -125,3 +125,8 @@
     color: #7f8c8d;
     margin: 0;
 }
+
+.buttonContainer {
+    text-align: center;
+    margin-top: 3rem;
+  }

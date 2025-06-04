@@ -84,6 +84,10 @@ function Testimonials() {
             </div>
           </div>
         </div>
+
+        <div className={styles.buttonContainer}>
+          <a href="/vip-reviews" className="gold-button">اعرف أكتر</a>
+        </div>
       </div>
     </section>
   );
