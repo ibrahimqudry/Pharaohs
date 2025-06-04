@@ -10,6 +10,7 @@ import VipReviewsPage from './pages/VipReviewsPage';
 import EventsPage from './pages/EventsPage';
 import CareersPage from './pages/CareersPage';
 import ProjectMilestonesPage from './pages/ProjectMilestonesPage';
+import AboutPage from './pages/AboutPage';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/events" element={<EventsPage />} />
           <Route path="/careers" element={<CareersPage />} />
           <Route path="/project-milestones" element={<ProjectMilestonesPage />} />
+          <Route path="/about" element={<AboutPage />} />
         </Routes>
       </main>
       <Footer />
