@@ -1,0 +1,355 @@
+/* Hero Section */
+.heroSection {
+  text-align: center;
+  margin-top: 7rem;
+  margin-bottom: 4rem;
+}
+
+.pageTitle {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--color-black);
+  margin-bottom: 1rem;
+}
+
+.pageDescription {
+  color: #666;
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Section Styles */
+.sectionTitle {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  color: var(--color-black);
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 0;
+  width: 40px;
+  height: 3px;
+  background: var(--color-gold);
+}
+
+/* Opportunities Section */
+.opportunitiesSection {
+  margin-bottom: 5rem;
+}
+
+.opportunitiesSection .sectionTitle {
+  display: block;
+  text-align: center;
+}
+
+.opportunitiesSection .sectionTitle::after {
+  right: 50%;
+  transform: translateX(50%);
+  width: 60px;
+}
+
+.opportunitiesGrid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .opportunitiesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .opportunitiesGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.opportunityCard {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.opportunityCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.opportunityIcon {
+  font-size: 2.5rem;
+  color: var(--color-gold);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.opportunityTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-black);
+  text-align: center;
+}
+
+.opportunityDescription {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.opportunityDetails {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+}
+
+.detailItem {
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.detailItem:last-child {
+  margin-bottom: 0;
+}
+
+.detailLabel {
+  color: #666;
+  font-weight: 500;
+}
+
+.detailValue {
+  font-weight: 600;
+  color: var(--color-gold);
+}
+
+.opportunityButton {
+  display: block;
+  text-align: center;
+  padding: 0.75rem 1.5rem;
+  background-color: transparent;
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.opportunityButton:hover {
+  background-color: var(--color-gold);
+  color: white;
+}
+
+/* Benefits Section */
+.benefitsSection {
+  margin-bottom: 5rem;
+  background-color: #f8f9fa;
+  padding: 4rem 0;
+}
+
+.benefitsSection .sectionTitle {
+  display: block;
+  text-align: center;
+}
+
+.benefitsSection .sectionTitle::after {
+  right: 50%;
+  transform: translateX(50%);
+  width: 60px;
+}
+
+.benefitsGrid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .benefitsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .benefitsGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.benefitCard {
+  background-color: white;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s;
+}
+
+.benefitCard:hover {
+  transform: translateY(-5px);
+}
+
+.benefitIcon {
+  font-size: 2.5rem;
+  color: var(--color-gold);
+  margin-bottom: 1.5rem;
+}
+
+.benefitTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-black);
+}
+
+.benefitDescription {
+  color: #555;
+  line-height: 1.6;
+}
+
+/* FAQ Section */
+.faqSection {
+  margin-bottom: 5rem;
+}
+
+.faqSection .sectionTitle {
+  display: block;
+  text-align: center;
+}
+
+.faqSection .sectionTitle::after {
+  right: 50%;
+  transform: translateX(50%);
+  width: 60px;
+}
+
+.faqContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faqItem {
+  margin-bottom: 1rem;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.faqQuestion {
+  padding: 1.25rem;
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.faqQuestion:hover {
+  background-color: #f8f9fa;
+}
+
+.faqQuestion.active {
+  background-color: var(--color-gold);
+  color: white;
+}
+
+.questionIcon {
+  margin-left: 0.75rem;
+}
+
+.accordionIcon {
+  font-size: 0.85rem;
+}
+
+.faqAnswer {
+  padding: 0 1.25rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
+  line-height: 1.6;
+  color: #555;
+}
+
+.faqAnswer.active {
+  padding: 1.25rem;
+  max-height: 500px;
+}
+
+/* Contact Section */
+.contactSection {
+  margin-bottom: 3rem;
+}
+
+.contactSection .sectionTitle {
+  display: block;
+  text-align: center;
+}
+
+.contactSection .sectionTitle::after {
+  right: 50%;
+  transform: translateX(50%);
+  width: 60px;
+}
+
+.contactContainer {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contactForm {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  border-color: var(--color-gold);
+  outline: none;
+}
