@@ -1,0 +1,218 @@
+.contactSection {
+  margin-bottom: 4rem;
+}
+
+.contactGrid {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .contactGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.sectionTitle {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+  color: var(--color-black);
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 0;
+  width: 40px;
+  height: 3px;
+  background: var(--color-gold);
+}
+
+/* Contact Info Styles */
+.contactInfo {
+  background-color: #f8f9fa;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.infoItem {
+  display: flex;
+  margin-bottom: 1.5rem;
+  align-items: flex-start;
+}
+
+.infoIcon {
+  color: var(--color-gold);
+  font-size: 1.5rem;
+  margin-left: 1rem;
+  margin-top: 0.25rem;
+}
+
+.infoItem h3 {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.infoItem p {
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Social Media Styles */
+.socialSection {
+  margin-top: 2rem;
+}
+
+.socialSection h3 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.socialLinks {
+  display: flex;
+  gap: 1rem;
+}
+
+.socialLink {
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+.socialLink:hover {
+  color: var(--color-gold);
+  border-color: var(--color-gold);
+  transform: translateY(-3px);
+}
+
+/* Contact Form Styles */
+.contactForm {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+  border-color: var(--color-gold);
+  outline: none;
+}
+
+/* Branches Section Styles */
+.branchesSection {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+.branchesGrid {
+  display: grid;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+  .branchesGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.branchCard {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.branchCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.branchName {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-black);
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+.branchName::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 30px;
+  height: 2px;
+  background: var(--color-gold);
+}
+
+.branchDetails {
+  margin-bottom: 1.5rem;
+}
+
+.branchDetails p {
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+
+.branchDetails svg {
+  color: var(--color-gold);
+  margin-left: 0.75rem;
+}
+
+.mapLink {
+  display: inline-block;
+  color: var(--color-gold);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s;
+  border-bottom: 1px solid transparent;
+}
+
+.mapLink:hover {
+  border-bottom: 1px solid var(--color-gold);
+}

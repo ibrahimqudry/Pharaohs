@@ -1,0 +1,155 @@
+import React from 'react';
+import styles from './ContactPage.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faFacebookF, 
+  faInstagram, 
+  faYoutube,
+  faTwitter,
+  faLinkedinIn 
+} from '@fortawesome/free-brands-svg-icons';
+import { faMapMarkerAlt, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+
+function ContactPage() {
+  const branches = [
+    {
+      name: "المقر الرئيسي - أسوان",
+      address: "شارع كورنيش النيل، أسوان الجديدة",
+      phone: "123-456-789",
+      email: "aswan@pharaohs.com",
+      mapUrl: "https://maps.google.com/?q=Aswan,Egypt"
+    },
+    {
+      name: "فرع القاهرة",
+      address: "شارع التحرير، وسط البلد، القاهرة",
+      phone: "123-456-790",
+      email: "cairo@pharaohs.com",
+      mapUrl: "https://maps.google.com/?q=Cairo,Egypt"
+    },
+    {
+      name: "فرع الإسكندرية",
+      address: "شارع 45، ميامي، الإسكندرية",
+      phone: "123-456-791",
+      email: "alex@pharaohs.com",
+      mapUrl: "https://maps.google.com/?q=Alexandria,Egypt"
+    }
+  ];
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Here you would handle the form submission
+    alert('تم إرسال رسالتك بنجاح!');
+  };
+
+  return (
+    <main className="pt-24">
+      <div className="container mx-auto px-4">
+        <h1 className="text-4xl font-bold mb-8 text-center">تواصل معنا</h1>
+        
+        {/* Contact Information Section */}
+        <section className={styles.contactSection}>
+          <div className={styles.contactGrid}>
+            <div className={styles.contactInfo}>
+              <h2 className={styles.sectionTitle}>معلومات الاتصال</h2>
+              <div className={styles.infoItem}>
+                <FontAwesomeIcon icon={faPhone} className={styles.infoIcon} />
+                <div>
+                  <h3>اتصل بنا</h3>
+                  <p>123-456-789</p>
+                  <p>123-456-790</p>
+                </div>
+              </div>
+              <div className={styles.infoItem}>
+                <FontAwesomeIcon icon={faEnvelope} className={styles.infoIcon} />
+                <div>
+                  <h3>البريد الإلكتروني</h3>
+                  <p>info@pharaohs.com</p>
+                  <p>sales@pharaohs.com</p>
+                </div>
+              </div>
+              <div className={styles.infoItem}>
+                <FontAwesomeIcon icon={faMapMarkerAlt} className={styles.infoIcon} />
+                <div>
+                  <h3>العنوان الرئيسي</h3>
+                  <p>شارع كورنيش النيل، أسوان الجديدة، مصر</p>
+                </div>
+              </div>
+              
+              {/* Social Media Links */}
+              <div className={styles.socialSection}>
+                <h3>تابعنا على وسائل التواصل الاجتماعي</h3>
+                <div className={styles.socialLinks}>
+                  <a href="#" className={styles.socialLink}>
+                    <FontAwesomeIcon icon={faFacebookF} />
+                  </a>
+                  <a href="#" className={styles.socialLink}>
+                    <FontAwesomeIcon icon={faInstagram} />
+                  </a>
+                  <a href="#" className={styles.socialLink}>
+                    <FontAwesomeIcon icon={faYoutube} />
+                  </a>
+                  <a href="#" className={styles.socialLink}>
+                    <FontAwesomeIcon icon={faTwitter} />
+                  </a>
+                  <a href="#" className={styles.socialLink}>
+                    <FontAwesomeIcon icon={faLinkedinIn} />
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            {/* Contact Form */}
+            <div className={styles.contactForm}>
+              <h2 className={styles.sectionTitle}>أرسل لنا رسالة</h2>
+              <form onSubmit={handleSubmit}>
+                <div className={styles.formGroup}>
+                  <label htmlFor="name">الاسم</label>
+                  <input type="text" id="name" name="name" required />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="email">البريد الإلكتروني</label>
+                  <input type="email" id="email" name="email" required />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="phone">رقم الهاتف</label>
+                  <input type="tel" id="phone" name="phone" />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="subject">الموضوع</label>
+                  <input type="text" id="subject" name="subject" required />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="message">الرسالة</label>
+                  <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" className="gold-button">إرسال الرسالة</button>
+              </form>
+            </div>
+          </div>
+        </section>
+        
+        {/* Branches Section */}
+        <section className={styles.branchesSection}>
+          <h2 className={styles.sectionTitle}>فروعنا</h2>
+          <div className={styles.branchesGrid}>
+            {branches.map((branch, index) => (
+              <div key={index} className={styles.branchCard}>
+                <h3 className={styles.branchName}>{branch.name}</h3>
+                <div className={styles.branchDetails}>
+                  <p><FontAwesomeIcon icon={faMapMarkerAlt} /> {branch.address}</p>
+                  <p><FontAwesomeIcon icon={faPhone} /> {branch.phone}</p>
+                  <p><FontAwesomeIcon icon={faEnvelope} /> {branch.email}</p>
+                </div>
+                <a href={branch.mapUrl} target="_blank" rel="noopener noreferrer" className={styles.mapLink}>
+                  عرض على الخريطة
+                </a>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}
+
+export default ContactPage;
