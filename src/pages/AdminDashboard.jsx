@@ -14,78 +14,79 @@ import HomeEditor from '../components/AdminEditors/HomeEditor';
 // import MilestonesEditor from '../components/AdminEditors/MilestonesEditor';
 
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState('projects');
+  const [activeTab, setActiveTab] = useState('home');
   const { logout } = useAuth();
   const navigate = useNavigate();
-  
+
   const handleLogout = () => {
-    logout();
-    navigate('/admin');
+    navigate('/');
   };
 
   return (
     <div className={styles.dashboardContainer}>
-      <div className={styles.sidebar}>
-        <div className={styles.sidebarHeader}>
-          <h2>لوحة التحكم</h2>
-        </div>
-        <nav className={styles.sidebarNav}>
-          <button 
-            className={`${styles.navButton} ${activeTab === 'home' ? styles.active : ''}`}
-            onClick={() => setActiveTab('home')}
-          >
-            الصفحة الرئيسية
-          </button>
-          <button 
-            className={`${styles.navButton} ${activeTab === 'about' ? styles.active : ''}`}
-            onClick={() => setActiveTab('about')}
-          >
-            من نحن
-          </button>
-          <button 
-            className={`${styles.navButton} ${activeTab === 'projects' ? styles.active : ''}`}
-            onClick={() => setActiveTab('projects')}
-          >
-            المشاريع
-          </button>
-          <button 
-            className={`${styles.navButton} ${activeTab === 'events' ? styles.active : ''}`}
-            onClick={() => setActiveTab('events')}
-          >
-            الفعاليات
-          </button>
-          <button 
-            className={`${styles.navButton} ${activeTab === 'careers' ? styles.active : ''}`}
-            onClick={() => setActiveTab('careers')}
-          >
-            الوظائف
-          </button>
-          <button 
-            className={`${styles.navButton} ${activeTab === 'investment' ? styles.active : ''}`}
-            onClick={() => setActiveTab('investment')}
-          >
-            الاستثمار
-          </button>
-          <button 
-            className={`${styles.navButton} ${activeTab === 'vip-reviews' ? styles.active : ''}`}
-            onClick={() => setActiveTab('vip-reviews')}
-          >
-            آراء العملاء
-          </button>
-          <button 
-            className={`${styles.navButton} ${activeTab === 'milestones' ? styles.active : ''}`}
-            onClick={() => setActiveTab('milestones')}
-          >
-            مراحل المشاريع
-          </button>
-        </nav>
-        <div className={styles.sidebarFooter}>
-          <button onClick={handleLogout} className={styles.logoutButton}>
-            تسجيل الخروج
-          </button>
+      <div className={styles.sidebarContainer}>
+        <div className={styles.sidebar}>
+          <div className={styles.sidebarHeader}>
+            <h2>لوحة التحكم</h2>
+          </div>
+          <nav className={styles.sidebarNav}>
+            <button
+              className={`${styles.navButton} ${activeTab === 'home' ? styles.active : ''}`}
+              onClick={() => setActiveTab('home')}
+            >
+              الصفحة الرئيسية
+            </button>
+            <button
+              className={`${styles.navButton} ${activeTab === 'about' ? styles.active : ''}`}
+              onClick={() => setActiveTab('about')}
+            >
+              من نحن
+            </button>
+            <button
+              className={`${styles.navButton} ${activeTab === 'projects' ? styles.active : ''}`}
+              onClick={() => setActiveTab('projects')}
+            >
+              المشاريع
+            </button>
+            <button
+              className={`${styles.navButton} ${activeTab === 'events' ? styles.active : ''}`}
+              onClick={() => setActiveTab('events')}
+            >
+              الفعاليات
+            </button>
+            <button
+              className={`${styles.navButton} ${activeTab === 'careers' ? styles.active : ''}`}
+              onClick={() => setActiveTab('careers')}
+            >
+              الوظائف
+            </button>
+            <button
+              className={`${styles.navButton} ${activeTab === 'investment' ? styles.active : ''}`}
+              onClick={() => setActiveTab('investment')}
+            >
+              الاستثمار
+            </button>
+            <button
+              className={`${styles.navButton} ${activeTab === 'vip-reviews' ? styles.active : ''}`}
+              onClick={() => setActiveTab('vip-reviews')}
+            >
+              آراء العملاء
+            </button>
+            <button
+              className={`${styles.navButton} ${activeTab === 'milestones' ? styles.active : ''}`}
+              onClick={() => setActiveTab('milestones')}
+            >
+              مراحل المشاريع
+            </button>
+          </nav>
+          <div className={styles.sidebarFooter}>
+            <button onClick={handleLogout} className={styles.logoutButton}>
+              تسجيل الخروج
+            </button>
+          </div>
         </div>
       </div>
-      
+
       <div className={styles.content}>
         <div className={styles.contentHeader}>
           <h1 className={styles.contentTitle}>
@@ -99,7 +100,7 @@ export default function AdminDashboard() {
             {activeTab === 'milestones' && 'تحرير صفحة مراحل المشاريع'}
           </h1>
         </div>
-        
+
         <div className={styles.editorContainer}>
           {activeTab === 'home' && <HomeEditor />}
           {activeTab === 'about' && <AboutEditor />}
