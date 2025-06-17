@@ -9,7 +9,7 @@ import AboutEditor from '../components/AdminEditors/AboutEditor';
 import EventsEditor from '../components/AdminEditors/EventsEditor';
 import CareersEditor from '../components/AdminEditors/CareersEditor';
 import HomeEditor from '../components/AdminEditors/HomeEditor';
-// import InvestmentEditor from '../components/AdminEditors/InvestmentEditor';
+import InvestmentEditor from '../components/AdminEditors/InvestmentEditor';
 import VipReviewsEditor from '../components/AdminEditors/VipReviewsEditor';
 import MilestonesEditor from '../components/AdminEditors/MilestonesEditor';
 
