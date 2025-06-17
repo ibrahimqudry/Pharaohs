@@ -7,7 +7,9 @@
 .sidebarContainer {
   background-color: #2c3e50;
   width: 250px;
+  transition: all 0.3s ease;
 }
+
 .sidebar {
   width: 100%;
   color: white;
@@ -16,6 +18,54 @@
   position: sticky;
   top: 0;
   max-height: 110vh;
+}
+
+/* Mobile sidebar toggle button */
+.menuToggle {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  background-color: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Responsive styles for tablet and mobile */
+@media (max-width: 992px) {
+  .sidebarContainer {
+    width: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboardContainer {
+    position: relative;
+  }
+  
+  .menuToggle {
+    display: block;
+  }
+  
+  .sidebarContainer {
+    position: fixed;
+    left: 100%;
+    top: 0;
+    height: 100%;
+    width: 250px;
+    z-index: 100;
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+  }
+  
+  .sidebarContainer.open {
+    transform: translateX(-100%);
+  }
 }
 
 .sidebarHeader {
@@ -86,6 +136,9 @@
   background-color: white;
   padding: 1.5rem 2rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .contentTitle {
@@ -96,4 +149,47 @@
 
 .editorContainer {
   padding: 2rem;
+}
+
+/* Responsive styles for tablet and mobile */
+@media (max-width: 992px) {
+  .contentHeader {
+    padding: 1.25rem 1.5rem;
+  }
+  
+  .contentTitle {
+    font-size: 1.35rem;
+  }
+  
+  .editorContainer {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .contentHeader {
+    padding: 1rem 1.25rem;
+  }
+  
+  .contentTitle {
+    font-size: 1.25rem;
+  }
+  
+  .editorContainer {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contentHeader {
+    padding: 0.875rem 1rem;
+  }
+  
+  .contentTitle {
+    font-size: 1.125rem;
+  }
+  
+  .editorContainer {
+    padding: 0.875rem;
+  }
 }
