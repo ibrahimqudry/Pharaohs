@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import styles from './AdminDashboard.module.css';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 // Import editor components
 import ProjectsEditor from '../components/AdminEditors/ProjectsEditor';
@@ -15,16 +16,28 @@ import MilestonesEditor from '../components/AdminEditors/MilestonesEditor';
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('home');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     navigate('/');
   };
+  
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+  
+  const closeSidebar = () => {
+    setSidebarOpen(false);
+  };
 
   return (
     <div className={styles.dashboardContainer}>
-      <div className={styles.sidebarContainer}>
+      <button className={styles.menuToggle} onClick={toggleSidebar}>
+        {sidebarOpen ? <FaTimes /> : <FaBars />}
+      </button>
+      <div className={`${styles.sidebarContainer} ${sidebarOpen ? styles.open : ''}`}>
         <div className={styles.sidebar}>
           <div className={styles.sidebarHeader}>
             <h2>لوحة التحكم</h2>
@@ -32,55 +45,85 @@ export default function AdminDashboard() {
           <nav className={styles.sidebarNav}>
             <button
               className={`${styles.navButton} ${activeTab === 'home' ? styles.active : ''}`}
-              onClick={() => setActiveTab('home')}
+              onClick={() => {
+                setActiveTab('home');
+                closeSidebar();
+              }}
             >
               الصفحة الرئيسية
             </button>
             <button
               className={`${styles.navButton} ${activeTab === 'about' ? styles.active : ''}`}
-              onClick={() => setActiveTab('about')}
+              onClick={() => {
+                setActiveTab('about');
+                closeSidebar();
+              }}
             >
               من نحن
             </button>
             <button
               className={`${styles.navButton} ${activeTab === 'projects' ? styles.active : ''}`}
-              onClick={() => setActiveTab('projects')}
+              onClick={() => {
+                setActiveTab('projects');
+                closeSidebar();
+              }}
             >
               المشاريع
             </button>
             <button
               className={`${styles.navButton} ${activeTab === 'events' ? styles.active : ''}`}
-              onClick={() => setActiveTab('events')}
+              onClick={() => {
+                setActiveTab('events');
+                closeSidebar();
+              }}
             >
               الفعاليات
             </button>
             <button
               className={`${styles.navButton} ${activeTab === 'careers' ? styles.active : ''}`}
-              onClick={() => setActiveTab('careers')}
+              onClick={() => {
+                setActiveTab('careers');
+                closeSidebar();
+              }}
             >
               الوظائف
             </button>
             <button
               className={`${styles.navButton} ${activeTab === 'investment' ? styles.active : ''}`}
-              onClick={() => setActiveTab('investment')}
+              onClick={() => {
+                setActiveTab('investment');
+                closeSidebar();
+              }}
             >
               الاستثمار
             </button>
             <button
               className={`${styles.navButton} ${activeTab === 'vip-reviews' ? styles.active : ''}`}
-              onClick={() => setActiveTab('vip-reviews')}
+              onClick={() => {
+                setActiveTab('vip-reviews');
+                closeSidebar();
+              }}
             >
               آراء العملاء
             </button>
             <button
               className={`${styles.navButton} ${activeTab === 'milestones' ? styles.active : ''}`}
-              onClick={() => setActiveTab('milestones')}
+              onClick={() => {
+                setActiveTab('milestones');
+                closeSidebar();
+              }}
             >
               مراحل المشاريع
             </button>
           </nav>
           <div className={styles.sidebarFooter}>
-            <button onClick={handleLogout} className={styles.logoutButton}>
+            <button 
+              onClick={() => {
+                handleLogout();
+                closeSidebar();
+              }} 
+              className={styles.logoutButton}
+            >
               تسجيل الخروج
             </button>
           </div>
