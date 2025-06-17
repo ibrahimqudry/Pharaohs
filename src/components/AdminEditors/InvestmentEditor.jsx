@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import styles from './EditorStyles.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faChartLine, 
   faHandshake, 
