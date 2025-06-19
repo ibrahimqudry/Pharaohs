@@ -23,7 +23,9 @@ function Header() {
   return (
     <header>
       <nav className="container">
-        <div className={styles.logo}>الفراعنة</div>
+        <a href="/" className={styles.logo}>
+          <img src="/logo.jpg" alt="الفراعنة" />
+        </a>
         <button className={styles.toggleButton}>
           <span></span>
           <span></span>
@@ -32,12 +34,12 @@ function Header() {
         <div className={styles.navLinks}>
           <a href="/">الرئيسية</a>
           <a href="/projects">مشاريعنا</a>
+          <a href="/about">عن الفراعنة</a>
+          <a href="/contact">تواصل معنا</a>
           <a href="/events">فعالياتنا</a>
           <a href="/careers">الوظائف</a>
           <a href="/investment">فرص الاستثمار</a>
           <a href="/vip-reviews">آراء العملاء</a>
-          <a href="/about">عن الفراعنة</a>
-          <a href="/contact">تواصل معنا</a>
         </div>
         <button className="gold-button">احجز وحدتك</button>
       </nav>
