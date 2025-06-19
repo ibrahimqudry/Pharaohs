@@ -19,7 +19,14 @@ function Header() {
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
-    if (isDropdownOpen) setIsDropdownOpen(false); // Close dropdown when toggling menu
+    if (isDropdownOpen) setIsDropdownOpen(false);
+  };
+
+  const handleWhatsAppClick = () => {
+    const phoneNumber = '+201149136352';
+    const message = encodeURIComponent('مرحبا، أرغب في حجز وحدة');
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   const moreLinks = [
@@ -100,7 +107,7 @@ function Header() {
             </li>
             <li className={styles.dropdown} ref={selectRef}>
               <button
-                className={`${styles.dropdownToggle} ${styles.navLink}`}
+                className={styles.dropdownToggle}
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 aria-expanded={isDropdownOpen}
                 aria-haspopup="true"
@@ -128,7 +135,11 @@ function Header() {
           </ul>
         </div>
 
-        <button className={`${styles.bookButton} gold-button`} aria-label="احجز وحدتك الآن">
+        <button
+          className={`${styles.bookButton} gold-button`}
+          onClick={handleWhatsAppClick}
+          aria-label="احجز وحدتك عبر واتساب"
+        >
           احجز وحدتك
         </button>
       </nav>
