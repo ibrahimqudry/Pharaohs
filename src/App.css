@@ -47,6 +47,7 @@ body {
 .gold-button:hover {
   background-color: #B4941F;
   color: #1A1A1A;
+  border: 1px solid #B4941F;
 }
 
 /* Swiper customization */

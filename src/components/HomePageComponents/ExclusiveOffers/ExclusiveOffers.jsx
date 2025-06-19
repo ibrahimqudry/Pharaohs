@@ -18,7 +18,7 @@ function ExclusiveOffers() {
               <p className="mb-4">خصم 15% على الدفعة المقدمة</p>
               <div className={styles.offerDetails}>
                 <span>يبدأ من 2.5 مليون جنيه</span>
-                <a href="/offers/villas" className={styles.offerButton}>التفاصيل</a>
+                <a href="/offers/villas" className="gold-button">التفاصيل</a>
               </div>
             </div>
           </div>
@@ -32,7 +32,7 @@ function ExclusiveOffers() {
               <p className="mb-4">أقساط تصل إلى 7 سنوات</p>
               <div className={styles.offerDetails}>
                 <span>يبدأ من 1.2 مليون جنيه</span>
-                <a href="/offers/apartments" className={styles.offerButton}>التفاصيل</a>
+                <a href="/offers/apartments" className="gold-button">التفاصيل</a>
               </div>
             </div>
           </div>
@@ -46,7 +46,7 @@ function ExclusiveOffers() {
               <p className="mb-4">تقسيط حتى 5 سنوات بدون فوائد</p>
               <div className={styles.offerDetails}>
                 <span>يبدأ من 800 ألف جنيه</span>
-                <a href="/offers/lands" className={styles.offerButton}>التفاصيل</a>
+                <a href="/offers/lands" className="gold-button">التفاصيل</a>
               </div>
             </div>
           </div>
