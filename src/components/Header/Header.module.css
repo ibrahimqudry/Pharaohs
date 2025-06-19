@@ -257,4 +257,21 @@
     width: 90%;
     max-width: 200px;
   }
+  
+  /* Add these styles to ensure logo remains visible */
+  .logo {
+    display: flex;
+    position: relative;
+    z-index: 101; /* Higher than the mobile menu */
+  }
+  
+  .logo img {
+    height: 40px;
+  }
+  
+  /* Adjust nav container to maintain space for logo */
+  .nav {
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+  }
 }
