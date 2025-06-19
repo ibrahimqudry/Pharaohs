@@ -255,6 +255,6 @@
     left: 50%;
     transform: translateX(-50%);
     width: 90%;
-    max-width: 300px;
+    max-width: 200px;
   }
 }

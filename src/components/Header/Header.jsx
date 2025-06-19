@@ -107,7 +107,7 @@ function Header() {
             </li>
             <li className={styles.dropdown} ref={selectRef}>
               <button
-                className={styles.dropdownToggle}
+                className={`${styles.dropdownToggle} ${styles.navLink}`}
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 aria-expanded={isDropdownOpen}
                 aria-haspopup="true"

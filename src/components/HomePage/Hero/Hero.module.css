@@ -19,7 +19,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: none;
   padding: 2rem;
   border-radius: 8px;
   max-width: 80%;
