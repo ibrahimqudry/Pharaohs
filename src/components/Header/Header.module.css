@@ -1,5 +1,4 @@
-/* Header styles */
-header {
+.header {
   position: fixed;
   width: 100%;
   background: rgba(255, 255, 255, 0.95);
@@ -8,12 +7,14 @@ header {
   z-index: 50;
 }
 
-nav {
+.nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
   height: 80px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .logo {
@@ -28,12 +29,6 @@ nav {
   object-fit: contain;
 }
 
-@media (max-width: 768px) {
-  .logo img {
-    height: 40px;
-  }
-}
-
 .toggleButton {
   display: flex;
   flex-direction: column;
@@ -44,28 +39,21 @@ nav {
   border: none;
   cursor: pointer;
   padding: 0;
-  z-index: 10;
+  z-index: 100;
   transition: all 0.3s ease;
-}
-
-.toggleButton:hover span {
-  background: var(--color-gold);
-}
-
-@media (min-width: 768px) {
-  .toggleButton {
-    display: none;
-  }
 }
 
 .toggleButton span {
   width: 100%;
   height: 3px;
-  background: var(--color-black);
+  background: var(--color-black, #333);
   border-radius: 10px;
   transition: all 0.3s ease;
-  position: relative;
   transform-origin: 1px;
+}
+
+.toggleButton:hover span {
+  background: var(--color-gold, #d4a017);
 }
 
 .toggleButton.active span:first-child {
@@ -103,51 +91,170 @@ nav {
   display: flex;
 }
 
-@media (min-width: 768px) {
-  .navLinks {
-    position: static;
-    display: flex;
-    flex-direction: row;
-    height: auto;
-    padding: 0;
-    transform: none;
-    background: none;
-    width: auto;
-    gap: 2rem;
-    backdrop-filter: none;
-  }
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
 }
 
-.navLinks a {
-  color: var(--color-black);
+.navLink {
+  color: var(--color-black, #333);
   text-decoration: none;
-  transition: all 0.3s ease;
   font-size: 1.25rem;
   position: relative;
   padding: 0.5rem 0;
+  display: block;
+  transition: all 0.3s ease;
 }
 
-.navLinks a::after {
+.navLink::after {
   content: '';
   position: absolute;
   width: 0;
   height: 2px;
   bottom: 0;
   right: 0;
-  background-color: var(--color-gold);
+  background-color: var(--color-gold, #d4a017);
   transition: width 0.3s ease;
 }
 
-.navLinks a:hover {
-  color: var(--color-gold);
+.navLink:hover,
+.navLink:focus {
+  color: var(--color-gold, #d4a017);
 }
 
-.navLinks a:hover::after {
+.navLink:hover::after,
+.navLink:focus::after {
   width: 100%;
 }
 
+.dropdown {
+  position: relative;
+}
+
+.dropdownToggle {
+  background: none;
+  border: none;
+  color: var(--color-black, #333);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: right;
+}
+
+.arrow::after {
+  content: '▼';
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.arrowOpen::after {
+  transform: rotate(180deg);
+}
+
+.dropdownMenu {
+  display: none;
+  padding: 0.5rem 0;
+  margin: 0.5rem 0 0 0;
+  list-style: none;
+  background: rgba(248, 248, 248, 0.95);
+}
+
+.dropdownMenu.show {
+  display: block;
+}
+
+.dropdownLink {
+  display: block;
+  padding: 0.75rem 1.5rem;
+  color: var(--color-black, #333);
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.dropdownLink:hover,
+.dropdownLink:focus {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--color-gold, #d4a017);
+}
+
+.bookButton {
+  background: var(--color-gold, #d4a017);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.bookButton:hover,
+.bookButton:focus {
+  background: var(--color-gold-dark, #b38b14);
+}
+
 @media (min-width: 768px) {
-  .navLinks a {
+  .toggleButton {
+    display: none;
+  }
+
+  .navLinks {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    width: auto;
+    background: none;
+    backdrop-filter: none;
+    padding: 0;
+    transform: none;
+    gap: 2rem;
+  }
+
+  .navList {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .navLink,
+  .dropdownToggle {
     font-size: 1rem;
+  }
+
+  .dropdownMenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    min-width: 200px;
+    z-index: 1000;
+    margin: 0;
+  }
+
+  .logo img {
+    height: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .bookButton {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 300px;
   }
 }
