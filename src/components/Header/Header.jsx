@@ -42,6 +42,19 @@ function Header() {
         <a href="/" className={styles.logo} aria-label="الفراعنة - الصفحة الرئيسية">
           <img src="/logo.jpg" alt="الفراعنة" />
         </a>
+        
+        {/* Dark Mode Toggle */}
+        <button 
+          className={styles.themeToggle} 
+          onClick={() => document.body.classList.toggle('dark-mode')} 
+          aria-label="تبديل الوضع المظلم"
+        >
+          {document.body.classList.contains('dark-mode') ? (
+            <span>☀️</span> /* Sun icon for light mode */
+          ) : (
+            <span>🌙</span> /* Moon icon for dark mode */
+          )}
+        </button>
 
         <button
           className={`${styles.toggleButton} ${isOpen ? styles.active : ''}`}
