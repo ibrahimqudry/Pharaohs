@@ -9,7 +9,6 @@ import InvestmentPage from './pages/InvestmentPage';
 import VipReviewsPage from './pages/VipReviewsPage';
 import EventsPage from './pages/EventsPage';
 import CareersPage from './pages/CareersPage';
-import ProjectMilestonesPage from './pages/ProjectMilestonesPage';
 import AboutPage from './pages/AboutPage';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
@@ -89,15 +88,6 @@ function App() {
               <Header />
               <main className="pt-16 pb-16">
                 <CareersPage />
-              </main>
-              <Footer />
-            </>
-          } />
-          <Route path="/project-milestones" element={
-            <>
-              <Header />
-              <main className="pt-16 pb-16">
-                <ProjectMilestonesPage />
               </main>
               <Footer />
             </>

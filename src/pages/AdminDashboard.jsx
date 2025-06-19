@@ -12,12 +12,10 @@ import CareersEditor from '../components/AdminEditors/CareersEditor';
 import HomeEditor from '../components/AdminEditors/HomeEditor';
 import InvestmentEditor from '../components/AdminEditors/InvestmentEditor';
 import VipReviewsEditor from '../components/AdminEditors/VipReviewsEditor';
-import MilestonesEditor from '../components/AdminEditors/MilestonesEditor';
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('home');
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -105,15 +103,6 @@ export default function AdminDashboard() {
               }}
             >
               آراء العملاء
-            </button>
-            <button
-              className={`${styles.navButton} ${activeTab === 'milestones' ? styles.active : ''}`}
-              onClick={() => {
-                setActiveTab('milestones');
-                closeSidebar();
-              }}
-            >
-              مراحل المشاريع
             </button>
           </nav>
           <div className={styles.sidebarFooter}>
