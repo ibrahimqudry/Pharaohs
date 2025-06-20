@@ -5,7 +5,7 @@ import { faStar, faQuoteRight, faFilter, faCrown, faBuilding, faHome, faLandmark
 
 function VipReviewsPage() {
   const [activeFilter, setActiveFilter] = useState('all');
-  
+
   const vipReviews = [
     {
       id: 1,
@@ -111,9 +111,16 @@ function VipReviewsPage() {
     }
   ];
 
-  const filteredReviews = activeFilter === 'all' 
-    ? vipReviews 
+  const filteredReviews = activeFilter === 'all'
+    ? vipReviews
     : vipReviews.filter(review => review.projectType === activeFilter);
+
+  const handleWhatsAppClick = () => {
+    const phoneNumber = '+201149136352';
+    const message = encodeURIComponent('مرحبا، أرغب في حجز وحدة');
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
+  };
 
   return (
     <main className="pt-24 pb-16">
@@ -133,34 +140,34 @@ function VipReviewsPage() {
             <span>تصفية التقييمات</span>
           </div>
           <div className={styles.filterButtons}>
-            <button 
+            <button
               className={`${styles.filterButton} ${activeFilter === 'all' ? styles.active : ''}`}
               onClick={() => setActiveFilter('all')}
             >
               الكل
             </button>
-            <button 
+            <button
               className={`${styles.filterButton} ${activeFilter === 'شقق' ? styles.active : ''}`}
               onClick={() => setActiveFilter('شقق')}
             >
               <FontAwesomeIcon icon={faBuilding} className={styles.buttonIcon} />
               شقق
             </button>
-            <button 
+            <button
               className={`${styles.filterButton} ${activeFilter === 'فلل' ? styles.active : ''}`}
               onClick={() => setActiveFilter('فلل')}
             >
               <FontAwesomeIcon icon={faHome} className={styles.buttonIcon} />
               فلل
             </button>
-            <button 
+            <button
               className={`${styles.filterButton} ${activeFilter === 'تجاري' ? styles.active : ''}`}
               onClick={() => setActiveFilter('تجاري')}
             >
               <FontAwesomeIcon icon={faLandmark} className={styles.buttonIcon} />
               تجاري
             </button>
-            <button 
+            <button
               className={`${styles.filterButton} ${activeFilter === 'أراضي' ? styles.active : ''}`}
               onClick={() => setActiveFilter('أراضي')}
             >
@@ -194,13 +201,13 @@ function VipReviewsPage() {
                   <span className={styles.projectName}>{review.projectName}</span>
                 </div>
               </div>
-              
+
               <div className={styles.reviewContent}>
                 <div className={styles.quoteIcon}>
                   <FontAwesomeIcon icon={faQuoteRight} />
                 </div>
                 <p className={styles.reviewText}>{review.review}</p>
-                
+
                 <div className={styles.reviewHighlights}>
                   <h4 className={styles.highlightsTitle}>أبرز المميزات:</h4>
                   <ul className={styles.highlightsList}>
@@ -209,7 +216,7 @@ function VipReviewsPage() {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className={styles.reviewFooter}>
                   <span className={styles.reviewDate}>{review.date}</span>
                 </div>
@@ -223,13 +230,13 @@ function VipReviewsPage() {
             <p>لا توجد تقييمات متاحة بهذا التصنيف حالياً</p>
           </div>
         )}
-        
+
         <div className={styles.callToAction}>
           <h2 className={styles.ctaTitle}>انضم إلى قائمة عملائنا المميزين</h2>
           <p className={styles.ctaText}>استثمر الآن في مشاريع الفراعنة واستمتع بتجربة عقارية فريدة</p>
           <div className={styles.ctaButtons}>
             <a href="/projects" className={styles.ctaButton}>استعرض المشاريع</a>
-            <a href="/contact" className="gold-button">تواصل معنا</a>
+            <a className="gold-button" onClick={handleWhatsAppClick}>تواصل معنا</a>
           </div>
         </div>
       </div>

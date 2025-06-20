@@ -225,18 +225,7 @@ function EventsPage() {
           </div>
         )}
         
-        <div className={styles.upcomingEvents}>
-          <h2 className={styles.upcomingTitle}>ترقبوا فعالياتنا القادمة</h2>
-          <p className={styles.upcomingDescription}>نعمل دائماً على تنظيم فعاليات متنوعة لعملائنا ومتابعينا. تابعونا لمعرفة أحدث الفعاليات.</p>
-          <div className={styles.subscribeForm}>
-            <h3 className={styles.subscribeTitle}>اشترك في النشرة البريدية</h3>
-            <p className={styles.subscribeText}>ليصلك كل جديد عن فعاليات وعروض شركة الفراعنة</p>
-            <form className={styles.form}>
-              <input type="email" placeholder="البريد الإلكتروني" className={styles.emailInput} required />
-              <button type="submit" className="gold-button">اشتراك</button>
-            </form>
-          </div>
-        </div>
+      
       </div>
     </main>
   );

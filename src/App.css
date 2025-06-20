@@ -41,6 +41,7 @@ body {
   border-radius: 0.5rem;
   font-weight: 600;
   text-decoration: none;
+  cursor: pointer;
   transition: background-color 0.3s;
 }
 

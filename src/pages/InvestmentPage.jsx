@@ -193,51 +193,6 @@ function InvestmentPage() {
           </div>
         </section>
 
-        {/* Contact Form */}
-        <section className={styles.contactSection}>
-          <h2 className={styles.sectionTitle}>تواصل معنا للاستفسار</h2>
-          <div className={styles.contactContainer}>
-            <form onSubmit={handleSubmit} className={styles.contactForm}>
-              <div className={styles.formGroup}>
-                <label htmlFor="name">الاسم</label>
-                <input type="text" id="name" name="name" required />
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="email">البريد الإلكتروني</label>
-                <input type="email" id="email" name="email" required />
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="phone">رقم الهاتف</label>
-                <input type="tel" id="phone" name="phone" required />
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="investmentType">نوع الاستثمار المهتم به</label>
-                <select id="investmentType" name="investmentType" required>
-                  <option value="">اختر نوع الاستثمار</option>
-                  <option value="residential">وحدات سكنية</option>
-                  <option value="commercial">محلات تجارية</option>
-                  <option value="land">أراضي</option>
-                  <option value="partnership">شراكة في المشاريع</option>
-                </select>
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="investmentAmount">مبلغ الاستثمار التقريبي</label>
-                <select id="investmentAmount" name="investmentAmount" required>
-                  <option value="">اختر المبلغ التقريبي</option>
-                  <option value="less-than-1m">أقل من مليون جنيه</option>
-                  <option value="1m-3m">من مليون إلى 3 مليون جنيه</option>
-                  <option value="3m-5m">من 3 مليون إلى 5 مليون جنيه</option>
-                  <option value="more-than-5m">أكثر من 5 مليون جنيه</option>
-                </select>
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="message">رسالتك</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
-              </div>
-              <button type="submit" className="gold-button">إرسال الطلب</button>
-            </form>
-          </div>
-        </section>
       </div>
     </main>
   );
