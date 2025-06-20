@@ -48,7 +48,6 @@
 }
 
 .offerCard {
-    background: var(--color-white);
     border-radius: 12px;
     overflow: hidden;
     box-shadow: var(--shadow-md);
@@ -95,8 +94,8 @@
 }
 
 .offerButton:hover {
-    background-color: #B4941F; /* Using the same hover color as in your global styles */
+    background-color: #B4941F;
+    /* Using the same hover color as in your global styles */
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
 }
-

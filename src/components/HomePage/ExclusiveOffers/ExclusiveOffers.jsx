@@ -9,7 +9,7 @@ function ExclusiveOffers() {
           <div className={styles.titleDecoration}></div>
         </div>
         <div className={styles.offersGrid}>
-          <div className={styles.offerCard}>
+          <div className={`${styles.offerCard} card`}>
             <div className={styles.offerImage}>
               <img src="/images/offer1.jpg" alt="عرض خاص للفلل" />
             </div>
@@ -23,7 +23,7 @@ function ExclusiveOffers() {
             </div>
           </div>
 
-          <div className={styles.offerCard}>
+          <div className={`${styles.offerCard} card`}>
             <div className={styles.offerImage}>
               <img src="/images/offer2.jpg" alt="عرض خاص للشقق" />
             </div>
@@ -37,7 +37,7 @@ function ExclusiveOffers() {
             </div>
           </div>
 
-          <div className={styles.offerCard}>
+          <div className={`${styles.offerCard} card`}>
             <div className={styles.offerImage}>
               <img src="/images/offer3.jpg" alt="عرض خاص للأراضي" />
             </div>

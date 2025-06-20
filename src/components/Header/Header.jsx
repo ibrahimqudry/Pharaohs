@@ -40,7 +40,7 @@ function Header() {
   ];
 
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} dm`}>
       <nav className={`${styles.nav} container`} aria-label="التنقل الرئيسي">
         <a href="/" className={styles.logo} aria-label="الفراعنة - الصفحة الرئيسية">
           <img src="/logo.jpg" alt="الفراعنة" />
@@ -119,7 +119,7 @@ function Header() {
             </li>
             <li className={styles.dropdown} ref={selectRef}>
               <button
-                className={`${styles.dropdownToggle} ${styles.navLink}`}
+                className={`${styles.dropdownToggle} ${styles.navLink} dm`}
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 aria-expanded={isDropdownOpen}
                 aria-haspopup="true"
