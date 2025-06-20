@@ -1,10 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTheme } from '../../context/ThemeContext'; // Add this import
 import styles from './Header.module.css';
+import { FaMoon, FaSun } from 'react-icons/fa'; // Add icons
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const selectRef = useRef(null);
+  const { darkMode, toggleTheme } = useTheme(); // Use theme context
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -43,17 +46,13 @@ function Header() {
           <img src="/logo.jpg" alt="الفراعنة" />
         </a>
         
-        {/* Dark Mode Toggle */}
+        {/* Theme Toggle Button */}
         <button 
           className={styles.themeToggle} 
-          onClick={() => document.body.classList.toggle('dark-mode')} 
+          onClick={toggleTheme} 
           aria-label="تبديل الوضع المظلم"
         >
-          {document.body.classList.contains('dark-mode') ? (
-            <span>☀️</span> /* Sun icon for light mode */
-          ) : (
-            <span>🌙</span> /* Moon icon for dark mode */
-          )}
+          {darkMode ? <FaSun className={styles.themeIcon} /> : <FaMoon className={styles.themeIcon} />}
         </button>
 
         <button
