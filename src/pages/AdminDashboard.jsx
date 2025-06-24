@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import styles from './AdminDashboard.module.css';
 import { FaBars, FaTimes } from 'react-icons/fa';

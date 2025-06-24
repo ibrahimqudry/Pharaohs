@@ -1,99 +1,56 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from './EditorStyles.module.css';
 
 export default function ProjectsEditor() {
+  const initialProjectState = {
+    title: '',
+    location: '',
+    types: ['شقق'],
+    description: '',
+    longDescription: '',
+    sliderImages: [''],
+    price: '',
+    status: 'متاح',
+    completion: '',
+    image: '',
+    isSold: false,
+    onSale: false,
+    progress: 0
+  };
+
   const [projects, setProjects] = useState([
     {
       id: 1,
-      image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
-      title: "مشروع النيل",
-      location: "أسوان الجديدة",
-      type: "شقق",
-      description: "وحدات سكنية فاخرة بإطلالة مباشرة على النيل، تتميز بتصميم عصري وإطلالات بانورامية.",
-      features: [
-        { text: "2-4 غرف نوم" },
-        { text: "2-3 حمامات" },
-        { text: "120-220 متر مربع" }
-      ],
-      price: "يبدأ من 1.5 مليون جنيه",
-      status: "متاح",
-      completion: "2024"
-    },
-    // More projects would be here
+      image: 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg',
+      title: 'مشروع النيل',
+      location: 'أسوان الجديدة',
+      types: ['شقق'],
+      description: 'وحدات سكنية فاخرة بإطلالة مباشرة على النيل، تتميز بتصميم عصري وإطلالات بانورامية.',
+      longDescription: '',
+      price: 'يبدأ من 1.5 مليون جنيه',
+      status: 'متاح',
+      completion: '2024',
+      isSold: false,
+      onSale: false,
+      progress: 0,
+      sliderImages: ['']
+    }
   ]);
 
   const [editingProject, setEditingProject] = useState(null);
-  const [newProject, setNewProject] = useState({
-    title: "",
-    location: "",
-    type: "شقق",
-    description: "",
-    features: [{ text: "" }],
-    price: "",
-    status: "متاح",
-    completion: "",
-    image: ""
-  });
+  const [newProject, setNewProject] = useState(initialProjectState);
 
   const handleEditProject = (project) => {
-    setEditingProject({...project});
+    setEditingProject({
+      ...project,
+      sliderImages: project.sliderImages?.length ? project.sliderImages : ['']
+    });
   };
 
   const handleUpdateProject = () => {
     setProjects(projects.map(p => p.id === editingProject.id ? editingProject : p));
     setEditingProject(null);
-    // In a real app, you would save to a database here
     alert('تم تحديث المشروع بنجاح');
-  };
-
-  const handleAddFeature = () => {
-    if (editingProject) {
-      setEditingProject({
-        ...editingProject,
-        features: [...editingProject.features, { text: "" }]
-      });
-    } else {
-      setNewProject({
-        ...newProject,
-        features: [...newProject.features, { text: "" }]
-      });
-    }
-  };
-
-  const handleRemoveFeature = (index) => {
-    if (editingProject) {
-      const updatedFeatures = [...editingProject.features];
-      updatedFeatures.splice(index, 1);
-      setEditingProject({
-        ...editingProject,
-        features: updatedFeatures
-      });
-    } else {
-      const updatedFeatures = [...newProject.features];
-      updatedFeatures.splice(index, 1);
-      setNewProject({
-        ...newProject,
-        features: updatedFeatures
-      });
-    }
-  };
-
-  const handleFeatureChange = (index, value) => {
-    if (editingProject) {
-      const updatedFeatures = [...editingProject.features];
-      updatedFeatures[index] = { text: value };
-      setEditingProject({
-        ...editingProject,
-        features: updatedFeatures
-      });
-    } else {
-      const updatedFeatures = [...newProject.features];
-      updatedFeatures[index] = { text: value };
-      setNewProject({
-        ...newProject,
-        features: updatedFeatures
-      });
-    }
   };
 
   const handleAddProject = () => {
@@ -102,28 +59,201 @@ export default function ProjectsEditor() {
       id: projects.length > 0 ? Math.max(...projects.map(p => p.id)) + 1 : 1
     };
     setProjects([...projects, projectToAdd]);
-    setNewProject({
-      title: "",
-      location: "",
-      type: "شقق",
-      description: "",
-      features: [{ text: "" }],
-      price: "",
-      status: "متاح",
-      completion: "",
-      image: ""
-    });
-    // In a real app, you would save to a database here
+    setNewProject(initialProjectState);
     alert('تمت إضافة المشروع بنجاح');
   };
 
   const handleDeleteProject = (id) => {
     if (confirm('هل أنت متأكد من حذف هذا المشروع؟')) {
       setProjects(projects.filter(p => p.id !== id));
-      // In a real app, you would delete from a database here
       alert('تم حذف المشروع بنجاح');
     }
   };
+
+  const renderForm = (project, setProject, isEditing) => (
+    <div className={isEditing ? styles.editForm : styles.addForm}>
+      <h2 className={styles.sectionTitle}>{isEditing ? 'تعديل المشروع' : 'إضافة مشروع جديد'}</h2>
+      
+      <div className={styles.formGroup}>
+        <label>عنوان المشروع</label>
+        <input
+          type="text"
+          value={project.title}
+          onChange={(e) => setProject({ ...project, title: e.target.value })}
+        />
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>الموقع</label>
+        <input
+          type="text"
+          value={project.location}
+          onChange={(e) => setProject({ ...project, location: e.target.value })}
+        />
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>أنواع المشروع</label>
+        <select
+          multiple
+          value={project.types}
+          onChange={(e) => {
+            const selectedTypes = Array.from(e.target.options)
+              .filter(option => option.selected)
+              .map(option => option.value);
+            setProject({ ...project, types: selectedTypes });
+          }}
+        >
+          <option value="شقق">شقق</option>
+          <option value="فلل">فلل</option>
+          <option value="تجاري">تجاري</option>
+          <option value="أراضي">أراضي</option>
+          <option value="سكني">سكني</option>
+        </select>
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>الوصف</label>
+        <textarea
+          value={project.description}
+          onChange={(e) => setProject({ ...project, description: e.target.value })}
+          rows="4"
+        />
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>الوصف الطويل</label>
+        <textarea
+          value={project.longDescription}
+          onChange={(e) => setProject({ ...project, longDescription: e.target.value })}
+          rows="8"
+        />
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>صور السلايدر</label>
+        {project.sliderImages.map((img, index) => (
+          <div key={index} className={styles.imageInput}>
+            <input
+              type="text"
+              value={img}
+              onChange={(e) => {
+                const updatedImages = [...project.sliderImages];
+                updatedImages[index] = e.target.value;
+                setProject({ ...project, sliderImages: updatedImages });
+              }}
+              placeholder="رابط الصورة"
+            />
+            <button
+              type="button"
+              className={styles.removeButton}
+              onClick={() => {
+                const updatedImages = project.sliderImages.filter((_, i) => i !== index);
+                setProject({ ...project, sliderImages: updatedImages });
+              }}
+            >
+              حذف
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          className={styles.addButton}
+          onClick={() => setProject({ ...project, sliderImages: [...project.sliderImages, ''] })}
+        >
+          إضافة صورة
+        </button>
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>السعر</label>
+        <input
+          type="text"
+          value={project.price}
+          onChange={(e) => setProject({ ...project, price: e.target.value })}
+        />
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>الحالة</label>
+        <select
+          value={project.status}
+          onChange={(e) => setProject({ ...project, status: e.target.value })}
+        >
+          <option value="متاح">متاح</option>
+          <option value="محجوز">محجوز</option>
+          <option value="مكتمل">مكتمل</option>
+          <option value="تم البيع">تم البيع</option>
+          <option value="خصم 15%">خصم 15%</option>
+          <option value="خصم 20%">خصم 20%</option>
+        </select>
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>تاريخ الإنجاز</label>
+        <input
+          type="text"
+          value={project.completion}
+          onChange={(e) => setProject({ ...project, completion: e.target.value })}
+        />
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>رابط الصورة</label>
+        <input
+          type="text"
+          value={project.image}
+          onChange={(e) => setProject({ ...project, image: e.target.value })}
+        />
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>تم البيع</label>
+        <input
+          type="checkbox"
+          checked={project.isSold}
+          onChange={(e) => setProject({ ...project, isSold: e.target.checked })}
+        />
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>عرض خاص</label>
+        <input
+          type="checkbox"
+          checked={project.onSale}
+          onChange={(e) => setProject({ ...project, onSale: e.target.checked })}
+        />
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>نسبة الإنجاز (%)</label>
+        <input
+          type="number"
+          min="0"
+          max="100"
+          value={project.progress}
+          onChange={(e) => setProject({ ...project, progress: parseInt(e.target.value) || 0 })}
+        />
+      </div>
+
+      <div className={styles.formActions}>
+        <button
+          className={styles.saveButton}
+          onClick={isEditing ? handleUpdateProject : handleAddProject}
+        >
+          {isEditing ? 'حفظ التغييرات' : 'إضافة المشروع'}
+        </button>
+        {isEditing && (
+          <button
+            className={styles.cancelButton}
+            onClick={() => setEditingProject(null)}
+          >
+            إلغاء
+          </button>
+        )}
+      </div>
+    </div>
+  );
 
   return (
     <div className={styles.editorWrapper}>
@@ -145,16 +275,16 @@ export default function ProjectsEditor() {
                 <tr key={project.id}>
                   <td>{project.title}</td>
                   <td>{project.location}</td>
-                  <td>{project.type}</td>
+                  <td>{project.types.join(', ')}</td>
                   <td>{project.status}</td>
                   <td>
-                    <button 
+                    <button
                       className={styles.editButton}
                       onClick={() => handleEditProject(project)}
                     >
                       تعديل
                     </button>
-                    <button 
+                    <button
                       className={styles.deleteButton}
                       onClick={() => handleDeleteProject(project.id)}
                     >
@@ -168,233 +298,7 @@ export default function ProjectsEditor() {
         </div>
       </div>
 
-      {editingProject ? (
-        <div className={styles.editForm}>
-          <h2 className={styles.sectionTitle}>تعديل المشروع</h2>
-          <div className={styles.formGroup}>
-            <label>عنوان المشروع</label>
-            <input 
-              type="text" 
-              value={editingProject.title}
-              onChange={(e) => setEditingProject({...editingProject, title: e.target.value})}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>الموقع</label>
-            <input 
-              type="text" 
-              value={editingProject.location}
-              onChange={(e) => setEditingProject({...editingProject, location: e.target.value})}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>النوع</label>
-            <select
-              value={editingProject.type}
-              onChange={(e) => setEditingProject({...editingProject, type: e.target.value})}
-            >
-              <option value="شقق">شقق</option>
-              <option value="فلل">فلل</option>
-              <option value="تجاري">تجاري</option>
-              <option value="أراضي">أراضي</option>
-            </select>
-          </div>
-          <div className={styles.formGroup}>
-            <label>الوصف</label>
-            <textarea 
-              value={editingProject.description}
-              onChange={(e) => setEditingProject({...editingProject, description: e.target.value})}
-              rows="4"
-            ></textarea>
-          </div>
-          <div className={styles.formGroup}>
-            <label>المميزات</label>
-            {editingProject.features.map((feature, index) => (
-              <div key={index} className={styles.featureInput}>
-                <input 
-                  type="text" 
-                  value={feature.text}
-                  onChange={(e) => handleFeatureChange(index, e.target.value)}
-                />
-                <button 
-                  type="button" 
-                  className={styles.removeButton}
-                  onClick={() => handleRemoveFeature(index)}
-                >
-                  حذف
-                </button>
-              </div>
-            ))}
-            <button 
-              type="button" 
-              className={styles.addButton}
-              onClick={handleAddFeature}
-            >
-              إضافة ميزة
-            </button>
-          </div>
-          <div className={styles.formGroup}>
-            <label>السعر</label>
-            <input 
-              type="text" 
-              value={editingProject.price}
-              onChange={(e) => setEditingProject({...editingProject, price: e.target.value})}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>الحالة</label>
-            <select
-              value={editingProject.status}
-              onChange={(e) => setEditingProject({...editingProject, status: e.target.value})}
-            >
-              <option value="متاح">متاح</option>
-              <option value="محجوز">محجوز</option>
-              <option value="مكتمل">مكتمل</option>
-            </select>
-          </div>
-          <div className={styles.formGroup}>
-            <label>تاريخ الإنجاز</label>
-            <input 
-              type="text" 
-              value={editingProject.completion}
-              onChange={(e) => setEditingProject({...editingProject, completion: e.target.value})}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>رابط الصورة</label>
-            <input 
-              type="text" 
-              value={editingProject.image}
-              onChange={(e) => setEditingProject({...editingProject, image: e.target.value})}
-            />
-          </div>
-          <div className={styles.formActions}>
-            <button 
-              className={styles.saveButton}
-              onClick={handleUpdateProject}
-            >
-              حفظ التغييرات
-            </button>
-            <button 
-              className={styles.cancelButton}
-              onClick={() => setEditingProject(null)}
-            >
-              إلغاء
-            </button>
-          </div>
-        </div>
-      ) : (
-        <div className={styles.addForm}>
-          <h2 className={styles.sectionTitle}>إضافة مشروع جديد</h2>
-          <div className={styles.formGroup}>
-            <label>عنوان المشروع</label>
-            <input 
-              type="text" 
-              value={newProject.title}
-              onChange={(e) => setNewProject({...newProject, title: e.target.value})}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>الموقع</label>
-            <input 
-              type="text" 
-              value={newProject.location}
-              onChange={(e) => setNewProject({...newProject, location: e.target.value})}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>النوع</label>
-            <select
-              value={newProject.type}
-              onChange={(e) => setNewProject({...newProject, type: e.target.value})}
-            >
-              <option value="شقق">شقق</option>
-              <option value="فلل">فلل</option>
-              <option value="تجاري">تجاري</option>
-              <option value="أراضي">أراضي</option>
-            </select>
-          </div>
-          <div className={styles.formGroup}>
-            <label>الوصف</label>
-            <textarea 
-              value={newProject.description}
-              onChange={(e) => setNewProject({...newProject, description: e.target.value})}
-              rows="4"
-            ></textarea>
-          </div>
-          <div className={styles.formGroup}>
-            <label>المميزات</label>
-            {newProject.features.map((feature, index) => (
-              <div key={index} className={styles.featureInput}>
-                <input 
-                  type="text" 
-                  value={feature.text}
-                  onChange={(e) => handleFeatureChange(index, e.target.value)}
-                />
-                {newProject.features.length > 1 && (
-                  <button 
-                    type="button" 
-                    className={styles.removeButton}
-                    onClick={() => handleRemoveFeature(index)}
-                  >
-                    حذف
-                  </button>
-                )}
-              </div>
-            ))}
-            <button 
-              type="button" 
-              className={styles.addButton}
-              onClick={handleAddFeature}
-            >
-              إضافة ميزة
-            </button>
-          </div>
-          <div className={styles.formGroup}>
-            <label>السعر</label>
-            <input 
-              type="text" 
-              value={newProject.price}
-              onChange={(e) => setNewProject({...newProject, price: e.target.value})}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>الحالة</label>
-            <select
-              value={newProject.status}
-              onChange={(e) => setNewProject({...newProject, status: e.target.value})}
-            >
-              <option value="متاح">متاح</option>
-              <option value="محجوز">محجوز</option>
-              <option value="مكتمل">مكتمل</option>
-            </select>
-          </div>
-          <div className={styles.formGroup}>
-            <label>تاريخ الإنجاز</label>
-            <input 
-              type="text" 
-              value={newProject.completion}
-              onChange={(e) => setNewProject({...newProject, completion: e.target.value})}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>رابط الصورة</label>
-            <input 
-              type="text" 
-              value={newProject.image}
-              onChange={(e) => setNewProject({...newProject, image: e.target.value})}
-            />
-          </div>
-          <div className={styles.formActions}>
-            <button 
-              className={styles.saveButton}
-              onClick={handleAddProject}
-            >
-              إضافة المشروع
-            </button>
-          </div>
-        </div>
-      )}
+      {editingProject ? renderForm(editingProject, setEditingProject, true) : renderForm(newProject, setNewProject, false)}
     </div>
   );
 }
