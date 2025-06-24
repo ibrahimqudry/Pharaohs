@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db } from '../../firebase/config';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection,setDoc, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import styles from './EditorStyles.module.css';
 
 export default function HomeEditor() {
@@ -8,6 +8,8 @@ export default function HomeEditor() {
   const [offers, setOffers] = useState([]);
   const [editingSlide, setEditingSlide] = useState(null);
   const [editingOffer, setEditingOffer] = useState(null);
+  const [allProjects, setAllProjects] = useState([]);
+  const [selectedVipProjects, setSelectedVipProjects] = useState([]);
   const [newSlide, setNewSlide] = useState({
     title: '',
     description: '',
@@ -22,7 +24,7 @@ export default function HomeEditor() {
     link: ''
   });
 
-  // Fetch hero slides and offers from Firestore on component mount
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,6 +43,22 @@ export default function HomeEditor() {
       }
     };
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'projects'));
+        const projects = [];
+        querySnapshot.forEach((doc) => {
+          projects.push({ id: doc.id, ...doc.data() });
+        });
+        setAllProjects(projects);
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      }
+    };
+    fetchProjects();
   }, []);
 
   const handleEditSlide = (slide) => {
@@ -151,12 +169,39 @@ export default function HomeEditor() {
     }
   };
 
+
+  const handleVipProjectSelect = (projectId) => {
+    setSelectedVipProjects(prev =>
+      prev.includes(projectId)
+        ? prev.filter(id => id !== projectId)
+        : [...prev, projectId]
+    );
+  };
+
+  const saveVipProjects = async (projectIds) => {
+    try {
+      // Reference to the VIP projects collection
+      const vipRef = doc(db, "homepage", "vipProjects");
+
+      // Update the document with selected project IDs
+      await setDoc(vipRef, {
+        projectIds: projectIds
+      }, { merge: true });
+
+      // Show success message
+      alert("تم حفظ المشاريع المميزة بنجاح");
+    } catch (error) {
+      console.error("Error saving VIP projects:", error);
+      alert("حدث خطأ أثناء حفظ المشاريع المميزة");
+    }
+  };
+
+
   return (
     <div className={styles.editorWrapper}>
       {/* Hero Slides Section */}
       <div className={styles.editorSection}>
         <h2 className={styles.sectionTitle}>تحرير سلايدر الصفحة الرئيسية</h2>
-        
         <div className={styles.projectsList}>
           <h3 className={styles.subsectionTitle}>قائمة السلايدات</h3>
           <div className={styles.projectsTable}>
@@ -174,13 +219,13 @@ export default function HomeEditor() {
                     <td>{slide.title}</td>
                     <td>{slide.description}</td>
                     <td>
-                      <button 
+                      <button
                         className={styles.editButton}
                         onClick={() => handleEditSlide(slide)}
                       >
                         تعديل
                       </button>
-                      <button 
+                      <button
                         className={styles.deleteButton}
                         onClick={() => handleDeleteSlide(slide.id)}
                       >
@@ -199,44 +244,44 @@ export default function HomeEditor() {
             <h3 className={styles.subsectionTitle}>تعديل السلايد</h3>
             <div className={styles.formGroup}>
               <label>العنوان</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={editingSlide.title}
-                onChange={(e) => setEditingSlide({...editingSlide, title: e.target.value})}
+                onChange={(e) => setEditingSlide({ ...editingSlide, title: e.target.value })}
               />
             </div>
             <div className={styles.formGroup}>
               <label>الوصف</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={editingSlide.description}
-                onChange={(e) => setEditingSlide({...editingSlide, description: e.target.value})}
+                onChange={(e) => setEditingSlide({ ...editingSlide, description: e.target.value })}
               />
             </div>
             <div className={styles.formGroup}>
               <label>رابط الصورة</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={editingSlide.image}
-                onChange={(e) => setEditingSlide({...editingSlide, image: e.target.value})}
+                onChange={(e) => setEditingSlide({ ...editingSlide, image: e.target.value })}
               />
             </div>
             <div className={styles.formGroup}>
               <label>الرابط</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={editingSlide.link}
-                onChange={(e) => setEditingSlide({...editingSlide, link: e.target.value})}
+                onChange={(e) => setEditingSlide({ ...editingSlide, link: e.target.value })}
               />
             </div>
             <div className={styles.formActions}>
-              <button 
+              <button
                 className={styles.saveButton}
                 onClick={handleUpdateSlide}
               >
                 حفظ التغييرات
               </button>
-              <button 
+              <button
                 className={styles.cancelButton}
                 onClick={() => setEditingSlide(null)}
               >
@@ -249,38 +294,38 @@ export default function HomeEditor() {
             <h3 className={styles.subsectionTitle}>إضافة سلايد جديد</h3>
             <div className={styles.formGroup}>
               <label>العنوان</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={newSlide.title}
-                onChange={(e) => setNewSlide({...newSlide, title: e.target.value})}
+                onChange={(e) => setNewSlide({ ...newSlide, title: e.target.value })}
               />
             </div>
             <div className={styles.formGroup}>
               <label>الوصف</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={newSlide.description}
-                onChange={(e) => setNewSlide({...newSlide, description: e.target.value})}
+                onChange={(e) => setNewSlide({ ...newSlide, description: e.target.value })}
               />
             </div>
             <div className={styles.formGroup}>
               <label>رابط الصورة</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={newSlide.image}
-                onChange={(e) => setNewSlide({...newSlide, image: e.target.value})}
+                onChange={(e) => setNewSlide({ ...newSlide, image: e.target.value })}
               />
             </div>
             <div className={styles.formGroup}>
               <label>الرابط</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={newSlide.link}
-                onChange={(e) => setNewSlide({...newSlide, link: e.target.value})}
+                onChange={(e) => setNewSlide({ ...newSlide, link: e.target.value })}
               />
             </div>
             <div className={styles.formActions}>
-              <button 
+              <button
                 className={styles.saveButton}
                 onClick={handleAddSlide}
               >
@@ -294,7 +339,6 @@ export default function HomeEditor() {
       {/* Exclusive Offers Section */}
       <div className={styles.editorSection}>
         <h2 className={styles.sectionTitle}>تحرير العروض الحصرية</h2>
-        
         <div className={styles.projectsList}>
           <h3 className={styles.subsectionTitle}>قائمة العروض</h3>
           <div className={styles.projectsTable}>
@@ -314,13 +358,13 @@ export default function HomeEditor() {
                     <td>{offer.description}</td>
                     <td>{offer.price}</td>
                     <td>
-                      <button 
+                      <button
                         className={styles.editButton}
                         onClick={() => handleEditOffer(offer)}
                       >
                         تعديل
                       </button>
-                      <button 
+                      <button
                         className={styles.deleteButton}
                         onClick={() => handleDeleteOffer(offer.id)}
                       >
@@ -339,54 +383,54 @@ export default function HomeEditor() {
             <h3 className={styles.subsectionTitle}>تعديل العرض</h3>
             <div className={styles.formGroup}>
               <label>العنوان</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={editingOffer.title}
-                onChange={(e) => setEditingOffer({...editingOffer, title: e.target.value})}
+                onChange={(e) => setEditingOffer({ ...editingOffer, title: e.target.value })}
               />
             </div>
             <div className={styles.formGroup}>
               <label>الوصف</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={editingOffer.description}
-                onChange={(e) => setEditingOffer({...editingOffer, description: e.target.value})}
+                onChange={(e) => setEditingOffer({ ...editingOffer, description: e.target.value })}
               />
             </div>
             <div className={styles.formGroup}>
               <label>السعر</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={editingOffer.price}
-                onChange={(e) => setEditingOffer({...editingOffer, price: e.target.value})}
-             
+                onChange={(e) => setEditingOffer({ ...editingOffer, price: e.target.value })}
 
- />
+
+              />
             </div>
             <div className={styles.formGroup}>
               <label>رابط الصورة</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={editingOffer.image}
-                onChange={(e) => setEditingOffer({...editingOffer, image: e.target.value})}
+                onChange={(e) => setEditingOffer({ ...editingOffer, image: e.target.value })}
               />
             </div>
             <div className={styles.formGroup}>
               <label>الرابط</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={editingOffer.link}
-                onChange={(e) => setEditingOffer({...editingOffer, link: e.target.value})}
+                onChange={(e) => setEditingOffer({ ...editingOffer, link: e.target.value })}
               />
             </div>
             <div className={styles.formActions}>
-              <button 
+              <button
                 className={styles.saveButton}
                 onClick={handleUpdateOffer}
               >
                 حفظ التغييرات
               </button>
-              <button 
+              <button
                 className={styles.cancelButton}
                 onClick={() => setEditingOffer(null)}
               >
@@ -399,46 +443,46 @@ export default function HomeEditor() {
             <h3 className={styles.subsectionTitle}>إضافة عرض جديد</h3>
             <div className={styles.formGroup}>
               <label>العنوان</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={newOffer.title}
-                onChange={(e) => setNewOffer({...newOffer, title: e.target.value})}
+                onChange={(e) => setNewOffer({ ...newOffer, title: e.target.value })}
               />
             </div>
             <div className={styles.formGroup}>
               <label>الوصف</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={newOffer.description}
-                onChange={(e) => setNewOffer({...newOffer, description: e.target.value})}
+                onChange={(e) => setNewOffer({ ...newOffer, description: e.target.value })}
               />
             </div>
             <div className={styles.formGroup}>
               <label>السعر</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={newOffer.price}
-                onChange={(e) => setNewOffer({...newOffer, price: e.target.value})}
+                onChange={(e) => setNewOffer({ ...newOffer, price: e.target.value })}
               />
             </div>
             <div className={styles.formGroup}>
               <label>رابط الصورة</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={newOffer.image}
-                onChange={(e) => setNewOffer({...newOffer, image: e.target.value})}
+                onChange={(e) => setNewOffer({ ...newOffer, image: e.target.value })}
               />
             </div>
             <div className={styles.formGroup}>
               <label>الرابط</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={newOffer.link}
-                onChange={(e) => setNewOffer({...newOffer, link: e.target.value})}
+                onChange={(e) => setNewOffer({ ...newOffer, link: e.target.value })}
               />
             </div>
             <div className={styles.formActions}>
-              <button 
+              <button
                 className={styles.saveButton}
                 onClick={handleAddOffer}
               >
@@ -448,6 +492,34 @@ export default function HomeEditor() {
           </div>
         )}
       </div>
+
+      {/* VIP projects */}
+      <div className={styles.section}>
+        <h3>اختر المشاريع المميزة</h3>
+        <div className={styles.projectsGrid}>
+          {allProjects.map(project => (
+            <div key={project.id} className={styles.projectCard}>
+              <input
+                type="checkbox"
+                id={`project-${project.id}`}
+                checked={selectedVipProjects.includes(project.id)}
+                onChange={() => handleVipProjectSelect(project.id)}
+              />
+              <label htmlFor={`project-${project.id}`}>
+                <img src={project.image} alt={project.title} />
+                <h4>{project.title}</h4>
+              </label>
+            </div>
+          ))}
+        </div>
+        <button
+          className={styles.saveButton}
+          onClick={() => saveVipProjects(selectedVipProjects)}
+        >
+          حفظ المشاريع المميزة
+        </button>
+      </div>
+
     </div>
   );
 }

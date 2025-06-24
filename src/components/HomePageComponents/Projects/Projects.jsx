@@ -1,30 +1,50 @@
 import styles from './Projects.module.css';
+import { useState, useEffect } from 'react';
+import { db } from '../../../firebase/config';
+import { doc, getDoc } from "firebase/firestore";
 
-function Projects() {
-  const projects = [
-    {
-      image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
-      title: "مشروع النيل",
-      description: "وحدات سكنية فاخرة بإطلالة مباشرة على النيل"
-    },
-    {
-      image: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg",
-      title: "مشروع الواحة",
-      description: "مجمع سكني متكامل الخدمات"
-    },
-    {
-      image: "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg",
-      title: "مشروع الفردوس",
-      description: "فلل مستقلة بتصميم عصري"
-    }
-  ];
+const Projects = () => {
+  const [vipProjects, setVipProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchVipProjects = async () => {
+      try {
+        // Get the VIP projects document
+        const vipDocRef = doc(db, "homepage", "vipProjects");
+        const vipDocSnap = await getDoc(vipDocRef);
+        
+        if (vipDocSnap.exists()) {
+          const { projectIds } = vipDocSnap.data();
+          
+          // Fetch details for each VIP project
+          const projectsPromises = projectIds.map(async (id) => {
+            const projectDocRef = doc(db, "projects", id);
+            const projectDocSnap = await getDoc(projectDocRef);
+            return projectDocSnap.data();
+          });
+          
+          const projectsData = await Promise.all(projectsPromises);
+          setVipProjects(projectsData);
+        }
+      } catch (error) {
+        console.error("Error fetching VIP projects:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchVipProjects();
+  }, []);
+
+  if (loading) return <div>جاري التحميل...</div>;
 
   return (
     <section className={styles.section}>
       <div className="container">
         <h2 className={styles.sectionTitle}>أبرز مشاريعنا</h2>
         <div className={styles.grid}>
-          {projects.map((project, index) => (
+          {vipProjects.map((project, index) => (
             <div key={index} className={styles.card}>
               <img src={project.image} alt={project.title} />
               <div className={styles.cardContent}>
@@ -40,5 +60,6 @@ function Projects() {
       </div>
     </section>
   );
-}
+ 
+};
 export default Projects;

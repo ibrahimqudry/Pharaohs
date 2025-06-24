@@ -621,3 +621,78 @@
   background-color: #e3f2fd;
   color: #1565c0;
 }
+
+/* VIP Projects Section */
+.section {
+  margin-bottom: 2rem;
+}
+
+.projectsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 0.5rem;
+  direction: rtl;
+}
+
+.projectCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  direction: rtl;
+}
+
+.projectCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.projectCard input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #d4af37;
+}
+
+.projectCard img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.projectCard h4 {
+  flex: 1;
+  font-weight: 500;
+  color: #2c3e50;
+  text-align: right;
+  margin: 0;
+}
+
+.saveButton {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #d4af37;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  float: left;
+}
+
+.saveButton:hover {
+  background-color: #c19b2e;
+}
+
+.saveButton:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
