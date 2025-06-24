@@ -17,14 +17,39 @@
   margin: 0 auto;
 }
 
+.logoAndToggle {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Adjust theme toggle position in mobile view */
+@media (max-width: 768px) {
+  .logoAndToggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .themeToggle {
+    position: relative;
+    right: 1;
+    margin: 0;
+    top: 0;
+  }
+}
+
 .logo {
   display: flex;
   align-items: center;
   height: 100%;
+  max-width: 150px ;
+  width: auto;
 }
 
 .logo img {
-  height: 50px;
+  height: 250px;
   width: auto;
   object-fit: contain;
 }
@@ -243,7 +268,8 @@
   }
 
   .logo img {
-    height: 40px;
+    height: 150px;
+    margin-left: 100px;
   }
 }
 
@@ -253,19 +279,14 @@
     bottom: 1rem;
     left: 50%;
     transform: translateX(-50%);
-    width: 90%;
+    width: 35%;
     max-width: 200px;
   }
   
-  /* Add these styles to ensure logo remains visible */
-  .logo {
-    display: flex;
-    position: relative;
-    z-index: 101; /* Higher than the mobile menu */
-  }
+ 
   
   .logo img {
-    height: 40px;
+    height: 100px;
   }
   
   /* Adjust nav container to maintain space for logo */
@@ -300,12 +321,4 @@
   background: rgba(0, 0, 0, 0.05);
 }
 
-/* Adjust position in mobile view */
-@media (max-width: 768px) {
-  .themeToggle {
-    position: absolute;
-    top: 1.5rem;
-    left: 5rem;
-    z-index: 101;
-  }
-}
+

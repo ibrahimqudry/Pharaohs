@@ -42,19 +42,20 @@ function Header() {
   return (
     <header className={`${styles.header} dm`}>
       <nav className={`${styles.nav} container`} aria-label="التنقل الرئيسي">
-        <a href="/" className={styles.logo} aria-label="الفراعنة - الصفحة الرئيسية">
-          <img src="/logo.jpg" alt="الفراعنة" />
-        </a>
+        <div className={styles.logoAndToggle}>
+          <a href="/" className={styles.logo} aria-label="الفراعنة - الصفحة الرئيسية">
+            <img src="/logo.png" alt="الفراعنة" />
+          </a>
+          
+          <button 
+            className={styles.themeToggle} 
+            onClick={toggleTheme} 
+            aria-label="تبديل الوضع المظلم"
+          >
+            {darkMode ? <FaSun className={styles.themeIcon} /> : <FaMoon className={styles.themeIcon} />}
+          </button>
+        </div>
         
-        {/* Theme Toggle Button */}
-        <button 
-          className={styles.themeToggle} 
-          onClick={toggleTheme} 
-          aria-label="تبديل الوضع المظلم"
-        >
-          {darkMode ? <FaSun className={styles.themeIcon} /> : <FaMoon className={styles.themeIcon} />}
-        </button>
-
         <button
           className={`${styles.toggleButton} ${isOpen ? styles.active : ''}`}
           onClick={toggleMenu}
