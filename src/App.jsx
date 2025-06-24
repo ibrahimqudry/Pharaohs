@@ -16,6 +16,7 @@ import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import ProjectDetailsPage from './pages/ProjectDetailsPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   return (
@@ -114,6 +115,7 @@ function App() {
                 <Footer />
               </>
             } />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Router>
       </ThemeProvider>
