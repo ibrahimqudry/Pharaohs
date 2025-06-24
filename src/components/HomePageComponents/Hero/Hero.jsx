@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Hero.module.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css/navigation';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../../firebase/config';
 
 export function NextArrow(props) {
   const { className, style, onClick } = props;
@@ -28,37 +30,39 @@ export function PrevArrow(props) {
 }
 
 const Hero = () => {
-  const slides = [
-    {
-      id: 1,
-      image: 'https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg',
-      title: 'الفراعنة للتطوير العقاري',
-      description: 'نبني مستقبلك في أسوان الجديدة',
-      link: '/projects'
-    },
-    {
-      id: 2,
-      image: 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg',
-      title: 'مشروع النيل',
-      description: 'إطلالة مباشرة على النيل',
-      link: '/projects'
-    },
-    {
-      id: 3,
-      image: 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg',
-      title: 'مشروع الفردوس',
-      description: 'فلل مستقلة بتصميم عصري',
-      link: '/projects'
-    }
-  ];
+  const [slides, setSlides] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSlides = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'heroSlides'));
+        const slidesData = [];
+        querySnapshot.forEach((doc) => {
+          slidesData.push({ id: doc.id, ...doc.data() });
+        });
+        setSlides(slidesData);
+      } catch (error) {
+        console.error('Error fetching slides:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSlides();
+  }, []);
+
+  if (loading) return <div className={styles.loading}>جاري التحميل...</div>;
+  if (slides.length === 0) return <div className={styles.notFound}>لا توجد شرائح متاحة</div>;
 
   return (
     <Swiper
+      className={ styles.swiper}
       modules={[Navigation, Autoplay]}
       spaceBetween={50}
       slidesPerView={1}
       autoplay={{
-        delay: 5000, 
+        delay: 5000,
         disableOnInteraction: false
       }}
       navigation={{
@@ -69,7 +73,7 @@ const Hero = () => {
     >
       {slides.map((slide) => (
         <SwiperSlide key={slide.id}>
-          <div 
+          <div
             className={styles.heroSlide}
             style={{ backgroundImage: `url(${slide.image})` }}
           >
@@ -81,7 +85,7 @@ const Hero = () => {
           </div>
         </SwiperSlide>
       ))}
-      
+
       {/* Navigation buttons */}
       <div className="swiper-button-next"></div>
       <div className="swiper-button-prev"></div>

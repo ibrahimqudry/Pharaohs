@@ -1,6 +1,34 @@
+import { useEffect, useState } from 'react';
 import styles from './ExclusiveOffers.module.css';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../../firebase/config';
 
 function ExclusiveOffers() {
+  const [offers, setOffers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchOffers = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'offers'));
+        const offersData = [];
+        querySnapshot.forEach((doc) => {
+          offersData.push({ id: doc.id, ...doc.data() });
+        });
+        setOffers(offersData);
+      } catch (error) {
+        console.error('Error fetching offers:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOffers();
+  }, []);
+
+  if (loading) return <div className={styles.loading}>جاري التحميل...</div>;
+  if (offers.length === 0) return '';
+
   return (
     <section className={styles.exclusiveOffers}>
       <div className="container py-16">
@@ -9,51 +37,25 @@ function ExclusiveOffers() {
           <div className={styles.titleDecoration}></div>
         </div>
         <div className={styles.offersGrid}>
-          <div className={`${styles.offerCard} card`}>
-            <div className={styles.offerImage}>
-              <img src="/images/offer1.jpg" alt="عرض خاص للفلل" />
-            </div>
-            <div className={styles.offerContent}>
-              <h3 className="text-2xl font-semibold mb-2">فلل فاخرة</h3>
-              <p className="mb-4">خصم 15% على الدفعة المقدمة</p>
-              <div className={styles.offerDetails}>
-                <span>يبدأ من 2.5 مليون جنيه</span>
-                <a href="/offers/villas" className="gold-button">التفاصيل</a>
+          {offers.map((offer) => (
+            <div key={offer.id} className={`${styles.offerCard} card`}>
+              <div className={styles.offerImage}>
+                <img src={offer.image} alt={offer.title} />
+              </div>
+              <div className={styles.offerContent}>
+                <h3 className="text-2xl font-semibold mb-2">{offer.title}</h3>
+                <p className="mb-4">{offer.description}</p>
+                <div className={styles.offerDetails}>
+                  <span>{offer.price}</span>
+                  <a href={offer.link} className="gold-button">التفاصيل</a>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className={`${styles.offerCard} card`}>
-            <div className={styles.offerImage}>
-              <img src="/images/offer2.jpg" alt="عرض خاص للشقق" />
-            </div>
-            <div className={styles.offerContent}>
-              <h3 className="text-2xl font-semibold mb-2">شقق سكنية</h3>
-              <p className="mb-4">أقساط تصل إلى 7 سنوات</p>
-              <div className={styles.offerDetails}>
-                <span>يبدأ من 1.2 مليون جنيه</span>
-                <a href="/offers/apartments" className="gold-button">التفاصيل</a>
-              </div>
-            </div>
-          </div>
-
-          <div className={`${styles.offerCard} card`}>
-            <div className={styles.offerImage}>
-              <img src="/images/offer3.jpg" alt="عرض خاص للأراضي" />
-            </div>
-            <div className={styles.offerContent}>
-              <h3 className="text-2xl font-semibold mb-2">قطع أراضي</h3>
-              <p className="mb-4">تقسيط حتى 5 سنوات بدون فوائد</p>
-              <div className={styles.offerDetails}>
-                <span>يبدأ من 800 ألف جنيه</span>
-                <a href="/offers/lands" className="gold-button">التفاصيل</a>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default ExclusiveOffers ;
+export default ExclusiveOffers;
