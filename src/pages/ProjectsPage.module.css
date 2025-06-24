@@ -237,3 +237,68 @@
   border-radius: 8px;
   margin-top: 2rem;
 }
+
+.soldMark, .saleMark {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  color: white;
+  z-index: 2;
+}
+
+.soldMark {
+  background-color: #ff4757;
+}
+
+.saleMark {
+  background-color: #2ed573;
+}
+
+.progressContainer {
+  width: 100%;
+  background: #e0e0e0;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.progressBar {
+  height: 10px;
+  background: #4CAF50;
+  border-radius: 5px;
+}
+
+.progressText {
+  display: block;
+  text-align: center;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.projectTypeSection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.typeItem {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.typeSeparator {
+  margin: 0 0.2rem;
+  color: var(--color-gold);
+}
+
+.typeIcon {
+  color: var(--color-gold);
+}
+
+.typeIcon {
+  color: var(--color-gold);
+  font-size: 1.1rem;
+}
