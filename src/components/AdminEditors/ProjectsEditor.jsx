@@ -1,25 +1,72 @@
 import { useState, useEffect } from 'react';
 import styles from './EditorStyles.module.css';
-import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
-import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { db } from '../../firebase/config';
 
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyC0FtFVzceBuf6q7BVBpzVsAqbVlt2tnes",
-  authDomain: "pharaohs-7e1a2.firebaseapp.com",
-  projectId: "pharaohs-7e1a2",
-  storageBucket: "pharaohs-7e1a2.firebasestorage.app",
-  messagingSenderId: "675479382602",
-  appId: "1:675479382602:web:b58758666f06227f33d4b3",
-  measurementId: "G-7TXJMLQD5S"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 export default function ProjectsEditor() {
+
+
+  const insertDummyProjects = async () => {
+    const dummyProjects = [
+      {
+        title: "مشروع النيل",
+        location: "أسوان الجديدة",
+        types: ["شقق", "سكني"],
+        description: "وحدات سكنية فاخرة بإطلالة مباشرة على النيل",
+        longDescription: "مشروع سكني راقي يضم وحدات سكنية فاخرة بتصاميم عصرية",
+        sliderImages: [
+          "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
+          "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg"
+        ],
+        price: "يبدأ من 1.5 مليون جنيه",
+        status: "متاح",
+        completion: "2024",
+        image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
+        isSold: false,
+        onSale: false,
+        progress: 60
+      },
+      {
+        title: "واحة الأعمال",
+        location: "أسوان الجديدة",
+        types: ["تجاري"],
+        description: "مجمع إداري وتجاري متكامل",
+        longDescription: "يضم مكاتب ومحلات تجارية بمساحات مختلفة",
+        sliderImages: [
+          "https://images.pexels.com/photos/1029599/pexels-photo-1029599.jpeg"
+        ],
+        price: "يبدأ من 1.2 مليون جنيه",
+        status: "خصم 15%",
+        completion: "2023",
+        image: "https://images.pexels.com/photos/1029599/pexels-photo-1029599.jpeg",
+        isSold: false,
+        onSale: true,
+        progress: 100
+      }
+    ];
+
+    try {
+      for (const project of dummyProjects) {
+        await addDoc(collection(db, 'projects'), project);
+      }
+      alert('تم إضافة المشاريع التجريبية بنجاح');
+      // Refresh the projects list
+      const projectsCollection = collection(db, 'projects');
+      const projectsSnapshot = await getDocs(projectsCollection);
+      const projectsList = projectsSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setProjects(projectsList);
+    } catch (error) {
+      console.error('Error inserting dummy projects:', error);
+      alert('حدث خطأ أثناء إضافة المشاريع التجريبية');
+    }
+  };
+ 
+
+
   const initialProjectState = {
     title: '',
     location: '',
@@ -114,7 +161,7 @@ export default function ProjectsEditor() {
   const renderForm = (project, setProject, isEditing) => (
     <div className={isEditing ? styles.editForm : styles.addForm}>
       <h2 className={styles.sectionTitle}>{isEditing ? 'تعديل المشروع' : 'إضافة مشروع جديد'}</h2>
-      
+
       <div className={styles.formGroup}>
         <label>عنوان المشروع</label>
         <input
@@ -298,6 +345,7 @@ export default function ProjectsEditor() {
 
   return (
     <div className={styles.editorWrapper}>
+      <button onClick={insertDummyProjects}>add random</button>
       <div className={styles.projectsList}>
         <h2 className={styles.sectionTitle}>قائمة المشاريع</h2>
         <div className={styles.projectsTable}>

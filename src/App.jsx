@@ -15,6 +15,7 @@ import AboutPage from './pages/AboutPage';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import ProjectDetailsPage from './pages/ProjectDetailsPage';
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
                 <AdminDashboard />
               </ProtectedRoute>
             } />
-            
+
             {/* Public Routes */}
             <Route path="/" element={
               <>
@@ -99,6 +100,15 @@ function App() {
                 <Header />
                 <main className="pt-16 pb-16">
                   <AboutPage />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/projects/:id" element={
+              <>
+                <Header />
+                <main className="pt-16 pb-16">
+                  <ProjectDetailsPage />
                 </main>
                 <Footer />
               </>

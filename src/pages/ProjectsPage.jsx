@@ -1,120 +1,40 @@
-import React, { useState } from 'react';
 import styles from './ProjectsPage.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt, faBuilding, faHome, faLandmark, faFilter, faMapMarkerAlt, faBed, faBath, faRulerCombined } from '@fortawesome/free-solid-svg-icons';
-
+import { faBuilding, faHome, faLandmark, faFilter, faMapMarkerAlt} from '@fortawesome/free-solid-svg-icons';
+import { useState, useEffect } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase/config';
 
 function ProjectsPage() {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'projects'));
+        const projectsData = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setProjects(projectsData);
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
   const [activeFilter, setActiveFilter] = useState('all');
 
-  const projects = [
-    {
-      id: 1,
-      image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
-      title: "مشروع النيل",
-      location: "أسوان الجديدة",
-      types: ["شقق", "سكني"],
-      description: "وحدات سكنية فاخرة بإطلالة مباشرة على النيل، تتميز بتصميم عصري وإطلالات بانورامية.",
-      features: [
-        { icon: faBed, text: "2-4 غرف نوم" },
-        { icon: faBath, text: "2-3 حمامات" },
-        { icon: faRulerCombined, text: "120-220 متر مربع" }
-      ],
-      price: "يبدأ من 1.5 مليون جنيه",
-      status: "تم البيع",
-      completion: "2024",
-      isSold: true,
-      progress: 100
-    },
-    {
-      id: 2,
-      image: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg",
-      title: "مشروع الواحة",
-      location: "أسوان الجديدة",
-      types: ["شقق", "سكني"],
-      description: "مجمع سكني متكامل الخدمات يضم فلل مستقلة ونصف مستقلة.",
-      features: [
-        { icon: faBed, text: "4-6 غرف نوم" },
-        { icon: faBath, text: "3-5 حمامات" },
-        { icon: faRulerCombined, text: "250-450 متر مربع" }
-      ],
-      price: "يبدأ من 3.2 مليون جنيه",
-      status: "خصم 20%",
-      completion: "2025",
-      onSale: true,
-      progress: 75
-    },
-    {
-      id: 3,
-      image: "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg",
-      title: "مشروع الفردوس",
-      location: "أسوان الجديدة",
-      types: ["شقق", "سكني"],
-      description: "فلل مستقلة بتصميم عصري، تتميز بالخصوصية والرفاهية مع حدائق خاصة ومسابح.",
-      features: [
-        { icon: faBed, text: "5-7 غرف نوم" },
-        { icon: faBath, text: "4-6 حمامات" },
-        { icon: faRulerCombined, text: "350-600 متر مربع" }
-      ],
-      price: "يبدأ من 4.5 مليون جنيه",
-      status: "متاح",
-      completion: "2024",
-      progress: 60
-    },
-    {
-      id: 4,
-      image: "https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg",
-      title: "أبراج الأفق",
-      location: "أسوان الجديدة",
-      types: ["شقق", "سكني"],
-      description: "أبراج سكنية حديثة بارتفاعات مختلفة، توفر إطلالات رائعة على النيل والمدينة.",
-      features: [
-        { icon: faBed, text: "1-3 غرف نوم" },
-        { icon: faBath, text: "1-2 حمامات" },
-        { icon: faRulerCombined, text: "70-150 متر مربع" }
-      ],
-      price: "يبدأ من 900 ألف جنيه",
-      status: "خصم 15%",
-      completion: "2023",
-      onSale: true,
-      progress: 100
-    },
-    {
-      id: 5,
-      image: "https://images.pexels.com/photos/1029599/pexels-photo-1029599.jpeg",
-      title: "واحة الأعمال",
-      location: "أسوان الجديدة",
-      types: ["شقق", "سكني"],
-      description: "مجمع إداري وتجاري متكامل يضم مكاتب ومحلات تجارية بمساحات مختلفة.",
-      features: [
-        { icon: faRulerCombined, text: "50-500 متر مربع" }
-      ],
-      price: "يبدأ من 1.2 مليون جنيه",
-      status: "متاح",
-      completion: "2023",
-      progress: 100
-    },
-    {
-      id: 6,
-      image: "https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg",
-      title: "أراضي الياسمين",
-      location: "أسوان الجديدة",
-      types: ["شقق", "سكني"],
-      description: "قطع أراضي سكنية بمساحات مختلفة، جاهزة للبناء ومزودة بكافة المرافق.",
-      features: [
-        { icon: faRulerCombined, text: "400-1000 متر مربع" }
-      ],
-      price: "يبدأ من 800 ألف جنيه",
-      status: "تم البيع",
-      completion: "جاهز",
-      isSold: true,
-      progress: 100
-    }
-  ];
+  
 
   const filteredProjects = activeFilter === 'all'
     ? projects
-    : projects.filter(project => project.type === activeFilter);
+    : projects.filter(project => project.types.includes(activeFilter));
 
   return (
     <main className="pt-24 pb-16">
@@ -202,15 +122,6 @@ function ProjectsPage() {
                   <span>{project.location}</span>
                 </div>
                 <p className={styles.projectDescription}>{project.description}</p>
-
-                {/* <div className={styles.projectFeatures}>
-                  {project.features.map((feature, index) => (
-                    <div key={index} className={styles.featureItem}>
-                      <FontAwesomeIcon icon={feature.icon} className={styles.featureIcon} />
-                      <span>{feature.text}</span>
-                    </div>
-                  ))}
-                </div> */}
 
 
                 {/* Project Type Section */}
