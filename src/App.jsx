@@ -20,15 +20,16 @@ import ProjectDetailsPage from './pages/ProjectDetailsPage';
 function App() {
   return (
     <AuthProvider>
-      <ThemeProvider> {/* Add ThemeProvider */}
+      <ThemeProvider> 
         <Router>
           <Routes>
             {/* Admin Routes */}
             <Route path="/admin" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={
-              <ProtectedRoute>
+              // <ProtectedRoute>
+              //   <AdminDashboard />
+              // </ProtectedRoute>
                 <AdminDashboard />
-              </ProtectedRoute>
             } />
 
             {/* Public Routes */}
