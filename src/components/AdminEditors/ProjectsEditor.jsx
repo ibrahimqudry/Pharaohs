@@ -1,5 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './EditorStyles.module.css';
+import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
+import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyC0FtFVzceBuf6q7BVBpzVsAqbVlt2tnes",
+  authDomain: "pharaohs-7e1a2.firebaseapp.com",
+  projectId: "pharaohs-7e1a2",
+  storageBucket: "pharaohs-7e1a2.firebasestorage.app",
+  messagingSenderId: "675479382602",
+  appId: "1:675479382602:web:b58758666f06227f33d4b3",
+  measurementId: "G-7TXJMLQD5S"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 export default function ProjectsEditor() {
   const initialProjectState = {
@@ -18,27 +36,28 @@ export default function ProjectsEditor() {
     progress: 0
   };
 
-  const [projects, setProjects] = useState([
-    {
-      id: 1,
-      image: 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg',
-      title: 'مشروع النيل',
-      location: 'أسوان الجديدة',
-      types: ['شقق'],
-      description: 'وحدات سكنية فاخرة بإطلالة مباشرة على النيل، تتميز بتصميم عصري وإطلالات بانورامية.',
-      longDescription: '',
-      price: 'يبدأ من 1.5 مليون جنيه',
-      status: 'متاح',
-      completion: '2024',
-      isSold: false,
-      onSale: false,
-      progress: 0,
-      sliderImages: ['']
-    }
-  ]);
-
+  const [projects, setProjects] = useState([]);
   const [editingProject, setEditingProject] = useState(null);
   const [newProject, setNewProject] = useState(initialProjectState);
+
+  // Fetch projects from Firestore on component mount
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const projectsCollection = collection(db, 'projects');
+        const projectsSnapshot = await getDocs(projectsCollection);
+        const projectsList = projectsSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setProjects(projectsList);
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+        alert('حدث خطأ أثناء جلب المشاريع');
+      }
+    };
+    fetchProjects();
+  }, []);
 
   const handleEditProject = (project) => {
     setEditingProject({
@@ -47,26 +66,48 @@ export default function ProjectsEditor() {
     });
   };
 
-  const handleUpdateProject = () => {
-    setProjects(projects.map(p => p.id === editingProject.id ? editingProject : p));
-    setEditingProject(null);
-    alert('تم تحديث المشروع بنجاح');
+  const handleUpdateProject = async () => {
+    try {
+      const projectRef = doc(db, 'projects', editingProject.id);
+      await updateDoc(projectRef, {
+        ...editingProject,
+        sliderImages: editingProject.sliderImages.filter(img => img !== '')
+      });
+      setProjects(projects.map(p => p.id === editingProject.id ? editingProject : p));
+      setEditingProject(null);
+      alert('تم تحديث المشروع بنجاح');
+    } catch (error) {
+      console.error('Error updating project:', error);
+      alert('حدث خطأ أثناء تحديث المشروع');
+    }
   };
 
-  const handleAddProject = () => {
-    const projectToAdd = {
-      ...newProject,
-      id: projects.length > 0 ? Math.max(...projects.map(p => p.id)) + 1 : 1
-    };
-    setProjects([...projects, projectToAdd]);
-    setNewProject(initialProjectState);
-    alert('تمت إضافة المشروع بنجاح');
+  const handleAddProject = async () => {
+    try {
+      const projectToAdd = {
+        ...newProject,
+        sliderImages: newProject.sliderImages.filter(img => img !== '')
+      };
+      const docRef = await addDoc(collection(db, 'projects'), projectToAdd);
+      setProjects([...projects, { id: docRef.id, ...projectToAdd }]);
+      setNewProject(initialProjectState);
+      alert('تمت إضافة المشروع بنجاح');
+    } catch (error) {
+      console.error('Error adding project:', error);
+      alert('حدث خطأ أثناء إضافة المشروع');
+    }
   };
 
-  const handleDeleteProject = (id) => {
+  const handleDeleteProject = async (id) => {
     if (confirm('هل أنت متأكد من حذف هذا المشروع؟')) {
-      setProjects(projects.filter(p => p.id !== id));
-      alert('تم حذف المشروع بنجاح');
+      try {
+        await deleteDoc(doc(db, 'projects', id));
+        setProjects(projects.filter(p => p.id !== id));
+        alert('تم حذف المشروع بنجاح');
+      } catch (error) {
+        console.error('Error deleting project:', error);
+        alert('حدث خطأ أثناء حذف المشروع');
+      }
     }
   };
 
