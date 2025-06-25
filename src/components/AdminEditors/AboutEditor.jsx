@@ -18,7 +18,7 @@ export default function AboutEditor() {
           setAboutData({
             description: '',
             goals: [],
-            vision: { text: '', points: [] },
+            vision: { text: '', points: [], imgSrc: '' },
             values: [],
             owners: []
           });
@@ -28,7 +28,7 @@ export default function AboutEditor() {
         setAboutData({
           description: '',
           goals: [],
-          vision: { text: '', points: [] },
+          vision: { text: '', points: [], imgSrc: '' },
           values: [],
           owners: []
         });
@@ -113,6 +113,18 @@ export default function AboutEditor() {
           إضافة هدف
         </button>
         <h3>رؤيتنا</h3>
+        <div className={styles.formGroup}>
+          <label>رابط صورة الرؤية</label>
+          <input
+            type="text"
+            value={aboutData.vision.imgSrc || ''}
+            onChange={e => setAboutData({
+              ...aboutData,
+              vision: { ...aboutData.vision, imgSrc: e.target.value }
+            })}
+            placeholder="رابط الصورة (اختياري)"
+          />
+        </div>
         <div className={styles.formGroup}>
           <label>نص الرؤية</label>
           <textarea

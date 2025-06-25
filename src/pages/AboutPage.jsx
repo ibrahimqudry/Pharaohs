@@ -98,7 +98,7 @@ function AboutPage() {
             </ul>
           </div>
           <div className={styles.visionImage}>
-            <img src="/images/vision.png" alt="Vision logo" />
+            <img src={aboutData.vision?.imgSrc ? aboutData.vision.imgSrc : "/images/vision.png"} alt="Vision logo" />
           </div>
         </div>
       </section>
