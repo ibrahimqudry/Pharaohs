@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db } from '../../firebase/config';
-import { collection,setDoc, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, setDoc, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import styles from './EditorStyles.module.css';
 
 export default function HomeEditor() {
@@ -23,7 +23,8 @@ export default function HomeEditor() {
     image: '',
     link: ''
   });
-
+  const [allEvents, setAllEvents] = useState([]);
+  const [selectedBestEvents, setSelectedBestEvents] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,6 +60,22 @@ export default function HomeEditor() {
       }
     };
     fetchProjects();
+  }, []);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'events'));
+        const events = [];
+        querySnapshot.forEach((doc) => {
+          events.push({ id: doc.id, ...doc.data() });
+        });
+        setAllEvents(events);
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      }
+    };
+    fetchEvents();
   }, []);
 
   const handleEditSlide = (slide) => {
@@ -169,7 +186,6 @@ export default function HomeEditor() {
     }
   };
 
-
   const handleVipProjectSelect = (projectId) => {
     setSelectedVipProjects(prev =>
       prev.includes(projectId)
@@ -196,6 +212,31 @@ export default function HomeEditor() {
     }
   };
 
+  const handleBestEventSelect = (eventId) => {
+    setSelectedBestEvents(prev =>
+      prev.includes(eventId)
+        ? prev.filter(id => id !== eventId)
+        : [...prev, eventId]
+    );
+  };
+
+  const saveBestEvents = async (eventIds) => {
+    try {
+      // Reference to the Best Events collection
+      const bestEventsRef = doc(db, "homepage", "bestEvents");
+
+      // Update the document with selected event IDs
+      await setDoc(bestEventsRef, {
+        eventIds: eventIds
+      }, { merge: true });
+
+      // Show success message
+      alert("تم حفظ أفضل الفعاليات بنجاح");
+    } catch (error) {
+      console.error("Error saving Best Events:", error);
+      alert("حدث خطأ أثناء حفظ أفضل الفعاليات");
+    }
+  };
 
   return (
     <div className={styles.editorWrapper}>
@@ -403,8 +444,6 @@ export default function HomeEditor() {
                 type="text"
                 value={editingOffer.price}
                 onChange={(e) => setEditingOffer({ ...editingOffer, price: e.target.value })}
-
-
               />
             </div>
             <div className={styles.formGroup}>
@@ -519,7 +558,32 @@ export default function HomeEditor() {
           حفظ المشاريع المميزة
         </button>
       </div>
-
+      {/* Best Events */}
+      <div className={styles.section}>
+        <h3>اختر أفضل الفعاليات</h3>
+        <div className={styles.projectsGrid}>
+          {allEvents && allEvents.map(event => (
+            <div key={event.id} className={styles.projectCard}>
+              <input
+                type="checkbox"
+                id={`event-${event.id}`}
+                checked={selectedBestEvents.includes(event.id)}
+                onChange={() => handleBestEventSelect(event.id)}
+              />
+              <label htmlFor={`event-${event.id}`}>
+                <img src={event.image} alt={event.title} />
+                <h4>{event.title}</h4>
+              </label>
+            </div>
+          ))}
+        </div>
+        <button
+          className={styles.saveButton}
+          onClick={() => saveBestEvents(selectedBestEvents)}
+        >
+          حفظ أفضل الفعاليات
+        </button>
+      </div>
     </div>
   );
 }

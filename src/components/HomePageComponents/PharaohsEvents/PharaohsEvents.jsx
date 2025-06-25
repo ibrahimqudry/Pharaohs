@@ -1,26 +1,29 @@
+import { useEffect, useState } from "react";
+import { db } from "../../../firebase/config";
+import { doc, getDoc, getDocs, collection } from "firebase/firestore";
 import styles from './PharaohsEvents.module.css';
 
 function PharaohsEvents() {
-  const events = [
-    {
-      image: "https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg",
-      title: "معرض العقارات السنوي",
-      date: "15 أكتوبر 2023",
-      description: "معرض لأحدث المشاريع العقارية في أسوان الجديدة مع عروض حصرية للزوار"
-    },
-    {
-      image: "https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg",
-      title: "ندوة الاستثمار العقاري",
-      date: "22 نوفمبر 2023",
-      description: "ندوة متخصصة حول فرص الاستثمار العقاري وكيفية تحقيق أعلى عائد استثماري"
-    },
-    {
-      image: "https://images.pexels.com/photos/1181605/pexels-photo-1181605.jpeg",
-      title: "جولة في مشاريع الفراعنة",
-      date: "5 ديسمبر 2023",
-      description: "جولة ميدانية في مشاريع شركة الفراعنة للتعرف على التصاميم والمواصفات عن قرب"
-    }
-  ];
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchBestEvents = async () => {
+      // 1. Get the best events IDs
+      const bestEventsDoc = await getDoc(doc(db, "homepage", "bestEvents"));
+      if (!bestEventsDoc.exists()) return;
+
+      const { eventIds } = bestEventsDoc.data();
+      if (!eventIds || eventIds.length === 0) return;
+
+      // 2. Fetch all events and filter by best event IDs
+      const eventsSnapshot = await getDocs(collection(db, "events"));
+      const allEvents = eventsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const filteredEvents = allEvents.filter(event => eventIds.includes(event.id));
+      setEvents(filteredEvents);
+    };
+
+    fetchBestEvents();
+  }, []);
 
   return (
     <section className={styles.pharaohsEvents}>
@@ -29,10 +32,10 @@ function PharaohsEvents() {
           <h2 className={styles.sectionTitle}>فعاليات الفراعنة</h2>
           <div className={styles.titleDecoration}></div>
         </div>
-        
+
         <div className={styles.eventsGrid}>
-          {events.map((event, index) => (
-            <div key={index} className={styles.eventCard}>
+          {events.map((event) => (
+            <div key={event.id} className={styles.eventCard}>
               <div className={styles.eventImage}>
                 <img src={event.image} alt={event.title} />
               </div>
@@ -40,10 +43,14 @@ function PharaohsEvents() {
                 <div className={styles.eventDate}>{event.date}</div>
                 <h3 className={styles.eventTitle}>{event.title}</h3>
                 <p className={styles.eventDescription}>{event.description}</p>
-                <a href="/events" className={styles.eventButton}>التفاصيل</a>
+                <a href={event.detailsLink || "/events"} className={styles.eventButton}>التفاصيل</a>
               </div>
             </div>
           ))}
+        </div>
+
+        <div className={styles.buttonContainer}>
+          <a href="/events" className="gold-button">اعرف أكتر</a>
         </div>
       </div>
     </section>

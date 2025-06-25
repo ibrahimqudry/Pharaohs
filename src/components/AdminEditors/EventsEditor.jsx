@@ -1,27 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './EditorStyles.module.css';
+import { db } from '../../firebase/config';
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc
+} from "firebase/firestore";
 
 export default function EventsEditor() {
-  const [events, setEvents] = useState([
-    {
-      id: 1,
-      image: "https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg",
-      title: "معرض العقارات السنوي",
-      date: "15 أكتوبر 2023",
-      location: "فندق كتراكت - أسوان",
-      type: "معرض",
-      description: "معرض لأحدث المشاريع العقارية في أسوان الجديدة مع عروض حصرية للزوار. فرصة مميزة للتعرف على أفضل الفرص الاستثمارية المتاحة والحصول على خصومات خاصة.",
-      highlights: [
-        "عروض حصرية على الوحدات السكنية",
-        "لقاءات مباشرة مع مطوري المشاريع",
-        "استشارات عقارية مجانية",
-        "جوائز وهدايا للزوار"
-      ],
-      time: "10:00 صباحاً - 10:00 مساءً",
-      registration: "مجاني"
-    },
-    // More events would be here
-  ]);
+  const [events, setEvents] = useState([]);
+  const eventsCollection = collection(db, "events");
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const data = await getDocs(eventsCollection);
+      setEvents(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+    };
+    fetchEvents();
+  }, []);
 
   const [editingEvent, setEditingEvent] = useState(null);
   const [newEvent, setNewEvent] = useState({
@@ -33,17 +32,21 @@ export default function EventsEditor() {
     highlights: [""],
     time: "",
     registration: "",
-    image: ""
+    image: "",
+    detailsLink: ""
   });
 
   const handleEditEvent = (event) => {
-    setEditingEvent({...event});
+    setEditingEvent({ ...event });
   };
 
-  const handleUpdateEvent = () => {
-    setEvents(events.map(e => e.id === editingEvent.id ? editingEvent : e));
+  const handleUpdateEvent = async () => {
+    const eventDoc = doc(db, "events", editingEvent.id);
+    await updateDoc(eventDoc, editingEvent);
+    // Re-fetch events
+    const data = await getDocs(eventsCollection);
+    setEvents(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
     setEditingEvent(null);
-    // In a real app, you would save to a database here
     alert('تم تحديث الفعالية بنجاح');
   };
 
@@ -97,12 +100,11 @@ export default function EventsEditor() {
     }
   };
 
-  const handleAddEvent = () => {
-    const eventToAdd = {
-      ...newEvent,
-      id: events.length > 0 ? Math.max(...events.map(e => e.id)) + 1 : 1
-    };
-    setEvents([...events, eventToAdd]);
+  const handleAddEvent = async () => {
+    await addDoc(eventsCollection, newEvent);
+    // Re-fetch events
+    const data = await getDocs(eventsCollection);
+    setEvents(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
     setNewEvent({
       title: "",
       date: "",
@@ -112,16 +114,19 @@ export default function EventsEditor() {
       highlights: [""],
       time: "",
       registration: "",
-      image: ""
+      image: "",
+      detailsLink: ""
     });
-    // In a real app, you would save to a database here
     alert('تمت إضافة الفعالية بنجاح');
   };
 
-  const handleDeleteEvent = (id) => {
+  const handleDeleteEvent = async (id) => {
     if (confirm('هل أنت متأكد من حذف هذه الفعالية؟')) {
-      setEvents(events.filter(e => e.id !== id));
-      // In a real app, you would delete from a database here
+      const eventDoc = doc(db, "events", id);
+      await deleteDoc(eventDoc);
+      // Re-fetch events
+      const data = await getDocs(eventsCollection);
+      setEvents(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
       alert('تم حذف الفعالية بنجاح');
     }
   };
@@ -149,13 +154,13 @@ export default function EventsEditor() {
                   <td>{event.location}</td>
                   <td>{event.type}</td>
                   <td>
-                    <button 
+                    <button
                       className={styles.editButton}
                       onClick={() => handleEditEvent(event)}
                     >
                       تعديل
                     </button>
-                    <button 
+                    <button
                       className={styles.deleteButton}
                       onClick={() => handleDeleteEvent(event.id)}
                     >
@@ -174,33 +179,33 @@ export default function EventsEditor() {
           <h2 className={styles.sectionTitle}>تعديل الفعالية</h2>
           <div className={styles.formGroup}>
             <label>عنوان الفعالية</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={editingEvent.title}
-              onChange={(e) => setEditingEvent({...editingEvent, title: e.target.value})}
+              onChange={(e) => setEditingEvent({ ...editingEvent, title: e.target.value })}
             />
           </div>
           <div className={styles.formGroup}>
             <label>التاريخ</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={editingEvent.date}
-              onChange={(e) => setEditingEvent({...editingEvent, date: e.target.value})}
+              onChange={(e) => setEditingEvent({ ...editingEvent, date: e.target.value })}
             />
           </div>
           <div className={styles.formGroup}>
             <label>الموقع</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={editingEvent.location}
-              onChange={(e) => setEditingEvent({...editingEvent, location: e.target.value})}
+              onChange={(e) => setEditingEvent({ ...editingEvent, location: e.target.value })}
             />
           </div>
           <div className={styles.formGroup}>
             <label>النوع</label>
             <select
               value={editingEvent.type}
-              onChange={(e) => setEditingEvent({...editingEvent, type: e.target.value})}
+              onChange={(e) => setEditingEvent({ ...editingEvent, type: e.target.value })}
             >
               <option value="معرض">معرض</option>
               <option value="ندوة">ندوة</option>
@@ -212,9 +217,9 @@ export default function EventsEditor() {
           </div>
           <div className={styles.formGroup}>
             <label>الوصف</label>
-            <textarea 
+            <textarea
               value={editingEvent.description}
-              onChange={(e) => setEditingEvent({...editingEvent, description: e.target.value})}
+              onChange={(e) => setEditingEvent({ ...editingEvent, description: e.target.value })}
               rows="4"
             ></textarea>
           </div>
@@ -222,13 +227,13 @@ export default function EventsEditor() {
             <label>أبرز النقاط</label>
             {editingEvent.highlights.map((highlight, index) => (
               <div key={index} className={styles.featureInput}>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={highlight}
                   onChange={(e) => handleHighlightChange(index, e.target.value)}
                 />
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className={styles.removeButton}
                   onClick={() => handleRemoveHighlight(index)}
                 >
@@ -236,8 +241,8 @@ export default function EventsEditor() {
                 </button>
               </div>
             ))}
-            <button 
-              type="button" 
+            <button
+              type="button"
               className={styles.addButton}
               onClick={handleAddHighlight}
             >
@@ -246,36 +251,44 @@ export default function EventsEditor() {
           </div>
           <div className={styles.formGroup}>
             <label>الوقت</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={editingEvent.time}
-              onChange={(e) => setEditingEvent({...editingEvent, time: e.target.value})}
+              onChange={(e) => setEditingEvent({ ...editingEvent, time: e.target.value })}
             />
           </div>
           <div className={styles.formGroup}>
-            <label>التسجيل</label>
-            <input 
-              type="text" 
+            <label>رسوم التسجيل</label>
+            <input
+              type="text"
               value={editingEvent.registration}
-              onChange={(e) => setEditingEvent({...editingEvent, registration: e.target.value})}
+              onChange={(e) => setEditingEvent({ ...editingEvent, registration: e.target.value })}
             />
           </div>
           <div className={styles.formGroup}>
             <label>رابط الصورة</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={editingEvent.image}
-              onChange={(e) => setEditingEvent({...editingEvent, image: e.target.value})}
+              onChange={(e) => setEditingEvent({ ...editingEvent, image: e.target.value })}
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label>رابط التفاصيل</label>
+            <input
+              type="text"
+              value={editingEvent.detailsLink || ''}
+              onChange={(e) => setEditingEvent({ ...editingEvent, detailsLink: e.target.value })}
             />
           </div>
           <div className={styles.formActions}>
-            <button 
+            <button
               className={styles.saveButton}
               onClick={handleUpdateEvent}
             >
               حفظ التغييرات
             </button>
-            <button 
+            <button
               className={styles.cancelButton}
               onClick={() => setEditingEvent(null)}
             >
@@ -288,33 +301,33 @@ export default function EventsEditor() {
           <h2 className={styles.sectionTitle}>إضافة فعالية جديدة</h2>
           <div className={styles.formGroup}>
             <label>عنوان الفعالية</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={newEvent.title}
-              onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}
+              onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
             />
           </div>
           <div className={styles.formGroup}>
             <label>التاريخ</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={newEvent.date}
-              onChange={(e) => setNewEvent({...newEvent, date: e.target.value})}
+              onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })}
             />
           </div>
           <div className={styles.formGroup}>
             <label>الموقع</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={newEvent.location}
-              onChange={(e) => setNewEvent({...newEvent, location: e.target.value})}
+              onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })}
             />
           </div>
           <div className={styles.formGroup}>
             <label>النوع</label>
             <select
               value={newEvent.type}
-              onChange={(e) => setNewEvent({...newEvent, type: e.target.value})}
+              onChange={(e) => setNewEvent({ ...newEvent, type: e.target.value })}
             >
               <option value="معرض">معرض</option>
               <option value="ندوة">ندوة</option>
@@ -326,9 +339,9 @@ export default function EventsEditor() {
           </div>
           <div className={styles.formGroup}>
             <label>الوصف</label>
-            <textarea 
+            <textarea
               value={newEvent.description}
-              onChange={(e) => setNewEvent({...newEvent, description: e.target.value})}
+              onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })}
               rows="4"
             ></textarea>
           </div>
@@ -336,14 +349,14 @@ export default function EventsEditor() {
             <label>أبرز النقاط</label>
             {newEvent.highlights.map((highlight, index) => (
               <div key={index} className={styles.featureInput}>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={highlight}
                   onChange={(e) => handleHighlightChange(index, e.target.value)}
                 />
                 {newEvent.highlights.length > 1 && (
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     className={styles.removeButton}
                     onClick={() => handleRemoveHighlight(index)}
                   >
@@ -352,8 +365,8 @@ export default function EventsEditor() {
                 )}
               </div>
             ))}
-            <button 
-              type="button" 
+            <button
+              type="button"
               className={styles.addButton}
               onClick={handleAddHighlight}
             >
@@ -362,30 +375,38 @@ export default function EventsEditor() {
           </div>
           <div className={styles.formGroup}>
             <label>الوقت</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={newEvent.time}
-              onChange={(e) => setNewEvent({...newEvent, time: e.target.value})}
+              onChange={(e) => setNewEvent({ ...newEvent, time: e.target.value })}
             />
           </div>
           <div className={styles.formGroup}>
-            <label>التسجيل</label>
-            <input 
-              type="text" 
+            <label>رسوم التسجيل</label>
+            <input
+              type="text"
               value={newEvent.registration}
-              onChange={(e) => setNewEvent({...newEvent, registration: e.target.value})}
+              onChange={(e) => setNewEvent({ ...newEvent, registration: e.target.value })}
             />
           </div>
           <div className={styles.formGroup}>
             <label>رابط الصورة</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={newEvent.image}
-              onChange={(e) => setNewEvent({...newEvent, image: e.target.value})}
+              onChange={(e) => setNewEvent({ ...newEvent, image: e.target.value })}
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label>رابط التفاصيل</label>
+            <input
+              type="text"
+              value={newEvent.detailsLink || ''}
+              onChange={(e) => setNewEvent({ ...newEvent, detailsLink: e.target.value })}
             />
           </div>
           <div className={styles.formActions}>
-            <button 
+            <button
               className={styles.saveButton}
               onClick={handleAddEvent}
             >

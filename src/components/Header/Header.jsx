@@ -16,7 +16,6 @@ function Header() {
 
 
   const [projects, setProjects] = useState([]);
-  const [selectedProject, setSelectedProject] = useState('');
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -188,7 +187,8 @@ function Header() {
                       href={link.href}
                       className={styles.dropdownLink}
                       onClick={() => {
-                        setIsDropdownOpen(false);
+                        setIsMoreDropdownOpen(false);
+                        setIsProjectsDropdownOpen(false);
                         setIsOpen(false);
                       }}
                     >

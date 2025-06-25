@@ -15,7 +15,7 @@ export default function ProjectDetailsPage() {
       try {
         const docRef = doc(db, 'projects', id);
         const docSnap = await getDoc(docRef);
-        
+
         if (docSnap.exists()) {
           setProject({ id: docSnap.id, ...docSnap.data() });
         } else {
@@ -56,10 +56,10 @@ export default function ProjectDetailsPage() {
               &#10095;
             </button>
             <div className={styles.slideWrapper}>
-              <img 
-                src={project.sliderImages[currentSlide].replace(/`/g, '')} 
-                alt={`${project.title} - صورة ${currentSlide + 1}`} 
-                className={styles.slideImage} 
+              <img
+                src={project.sliderImages[currentSlide].replace(/`/g, '')}
+                alt={`${project.title} - صورة ${currentSlide + 1}`}
+                className={styles.slideImage}
               />
               <div className={styles.slideCounter}>
                 {currentSlide + 1} / {project.sliderImages.length}
@@ -80,31 +80,31 @@ export default function ProjectDetailsPage() {
             {project.onSale && <div className={styles.saleTag}>عرض خاص</div>}
             {project.isSold && <div className={styles.soldTag}>تم البيع</div>}
           </div>
-          
+
           <div className={styles.detailsContainer}>
             <div className={styles.header}>
               <h1 className={styles.title}>{project.title}</h1>
               <p className={styles.location}>{project.location}</p>
             </div>
-            
+
             <div className={styles.infoGrid}>
               <div className={styles.infoItem}>
                 <span className={styles.infoLabel}>السعر:</span>
                 <span className={styles.price}>{project.price}</span>
               </div>
-              
+
               <div className={styles.infoItem}>
                 <span className={styles.infoLabel}>الحالة:</span>
                 <span className={`${styles.status} ${styles[project.status]}`}>
                   {project.status}
                 </span>
               </div>
-              
+
               <div className={styles.infoItem}>
                 <span className={styles.infoLabel}>موعد التسليم:</span>
                 <span>{project.completion}</span>
               </div>
-              
+
               <div className={styles.infoItem}>
                 <span className={styles.infoLabel}>النوع:</span>
                 <div className={styles.typesList}>
@@ -114,25 +114,25 @@ export default function ProjectDetailsPage() {
                 </div>
               </div>
             </div>
-            
+
             {/* Progress Bar */}
             {project.progress !== undefined && (
               <div className={styles.progressContainer}>
                 <span className={styles.progressLabel}>نسبة الإنجاز: {project.progress}%</span>
                 <div className={styles.progressBarOuter}>
-                  <div 
-                    className={styles.progressBarInner} 
+                  <div
+                    className={styles.progressBarInner}
                     style={{ width: `${project.progress}%` }}
                   ></div>
                 </div>
               </div>
             )}
-            
+
             {/* Description Section */}
             <div className={styles.descriptionSection}>
               <h2 className={styles.sectionTitle}>وصف المشروع</h2>
               <p className={styles.description}>{project.description}</p>
-              
+
               {project.longDescription && (
                 <div className={styles.longDescription}>
                   <h3 className={styles.subSectionTitle}>تفاصيل إضافية</h3>
@@ -140,7 +140,7 @@ export default function ProjectDetailsPage() {
                 </div>
               )}
             </div>
-            
+
             {/* Features Section */}
             {project.features && project.features.length > 0 && (
               <div className={styles.featuresSection}>
@@ -155,10 +155,21 @@ export default function ProjectDetailsPage() {
                 </ul>
               </div>
             )}
-            
+
             {/* Call to Action */}
             <div className={styles.ctaContainer}>
               <a href="/contact" className={styles.inquiryButton}>استفسار عن المشروع</a>
+              {project.youtubeLink && (
+                <a
+                  href={project.youtubeLink}
+                  className={styles.inquiryButton}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ marginRight: "1rem" }}
+                >
+                  مشاهدة فيديوهات المشروع
+                </a>
+              )}
             </div>
           </div>
         </div>

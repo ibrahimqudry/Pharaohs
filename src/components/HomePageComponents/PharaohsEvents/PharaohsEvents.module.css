@@ -108,3 +108,8 @@
 .eventButton:hover {
     border-bottom: 2px solid var(--color-gold);
 }
+
+.buttonContainer {
+    text-align: center;
+    margin-top: 3rem;
+}

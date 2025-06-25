@@ -64,7 +64,7 @@ export default function ProjectsEditor() {
       alert('حدث خطأ أثناء إضافة المشاريع التجريبية');
     }
   };
- 
+
 
 
   const initialProjectState = {
@@ -80,7 +80,8 @@ export default function ProjectsEditor() {
     image: '',
     isSold: false,
     onSale: false,
-    progress: 0
+    progress: 0,
+    youtubeLink: ''
   };
 
   const [projects, setProjects] = useState([]);
@@ -292,6 +293,15 @@ export default function ProjectsEditor() {
           type="text"
           value={project.image}
           onChange={(e) => setProject({ ...project, image: e.target.value })}
+        />
+      </div>
+      
+      <div className={styles.formGroup}>
+        <label>رابط قائمة تشغيل يوتيوب</label>
+        <input
+          type="text"
+          value={project.youtubeLink || ''}
+          onChange={(e) => setProject({ ...project, youtubeLink: e.target.value })}
         />
       </div>
 
