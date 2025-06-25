@@ -1,147 +1,154 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './EditorStyles.module.css';
+import { db } from '../../firebase/config';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 export default function AboutEditor() {
-  const [aboutData, setAboutData] = useState({
-    description: "شركة الفراعنة للتطوير العقاري هي شركة رائدة في مجال التطوير العقاري في مصر، نسعى لتقديم مشاريع سكنية وتجارية متميزة تجمع بين الأصالة والحداثة.",
-    goals: [
-      {
-        id: 1,
-        title: "التميز في التطوير العقاري",
-        description: "نسعى لتقديم مشاريع عقارية متميزة تلبي احتياجات عملائنا وتتجاوز توقعاتهم من حيث الجودة والتصميم والخدمات."
-      },
-      {
-        id: 2,
-        title: "بناء مجتمعات متكاملة",
-        description: "نهدف إلى إنشاء مجتمعات سكنية متكاملة توفر لساكنيها جميع الخدمات والمرافق التي يحتاجونها لحياة مريحة ومتوازنة."
-      },
-      {
-        id: 3,
-        title: "بناء علاقات طويلة الأمد",
-        description: "نسعى لبناء علاقات قوية ودائمة مع عملائنا وشركائنا تقوم على الثقة والشفافية والالتزام بتقديم أفضل الخدمات."
-      }
-    ],
-    vision: {
-      text: "نطمح أن نكون الشركة الرائدة في مجال التطوير العقاري في مصر والشرق الأوسط، من خلال تقديم مشاريع مبتكرة ومستدامة تجمع بين الأصالة والحداثة، وتساهم في تحسين جودة الحياة وتعزيز النمو الاقتصادي.",
-      points: [
-        "الريادة في تقديم حلول سكنية مبتكرة ومستدامة",
-        "تطوير مشاريع تعكس الهوية المصرية الأصيلة بلمسة عصرية",
-        "المساهمة في تنمية المجتمع وتحسين جودة الحياة",
-        "تعزيز مكانة مصر كوجهة استثمارية جاذبة في مجال العقارات"
-      ]
-    },
-    values: [
-      {
-        id: 1,
-        title: "الجودة",
-        description: "نلتزم بأعلى معايير الجودة في جميع مشاريعنا، من التصميم إلى التنفيذ والتسليم، لضمان رضا عملائنا."
-      },
-      {
-        id: 2,
-        title: "الابتكار",
-        description: "نسعى دائماً لتقديم حلول مبتكرة وتصاميم عصرية تلبي احتياجات العملاء وتواكب أحدث التوجهات العالمية."
-      },
-      {
-        id: 3,
-        title: "المصداقية",
-        description: "نؤمن بأهمية المصداقية والشفافية في التعامل مع عملائنا وشركائنا، ونلتزم بالوفاء بوعودنا وتعهداتنا."
-      },
-      {
-        id: 4,
-        title: "الاستدامة",
-        description: "نحرص على تطوير مشاريع مستدامة تراعي البعد البيئي والاجتماعي والاقتصادي، وتساهم في بناء مستقبل أفضل للأجيال القادمة."
-      }
-    ]
-  });
-
+  const [aboutData, setAboutData] = useState(null);
   const [editingSection, setEditingSection] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const handleSaveChanges = () => {
-    // In a real app, you would save to a database here
-    alert('تم حفظ التغييرات بنجاح');
-    setEditingSection(null);
+  useEffect(() => {
+    const fetchAboutData = async () => {
+      try {
+        const aboutDoc = await getDoc(doc(db, 'about', 'page'));
+        if (aboutDoc.exists()) {
+          setAboutData(aboutDoc.data());
+        } else {
+          setAboutData({
+            description: '',
+            goals: [],
+            vision: { text: '', points: [] },
+            values: [],
+            owners: []
+          });
+        }
+      } catch (error) {
+        alert('حدث خطأ أثناء جلب البيانات');
+        setAboutData({
+          description: '',
+          goals: [],
+          vision: { text: '', points: [] },
+          values: [],
+          owners: []
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAboutData();
+  }, []);
+
+  const handleSaveChanges = async () => {
+    try {
+      await setDoc(doc(db, 'about', 'page'), aboutData, { merge: true });
+      alert('تم حفظ التغييرات بنجاح');
+      setEditingSection(null);
+    } catch (error) {
+      alert('حدث خطأ أثناء حفظ البيانات');
+    }
   };
+
+  if (loading || !aboutData) {
+    return <div>جاري التحميل...</div>;
+  }
 
   return (
     <div className={styles.editorWrapper}>
       <div className={styles.editForm}>
         <h2 className={styles.sectionTitle}>تحرير صفحة من نحن</h2>
-        
         <div className={styles.formGroup}>
           <label>وصف الشركة</label>
-          <textarea 
+          <textarea
             value={aboutData.description}
-            onChange={(e) => setAboutData({...aboutData, description: e.target.value})}
+            onChange={(e) => setAboutData({ ...aboutData, description: e.target.value })}
             rows="4"
           ></textarea>
         </div>
-        
         <h3>أهدافنا</h3>
         {aboutData.goals.map((goal, index) => (
-          <div key={goal.id} className={styles.formGroup}>
+          <div key={goal.id || index} className={styles.formGroup}>
             <label>الهدف {index + 1}</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={goal.title}
               onChange={(e) => {
                 const updatedGoals = [...aboutData.goals];
                 updatedGoals[index].title = e.target.value;
-                setAboutData({...aboutData, goals: updatedGoals});
+                setAboutData({ ...aboutData, goals: updatedGoals });
               }}
               placeholder="عنوان الهدف"
             />
-            <textarea 
+            <textarea
               value={goal.description}
               onChange={(e) => {
                 const updatedGoals = [...aboutData.goals];
                 updatedGoals[index].description = e.target.value;
-                setAboutData({...aboutData, goals: updatedGoals});
+                setAboutData({ ...aboutData, goals: updatedGoals });
               }}
               rows="3"
               placeholder="وصف الهدف"
               className="mt-2"
             ></textarea>
+            <button
+              type="button"
+              className={styles.removeButton}
+              onClick={() => {
+                const updatedGoals = aboutData.goals.filter((_, i) => i !== index);
+                setAboutData({ ...aboutData, goals: updatedGoals });
+              }}
+            >
+              حذف
+            </button>
           </div>
         ))}
-        
+        <button
+          type="button"
+          className={styles.addButton}
+          onClick={() => setAboutData({
+            ...aboutData,
+            goals: [...aboutData.goals, { title: '', description: '' }]
+          })}
+        >
+          إضافة هدف
+        </button>
         <h3>رؤيتنا</h3>
         <div className={styles.formGroup}>
           <label>نص الرؤية</label>
-          <textarea 
+          <textarea
             value={aboutData.vision.text}
             onChange={(e) => setAboutData({
-              ...aboutData, 
-              vision: {...aboutData.vision, text: e.target.value}
+              ...aboutData,
+              vision: { ...aboutData.vision, text: e.target.value }
             })}
             rows="4"
           ></textarea>
         </div>
-        
         <div className={styles.formGroup}>
           <label>نقاط الرؤية</label>
           {aboutData.vision.points.map((point, index) => (
             <div key={index} className={styles.featureInput}>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={point}
                 onChange={(e) => {
                   const updatedPoints = [...aboutData.vision.points];
                   updatedPoints[index] = e.target.value;
                   setAboutData({
-                    ...aboutData, 
-                    vision: {...aboutData.vision, points: updatedPoints}
+                    ...aboutData,
+                    vision: { ...aboutData.vision, points: updatedPoints }
                   });
                 }}
               />
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className={styles.removeButton}
                 onClick={() => {
                   const updatedPoints = [...aboutData.vision.points];
                   updatedPoints.splice(index, 1);
                   setAboutData({
-                    ...aboutData, 
-                    vision: {...aboutData.vision, points: updatedPoints}
+                    ...aboutData,
+                    vision: { ...aboutData.vision, points: updatedPoints }
                   });
                 }}
               >
@@ -149,14 +156,14 @@ export default function AboutEditor() {
               </button>
             </div>
           ))}
-          <button 
-            type="button" 
+          <button
+            type="button"
             className={styles.addButton}
             onClick={() => {
               setAboutData({
-                ...aboutData, 
+                ...aboutData,
                 vision: {
-                  ...aboutData.vision, 
+                  ...aboutData.vision,
                   points: [...aboutData.vision.points, ""]
                 }
               });
@@ -165,37 +172,123 @@ export default function AboutEditor() {
             إضافة نقطة
           </button>
         </div>
-        
         <h3>قيمنا</h3>
         {aboutData.values.map((value, index) => (
-          <div key={value.id} className={styles.formGroup}>
+          <div key={value.id || index} className={styles.formGroup}>
             <label>القيمة {index + 1}</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={value.title}
               onChange={(e) => {
                 const updatedValues = [...aboutData.values];
                 updatedValues[index].title = e.target.value;
-                setAboutData({...aboutData, values: updatedValues});
+                setAboutData({ ...aboutData, values: updatedValues });
               }}
               placeholder="عنوان القيمة"
             />
-            <textarea 
+            <textarea
               value={value.description}
               onChange={(e) => {
                 const updatedValues = [...aboutData.values];
                 updatedValues[index].description = e.target.value;
-                setAboutData({...aboutData, values: updatedValues});
+                setAboutData({ ...aboutData, values: updatedValues });
               }}
               rows="3"
               placeholder="وصف القيمة"
               className="mt-2"
             ></textarea>
+            <button
+              type="button"
+              className={styles.removeButton}
+              onClick={() => {
+                const updatedValues = aboutData.values.filter((_, i) => i !== index);
+                setAboutData({ ...aboutData, values: updatedValues });
+              }}
+            >
+              حذف
+            </button>
           </div>
         ))}
-        
+        <button
+          type="button"
+          className={styles.addButton}
+          onClick={() => setAboutData({
+            ...aboutData,
+            values: [...aboutData.values, { title: '', description: '' }]
+          })}
+        >
+          إضافة قيمة
+        </button>
+        <h3>ملاك الشركة</h3>
+        <div className={styles.formGroup}>
+          {aboutData.owners && aboutData.owners.map((owner, idx) => (
+            <div key={idx} className={styles.ownerInput} style={{ marginBottom: '1.5rem', border: '1px solid #eee', borderRadius: 8, padding: 12 }}>
+              <input
+                type="text"
+                placeholder="الاسم"
+                value={owner.name}
+                onChange={e => {
+                  const updated = [...aboutData.owners];
+                  updated[idx].name = e.target.value;
+                  setAboutData({ ...aboutData, owners: updated });
+                }}
+                style={{ marginBottom: 8 }}
+              />
+              <input
+                type="text"
+                placeholder="الدور/الوظيفة"
+                value={owner.role}
+                onChange={e => {
+                  const updated = [...aboutData.owners];
+                  updated[idx].role = e.target.value;
+                  setAboutData({ ...aboutData, owners: updated });
+                }}
+                style={{ marginBottom: 8 }}
+              />
+              <input
+                type="text"
+                placeholder="رابط الصورة"
+                value={owner.image}
+                onChange={e => {
+                  const updated = [...aboutData.owners];
+                  updated[idx].image = e.target.value;
+                  setAboutData({ ...aboutData, owners: updated });
+                }}
+                style={{ marginBottom: 8 }}
+              />
+              <input
+                type="text"
+                placeholder="وصف مختصر"
+                value={owner.description}
+                onChange={e => {
+                  const updated = [...aboutData.owners];
+                  updated[idx].description = e.target.value;
+                  setAboutData({ ...aboutData, owners: updated });
+                }}
+                style={{ marginBottom: 8 }}
+              />
+              <button
+                type="button"
+                className={styles.removeButton}
+                onClick={() => {
+                  const updated = aboutData.owners.filter((_, i) => i !== idx);
+                  setAboutData({ ...aboutData, owners: updated });
+                }}
+              >
+                حذف
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            className={styles.addButton}
+            onClick={() => setAboutData({ ...aboutData, owners: [...(aboutData.owners || []), { name: '', role: '', image: '', description: '' }] })}
+          >
+            إضافة مالك
+          </button>
+        </div>
         <div className={styles.formActions}>
-          <button 
+          <button
             className={styles.saveButton}
             onClick={handleSaveChanges}
           >

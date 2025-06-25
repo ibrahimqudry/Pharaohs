@@ -1,14 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './AboutPage.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGem, faCheckCircle, faUsers, faHandshake, faChartLine, faStar } from '@fortawesome/free-solid-svg-icons';
+import { db } from '../firebase/config';
+import { doc, getDoc } from 'firebase/firestore';
+
 function AboutPage() {
+  const [aboutData, setAboutData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAboutData = async () => {
+      try {
+        const aboutDoc = await getDoc(doc(db, 'about', 'page'));
+        if (aboutDoc.exists()) {
+          setAboutData(aboutDoc.data());
+        } else {
+          setAboutData({
+            description: '',
+            goals: [],
+            vision: { text: '', points: [] },
+            values: [],
+            owners: []
+          });
+        }
+      } catch (error) {
+        setAboutData({
+          description: '',
+          goals: [],
+          vision: { text: '', points: [] },
+          values: [],
+          owners: []
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAboutData();
+  }, []);
+
+  if (loading || !aboutData) {
+    return <div>جاري التحميل...</div>;
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.pageHeader}>
         <h1 className={styles.pageTitle}>عن الفراعنة</h1>
         <p className={styles.pageDescription}>
-          شركة الفراعنة للتطوير العقاري هي شركة رائدة في مجال التطوير العقاري في مصر، نسعى لتقديم مشاريع سكنية وتجارية متميزة تجمع بين الأصالة والحداثة.
+          {aboutData.description}
         </p>
       </div>
 
@@ -18,35 +58,19 @@ function AboutPage() {
           <h2 className={styles.sectionTitle}>أهدافنا</h2>
         </div>
         <div className={styles.goalsContainer}>
-          <div className={styles.goalCard}>
-            <div className={styles.goalIcon}>
-              <FontAwesomeIcon icon={faChartLine} />
-            </div>
-            <h3 className={styles.goalTitle}>التميز في التطوير العقاري</h3>
-            <p className={styles.goalDescription}>
-              نسعى لتقديم مشاريع عقارية متميزة تلبي احتياجات عملائنا وتتجاوز توقعاتهم من حيث الجودة والتصميم والخدمات.
-            </p>
-          </div>
-
-          <div className={styles.goalCard}>
-            <div className={styles.goalIcon}>
-              <FontAwesomeIcon icon={faUsers} />
-            </div>
-            <h3 className={styles.goalTitle}>بناء مجتمعات متكاملة</h3>
-            <p className={styles.goalDescription}>
-              نهدف إلى إنشاء مجتمعات سكنية متكاملة توفر لساكنيها جميع الخدمات والمرافق التي يحتاجونها لحياة مريحة ومتوازنة.
-            </p>
-          </div>
-
-          <div className={styles.goalCard}>
-            <div className={styles.goalIcon}>
-              <FontAwesomeIcon icon={faHandshake} />
-            </div>
-            <h3 className={styles.goalTitle}>بناء علاقات طويلة الأمد</h3>
-            <p className={styles.goalDescription}>
-              نسعى لبناء علاقات قوية ودائمة مع عملائنا وشركائنا تقوم على الثقة والشفافية والالتزام بتقديم أفضل الخدمات.
-            </p>
-          </div>
+          {aboutData.goals && aboutData.goals.length > 0 ? (
+            aboutData.goals.map((goal, idx) => (
+              <div key={idx} className={styles.goalCard}>
+                <div className={styles.goalIcon}>
+                  <FontAwesomeIcon icon={faChartLine} />
+                </div>
+                <h3 className={styles.goalTitle}>{goal.title}</h3>
+                <p className={styles.goalDescription}>{goal.description}</p>
+              </div>
+            ))
+          ) : (
+            <p>لا توجد أهداف حالياً.</p>
+          )}
         </div>
       </section>
 
@@ -58,25 +82,19 @@ function AboutPage() {
         <div className={styles.visionContainer}>
           <div className={styles.visionContent}>
             <p className={styles.visionText}>
-              نطمح أن نكون الشركة الرائدة في مجال التطوير العقاري في مصر والشرق الأوسط، من خلال تقديم مشاريع مبتكرة ومستدامة تجمع بين الأصالة والحداثة، وتساهم في تحسين جودة الحياة وتعزيز النمو الاقتصادي.
+              {aboutData.vision?.text}
             </p>
             <ul className={styles.visionList}>
-              <li>
-                <FontAwesomeIcon icon={faCheckCircle} className={styles.listIcon} />
-                <span>الريادة في تقديم حلول سكنية مبتكرة ومستدامة</span>
-              </li>
-              <li>
-                <FontAwesomeIcon icon={faCheckCircle} className={styles.listIcon} />
-                <span>تطوير مشاريع تعكس الهوية المصرية الأصيلة بلمسة عصرية</span>
-              </li>
-              <li>
-                <FontAwesomeIcon icon={faCheckCircle} className={styles.listIcon} />
-                <span>المساهمة في تنمية المجتمع وتحسين جودة الحياة</span>
-              </li>
-              <li>
-                <FontAwesomeIcon icon={faCheckCircle} className={styles.listIcon} />
-                <span>تعزيز مكانة مصر كوجهة استثمارية جاذبة في مجال العقارات</span>
-              </li>
+              {aboutData.vision?.points && aboutData.vision.points.length > 0 ? (
+                aboutData.vision.points.map((point, idx) => (
+                  <li key={idx}>
+                    <FontAwesomeIcon icon={faCheckCircle} className={styles.listIcon} />
+                    <span>{point}</span>
+                  </li>
+                ))
+              ) : (
+                <li>لا توجد نقاط للرؤية حالياً.</li>
+              )}
             </ul>
           </div>
           <div className={styles.visionImage}>
@@ -91,45 +109,38 @@ function AboutPage() {
           <h2 className={styles.sectionTitle}>قيمنا</h2>
         </div>
         <div className={styles.valuesContainer}>
-          <div className={styles.valueCard}>
-            <div className={styles.valueIcon}>
-              <FontAwesomeIcon icon={faStar} />
-            </div>
-            <h3 className={styles.valueTitle}>الجودة</h3>
-            <p className={styles.valueDescription}>
-              نلتزم بأعلى معايير الجودة في جميع مشاريعنا، من التصميم إلى التنفيذ والتسليم، لضمان رضا عملائنا.
-            </p>
-          </div>
+          {aboutData.values && aboutData.values.length > 0 ? (
+            aboutData.values.map((value, idx) => (
+              <div key={idx} className={styles.valueCard}>
+                <div className={styles.valueIcon}>
+                  <FontAwesomeIcon icon={faStar} />
+                </div>
+                <h3 className={styles.valueTitle}>{value.title}</h3>
+                <p className={styles.valueDescription}>{value.description}</p>
+              </div>
+            ))
+          ) : (
+            <p>لا توجد قيم حالياً.</p>
+          )}
+        </div>
+      </section>
 
-          <div className={styles.valueCard}>
-            <div className={styles.valueIcon}>
-              <FontAwesomeIcon icon={faGem} />
-            </div>
-            <h3 className={styles.valueTitle}>الابتكار</h3>
-            <p className={styles.valueDescription}>
-              نسعى دائمًا لتقديم حلول مبتكرة وتصاميم فريدة تلبي احتياجات العملاء وتواكب أحدث التوجهات العالمية.
-            </p>
-          </div>
-
-          <div className={styles.valueCard}>
-            <div className={styles.valueIcon}>
-              <FontAwesomeIcon icon={faHandshake} />
-            </div>
-            <h3 className={styles.valueTitle}>النزاهة</h3>
-            <p className={styles.valueDescription}>
-              نؤمن بأهمية الشفافية والصدق في جميع تعاملاتنا مع العملاء والشركاء والموظفين.
-            </p>
-          </div>
-
-          <div className={styles.valueCard}>
-            <div className={styles.valueIcon}>
-              <FontAwesomeIcon icon={faUsers} />
-            </div>
-            <h3 className={styles.valueTitle}>العمل الجماعي</h3>
-            <p className={styles.valueDescription}>
-              نعمل كفريق واحد لتحقيق أهدافنا المشتركة، ونقدر مساهمة كل فرد في نجاح الشركة.
-            </p>
-          </div>
+      {/* قسم ملاك الشركة */}
+      <section className={styles.ownersSection}>
+        <h2 className={styles.ownersTitle}>ملاك الشركة</h2>
+        <div className={styles.ownersGrid}>
+          {aboutData.owners && aboutData.owners.length > 0 ? (
+            aboutData.owners.map((owner, idx) => (
+              <div key={idx} className={styles.ownerCard}>
+                <img src={owner.image} alt={owner.name} className={styles.ownerImage} />
+                <h3 className={styles.ownerName}>{owner.name}</h3>
+                <p className={styles.ownerRole}>{owner.role}</p>
+                <p className={styles.ownerDescription}>{owner.description}</p>
+              </div>
+            ))
+          ) : (
+            <p>لا يوجد ملاك حالياً.</p>
+          )}
         </div>
       </section>
     </div>
