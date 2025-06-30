@@ -29,70 +29,13 @@
   line-height: 1.6;
 }
 
-/* Filters */
-.filtersContainer {
-  border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 2.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.filtersTitle {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-.filterIcon {
-  color: var(--color-gold);
-  margin-left: 0.75rem;
-}
-
-.filterButtons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.filterButton {
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 0.5rem 1rem;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-}
-
-.filterButton:hover {
-  border-color: var(--color-gold);
-  color: var(--color-gold);
-}
-
-.filterButton.active {
-  color: white;
-  border-color: var(--color-gold);
-}
-
-.buttonIcon {
-  margin-left: 0.5rem;
-}
-
 /* Reviews Grid */
 .reviewsGrid {
   display: grid;
   gap: 2.5rem;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 600px));
+  justify-content: center;
   margin-bottom: 3rem;
-}
-
-@media (min-width: 992px) {
-  .reviewsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 .reviewCard {
@@ -242,11 +185,35 @@
   font-weight: bold;
 }
 
+.detailsButton {
+  background: var(--color-gold);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 0.4rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 1rem;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(218, 165, 32, 0.08);
+  display: inline-block;
+}
+
+.detailsButton:hover {
+  background: #bfa13a;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(218, 165, 32, 0.18);
+}
+
 .reviewFooter {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   border-top: 1px solid #eee;
   padding-top: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .reviewDate {
