@@ -138,6 +138,14 @@
   outline: none;
 }
 
+.formGroup input::placeholder,
+.formGroup textarea::placeholder {
+  text-align: right;
+  color: #999;
+  opacity: 0.8;
+  font-size: 1rem;
+}
+
 /* Branches Section Styles */
 .branchesSection {
   margin-top: 4rem;

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faQuoteRight, faFilter, faCrown, faBuilding, faHome, faLandmark, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 function VipReviewsPage() {
   const [vipReviews, setVipReviews] = useState([]);
@@ -54,7 +55,9 @@ function VipReviewsPage() {
         {/* Reviews Grid */}
         <div className={styles.reviewsGrid}>
           {loading ? (
-            <div>جاري التحميل...</div>
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+              <ClipLoader color="#bfa13a" size={60} />
+            </div>
           ) : vipReviews.map(review => (
             <div key={review.id} className={styles.reviewCard}>
               <div className={styles.reviewHeader}>
@@ -132,5 +135,6 @@ function VipReviewsPage() {
     </main>
   );
 }
+
 export default VipReviewsPage;
 
