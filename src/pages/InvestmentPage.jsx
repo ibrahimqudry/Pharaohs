@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './InvestmentPage.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faChartLine, 
-  faHandshake, 
-  faBuilding, 
-  faMapMarkedAlt, 
+import {
+  faChartLine,
+  faHandshake,
+  faBuilding,
+  faMapMarkedAlt,
   faMoneyBillWave,
   faShieldAlt,
   faCertificate,
@@ -14,104 +14,55 @@ import {
   faChevronDown,
   faChevronUp
 } from '@fortawesome/free-solid-svg-icons';
+import { db } from '../firebase/config';
+import { collection, getDocs } from 'firebase/firestore';
 
-function InvestmentPage() {
+export default function InvestmentPage() {
   const [activeAccordion, setActiveAccordion] = useState(null);
+  const [investmentOpportunities, setInvestmentOpportunities] = useState([]);
+  const [investmentBenefits, setInvestmentBenefits] = useState([]);
+  const [faqs, setFaqs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const toggleAccordion = (index) => {
     setActiveAccordion(activeAccordion === index ? null : index);
   };
 
-  const investmentOpportunities = [
-    {
-      id: 1,
-      title: "الاستثمار في الوحدات السكنية",
-      icon: faBuilding,
-      description: "فرصة للاستثمار في شقق وفلل سكنية فاخرة في مواقع استراتيجية بأسوان الجديدة، مع عائد استثماري يصل إلى 15% سنوياً.",
-      minInvestment: "1,500,000 جنيه",
-      expectedReturn: "12-15% سنوياً",
-      period: "3-5 سنوات"
-    },
-    {
-      id: 2,
-      title: "الاستثمار في المحلات التجارية",
-      icon: faMoneyBillWave,
-      description: "استثمر في المحلات والمساحات التجارية في مشاريعنا المميزة، واستفد من الموقع الاستراتيجي والإقبال المتزايد.",
-      minInvestment: "2,000,000 جنيه",
-      expectedReturn: "15-18% سنوياً",
-      period: "3-7 سنوات"
-    },
-    {
-      id: 3,
-      title: "الاستثمار في الأراضي",
-      icon: faMapMarkedAlt,
-      description: "فرصة للاستثمار في قطع أراضي استراتيجية في أسوان الجديدة، مع توقعات بارتفاع قيمتها بنسبة تصل إلى 40% خلال السنوات القادمة.",
-      minInvestment: "800,000 جنيه",
-      expectedReturn: "20-25% سنوياً",
-      period: "5-10 سنوات"
-    },
-    {
-      id: 4,
-      title: "الشراكة في المشاريع",
-      icon: faHandshake,
-      description: "فرصة للدخول كشريك في مشاريعنا العقارية المتميزة، مع ضمان الشفافية الكاملة والمتابعة المستمرة لسير العمل.",
-      minInvestment: "5,000,000 جنيه",
-      expectedReturn: "25-30% على المشروع",
-      period: "حسب المشروع"
-    }
-  ];
-
-  const investmentBenefits = [
-    {
-      icon: faChartLine,
-      title: "عوائد استثمارية مرتفعة",
-      description: "عوائد تصل إلى 30% على المشاريع الاستثمارية"
-    },
-    {
-      icon: faShieldAlt,
-      title: "استثمار آمن ومضمون",
-      description: "ضمانات قانونية وعقارية تحمي استثمارك"
-    },
-    {
-      icon: faCertificate,
-      title: "خبرة 20 عام",
-      description: "فريق متخصص بخبرة طويلة في السوق العقاري"
-    },
-    {
-      icon: faPercentage,
-      title: "خطط سداد مرنة",
-      description: "أنظمة سداد متنوعة تناسب جميع المستثمرين"
-    }
-  ];
-
-  const faqs = [
-    {
-      question: "ما هو الحد الأدنى للاستثمار في مشاريع الفراعنة؟",
-      answer: "يختلف الحد الأدنى للاستثمار حسب نوع الفرصة الاستثمارية، حيث يبدأ من 800,000 جنيه للاستثمار في الأراضي، و1,500,000 جنيه للوحدات السكنية، و2,000,000 جنيه للمحلات التجارية."
-    },
-    {
-      question: "ما هي مدة الاستثمار المتوقعة؟",
-      answer: "تتراوح مدة الاستثمار بين 3-10 سنوات حسب نوع الاستثمار، مع إمكانية التخارج المبكر وفقاً لشروط محددة في العقد."
-    },
-    {
-      question: "هل هناك ضمانات للاستثمار؟",
-      answer: "نعم، نقدم ضمانات قانونية وعقارية كاملة لحماية استثمارك، بالإضافة إلى عقود موثقة وصكوك ملكية واضحة."
-    },
-    {
-      question: "كيف يتم توزيع العوائد الاستثمارية؟",
-      answer: "يتم توزيع العوائد الاستثمارية بشكل دوري (سنوي أو نصف سنوي) حسب نوع الاستثمار والاتفاق المبرم، مع تقارير دورية عن أداء الاستثمار."
-    },
-    {
-      question: "هل يمكنني زيارة المشاريع قبل الاستثمار؟",
-      answer: "بالتأكيد، نرحب بزيارتكم لمشاريعنا في أي وقت، ويمكننا ترتيب جولات ميدانية مع مستشارينا العقاريين لشرح تفاصيل المشاريع والفرص الاستثمارية المتاحة."
-    }
-  ];
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // هنا يمكن إضافة كود للتعامل مع إرسال النموذج
-    alert('تم إرسال طلبك بنجاح، سيتواصل معك أحد مستشارينا قريباً!');
+  const iconMap = {
+    building: faBuilding,
+    handshake: faHandshake,
+    moneyBillWave: faMoneyBillWave,
+    mapMarkedAlt: faMapMarkedAlt,
+    chartLine: faChartLine,
+    shieldAlt: faShieldAlt,
+    certificate: faCertificate,
+    percentage: faPercentage,
+    questionCircle: faQuestionCircle
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const oppSnap = await getDocs(collection(db, 'investmentOpportunities'));
+        setInvestmentOpportunities(oppSnap.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+        const benSnap = await getDocs(collection(db, 'investmentBenefits'));
+        setInvestmentBenefits(benSnap.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+        const faqSnap = await getDocs(collection(db, 'investmentFaqs'));
+        setFaqs(faqSnap.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+      } catch (error) {
+        setInvestmentOpportunities([]);
+        setInvestmentBenefits([]);
+        setFaqs([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>جاري التحميل...</div>;
+  }
 
   return (
     <main className="pt-24 pb-16">
@@ -129,7 +80,7 @@ function InvestmentPage() {
             {investmentOpportunities.map((opportunity) => (
               <div key={opportunity.id} className={styles.opportunityCard}>
                 <div className={styles.opportunityIcon}>
-                  <FontAwesomeIcon icon={opportunity.icon} />
+                  <FontAwesomeIcon icon={iconMap[opportunity.icon]} />
                 </div>
                 <h3 className={styles.opportunityTitle}>{opportunity.title}</h3>
                 <p className={styles.opportunityDescription}>{opportunity.description}</p>
@@ -160,7 +111,7 @@ function InvestmentPage() {
             {investmentBenefits.map((benefit, index) => (
               <div key={index} className={styles.benefitCard}>
                 <div className={styles.benefitIcon}>
-                  <FontAwesomeIcon icon={benefit.icon} />
+                  <FontAwesomeIcon icon={iconMap[benefit.icon]} />
                 </div>
                 <h3 className={styles.benefitTitle}>{benefit.title}</h3>
                 <p className={styles.benefitDescription}>{benefit.description}</p>
@@ -175,14 +126,14 @@ function InvestmentPage() {
           <div className={styles.faqContainer}>
             {faqs.map((faq, index) => (
               <div key={index} className={styles.faqItem}>
-                <div 
+                <div
                   className={`${styles.faqQuestion} ${activeAccordion === index ? styles.active : ''}`}
                   onClick={() => toggleAccordion(index)}
                 >
                   <span><FontAwesomeIcon icon={faQuestionCircle} className={styles.questionIcon} /> {faq.question}</span>
-                  <FontAwesomeIcon 
-                    icon={activeAccordion === index ? faChevronUp : faChevronDown} 
-                    className={styles.accordionIcon} 
+                  <FontAwesomeIcon
+                    icon={activeAccordion === index ? faChevronUp : faChevronDown}
+                    className={styles.accordionIcon}
                   />
                 </div>
                 <div className={`${styles.faqAnswer} ${activeAccordion === index ? styles.active : ''}`}>
@@ -197,5 +148,3 @@ function InvestmentPage() {
     </main>
   );
 }
-
-export default InvestmentPage;
