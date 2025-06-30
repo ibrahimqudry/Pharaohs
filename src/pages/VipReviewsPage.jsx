@@ -55,7 +55,7 @@ function VipReviewsPage() {
         {/* Reviews Grid */}
         <div className={styles.reviewsGrid}>
           {loading ? (
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+            <div className='loading'>
               <ClipLoader color="#bfa13a" size={60} />
             </div>
           ) : vipReviews.map(review => (

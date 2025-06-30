@@ -1,8 +1,10 @@
 @import "tailwindcss";
+
 #root {
   width: 100%;
   direction: rtl;
 }
+
 /* App.css */
 /* Reset and base styles */
 :root {
@@ -59,4 +61,13 @@ body {
 
 .swiper-pagination-bullet-active {
   background: var(--color-gold) !important;
+}
+
+/* spinner style */
+.loading {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
 }

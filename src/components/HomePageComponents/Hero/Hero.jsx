@@ -6,6 +6,7 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css/navigation';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebase/config';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 export function NextArrow(props) {
   const { className, style, onClick } = props;
@@ -52,12 +53,12 @@ const Hero = () => {
     fetchSlides();
   }, []);
 
-  if (loading) return <div className={styles.loading}>جاري التحميل...</div>;
+  if (loading) return <div className='loading'><ClipLoader color="#bfa13a" size={48} /></div>;
   if (slides.length === 0) return <div className={styles.notFound}>لا توجد شرائح متاحة</div>;
 
   return (
     <Swiper
-      className={ styles.swiper}
+      className={styles.swiper}
       modules={[Navigation, Autoplay]}
       spaceBetween={50}
       slidesPerView={1}

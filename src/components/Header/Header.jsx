@@ -1,98 +1,204 @@
 import { useState, useEffect, useRef } from 'react';
-import { useTheme } from '../../context/ThemeContext'; // Add this import
-import styles from './Header.module.css';
-import { FaMoon, FaSun } from 'react-icons/fa'; // Add icons
-
-import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { useTheme } from '../../context/ThemeContext';
+import { FaMoon, FaSun } from 'react-icons/fa';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase/config';
+import styles from './Header.module.css';
+import ClipLoader from 'react-spinners/ClipLoader';
+
+// Navigation link data
+const navLinks = [
+  { to: '/', label: 'الرئيسية' },
+  { to: '/about', label: 'عن الفراعنة' },
+  { to: '/contact', label: 'تواصل معنا' },
+];
+
+const moreLinks = [
+  { to: '/events', label: 'فعالياتنا' },
+  { to: '/careers', label: 'الوظائف' },
+  { to: '/investment', label: 'فرص الاستثمار' },
+  { to: '/vip-reviews', label: 'آراء العملاء' },
+];
 
 function Header() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
-  const [isProjectsDropdownOpen, setIsProjectsDropdownOpen] = useState(false);
-  const selectRef = useRef(null);
   const { darkMode, toggleTheme } = useTheme();
-
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [dropdowns, setDropdowns] = useState({ projects: false, more: false });
   const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const dropdownRef = useRef(null);
 
+  // Fetch projects from Firebase
   useEffect(() => {
     const fetchProjects = async () => {
-      const projectsRef = collection(db, 'projects');
-      const snapshot = await getDocs(projectsRef);
-      const projectsList = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setProjects(projectsList);
+      setIsLoading(true);
+      try {
+        const projectsRef = collection(db, 'projects');
+        const snapshot = await getDocs(projectsRef);
+        const projectsList = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setProjects(projectsList);
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+        setError('فشل في تحميل المشاريع');
+      } finally {
+        setIsLoading(false);
+      }
     };
-
     fetchProjects();
   }, []);
 
+  // Handle clicks outside dropdowns
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (selectRef.current && !selectRef.current.contains(event.target)) {
-        setIsMoreDropdownOpen(false);
-        setIsProjectsDropdownOpen(false);
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdowns({ projects: false, more: false });
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Toggle mobile menu and close dropdowns
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
-    if (isMoreDropdownOpen) setIsMoreDropdownOpen(false);
-    if (isProjectsDropdownOpen) setIsProjectsDropdownOpen(false);
+    setIsMenuOpen(prev => !prev);
+    setDropdowns({ projects: false, more: false });
   };
 
+  // Toggle dropdowns
+  const toggleDropdown = (dropdown) =>
+    setDropdowns(prev => ({
+      projects: dropdown === 'projects' ? !prev.projects : false,
+      more: dropdown === 'more' ? !prev.more : false,
+    }));
+
+  // Handle WhatsApp booking
   const handleWhatsAppClick = () => {
     const phoneNumber = '+201149136352';
     const message = encodeURIComponent('مرحبا، أرغب في حجز وحدة');
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
-    window.open(whatsappUrl, '_blank');
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
-  const moreLinks = [
-    { href: '/events', label: 'فعالياتنا' },
-    { href: '/careers', label: 'الوظائف' },
-    { href: '/investment', label: 'فرص الاستثمار' },
-    { href: '/vip-reviews', label: 'آراء العملاء' },
-  ];
+  // Render navigation link
+  const renderNavLink = ({ to, label }) => (
+    <li key={to}>
+      <NavLink
+        to={to}
+        className={({ isActive }) =>
+          `${styles.navLink} ${isActive ? styles.active : ''}`
+        }
+        onClick={toggleMenu}
+      >
+        {label}
+      </NavLink>
+    </li>
+  );
 
-  const toggleProjectsDropdown = () => {
-    setIsMoreDropdownOpen(false); // Close the other dropdown
-    setIsProjectsDropdownOpen(prev => !prev);
-  };
-
-  const toggleMoreDropdown = () => {
-    setIsProjectsDropdownOpen(false); // Close the other dropdown
-    setIsMoreDropdownOpen(prev => !prev);
-  };
+  // Render dropdown
+  const renderDropdown = (type, items, label) => (
+    <li className={styles.dropdown} ref={dropdownRef}>
+      <button
+        className={`${styles.dropdownToggle} ${styles.navLink} ${darkMode ? 'dm' : ''}`}
+        onClick={() => toggleDropdown(type)}
+        aria-expanded={dropdowns[type]}
+        aria-haspopup="true"
+      >
+        {label}
+        <span
+          className={`${styles.arrow} ${dropdowns[type] ? styles.arrowOpen : ''}`}
+          aria-hidden="true"
+        ></span>
+      </button>
+      <ul
+        className={`${styles.dropdownMenu} ${darkMode ? 'dm' : ''} ${dropdowns[type] ? styles.show : ''
+          }`}
+        role="menu"
+      >
+        {type === 'projects' ? (
+          isLoading ? (
+            <li className="loading"><ClipLoader color="#bfa13a" size={32} /></li>
+          ) : error ? (
+            <li>{error}</li>
+          ) : projects.length === 0 ? (
+            <li>لا توجد مشاريع متاحة</li>
+          ) : (
+            <>
+              <li>
+                <NavLink
+                  to="/projects"
+                  className={({ isActive }) =>
+                    `${styles.dropdownLink} ${isActive ? styles.active : ''}`
+                  }
+                  onClick={toggleMenu}
+                >
+                  جميع المشاريع
+                </NavLink>
+              </li>
+              {projects.map(project => (
+                <li key={project.id}>
+                  <NavLink
+                    to={`/projects/${project.id}`}
+                    className={({ isActive }) =>
+                      `${styles.dropdownLink} ${isActive ? styles.active : ''}`
+                    }
+                    onClick={toggleMenu}
+                  >
+                    {project.title}
+                  </NavLink>
+                </li>
+              ))}
+            </>
+          )
+        ) : (
+          items.map(({ to, label }) => (
+            <li key={to}>
+              <NavLink
+                to={to}
+                className={({ isActive }) =>
+                  `${styles.dropdownLink} ${isActive ? styles.active : ''}`
+                }
+                onClick={toggleMenu}
+              >
+                {label}
+              </NavLink>
+            </li>
+          ))
+        )}
+      </ul>
+    </li>
+  );
 
   return (
-    <header className={`${styles.header} dm`}>
+    <header className={`${styles.header} ${darkMode ? 'dm' : ''}`}>
       <nav className={`${styles.nav} container`} aria-label="التنقل الرئيسي">
+        {/* Logo and Theme Toggle */}
         <div className={styles.logoAndToggle}>
-          <a href="/" className={styles.logo} aria-label="الفراعنة - الصفحة الرئيسية">
+          <NavLink
+            to="/"
+            className={styles.logo}
+            aria-label="الفراعنة - الصفحة الرئيسية"
+            onClick={toggleMenu}
+          >
             <img src="/logo.png" alt="الفراعنة" />
-          </a>
-
+          </NavLink>
           <button
             className={styles.themeToggle}
             onClick={toggleTheme}
-            aria-label="تبديل الوضع المظلم"
+            aria-label={`تبديل إلى الوضع ${darkMode ? 'الفاتح' : 'المظلم'}`}
           >
             {darkMode ? <FaSun className={styles.themeIcon} /> : <FaMoon className={styles.themeIcon} />}
           </button>
         </div>
 
+        {/* Mobile Menu Toggle */}
         <button
-          className={`${styles.toggleButton} ${isOpen ? styles.active : ''}`}
+          className={`${styles.toggleButton} ${isMenuOpen ? styles.active : ''}`}
           onClick={toggleMenu}
-          aria-expanded={isOpen}
+          aria-expanded={isMenuOpen}
           aria-controls="nav-menu"
           aria-label="تبديل القائمة"
         >
@@ -101,107 +207,20 @@ function Header() {
           <span></span>
         </button>
 
-        <div className={`${styles.navLinks} ${isOpen ? styles.active : ''}`} id="nav-menu">
+        {/* Navigation Links */}
+        <div
+          className={`${styles.navLinks} ${isMenuOpen ? styles.active : ''}`}
+          id="nav-menu"
+          role="navigation"
+        >
           <ul className={styles.navList}>
-            <li>
-              <a
-                href="/"
-                className={styles.navLink}
-                onClick={toggleMenu}
-              >
-                الرئيسية
-              </a>
-            </li>
-
-            <li className={styles.dropdown} ref={selectRef}>
-              <button
-                className={`${styles.dropdownToggle} ${styles.navLink}`}
-                onClick={toggleProjectsDropdown}
-                aria-expanded={isProjectsDropdownOpen}
-                aria-haspopup="true"
-              >
-                مشاريعنا
-                <span className={`${styles.arrow} ${isProjectsDropdownOpen ? styles.arrowOpen : ''}`} aria-hidden="true"></span>
-              </button>
-              <ul className={`${styles.dropdownMenu} ${isProjectsDropdownOpen ? styles.show : ''}`}>
-                <li>
-                  <a
-                    href="/projects"
-                    className={styles.dropdownLink}
-                    onClick={() => {
-                      setIsDropdownOpen(false);
-                      setIsOpen(false);
-                    }}
-                  >
-                    جميع المشاريع
-                  </a>
-                </li>
-                {projects.map(project => (
-                  <li key={project.id}>
-                    <a
-                      href={`/projects/${project.id}`}
-                      className={styles.dropdownLink}
-                      onClick={() => {
-                        setIsDropdownOpen(false);
-                        setIsOpen(false);
-                      }}
-                    >
-                      {project.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </li>
-
-            <li>
-              <a
-                href="/about"
-                className={styles.navLink}
-                onClick={toggleMenu}
-              >
-                عن الفراعنة
-              </a>
-            </li>
-            <li>
-              <a
-                href="/contact"
-                className={styles.navLink}
-                onClick={toggleMenu}
-              >
-                تواصل معنا
-              </a>
-            </li>
-            <li className={styles.dropdown} ref={selectRef}>
-              <button
-                className={`${styles.dropdownToggle} ${styles.navLink} dm`}
-                onClick={toggleMoreDropdown}
-                aria-expanded={isMoreDropdownOpen}
-                aria-haspopup="true"
-              >
-                المزيد
-                <span className={`${styles.arrow} ${isMoreDropdownOpen ? styles.arrowOpen : ''}`} aria-hidden="true"></span>
-              </button>
-              <ul className={`${styles.dropdownMenu} ${isMoreDropdownOpen ? styles.show : ''}`}>
-                {moreLinks.map((link) => (
-                  <li key={link.href}>
-                    <a
-                      href={link.href}
-                      className={styles.dropdownLink}
-                      onClick={() => {
-                        setIsMoreDropdownOpen(false);
-                        setIsProjectsDropdownOpen(false);
-                        setIsOpen(false);
-                      }}
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </li>
+            {navLinks.map(renderNavLink)}
+            {renderDropdown('projects', projects, 'مشاريعنا')}
+            {renderDropdown('more', moreLinks, 'المزيد')}
           </ul>
         </div>
 
+        {/* Book Now Button */}
         <button
           className={`${styles.bookButton} gold-button`}
           onClick={handleWhatsAppClick}

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './ExclusiveOffers.module.css';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebase/config';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 function ExclusiveOffers() {
   const [offers, setOffers] = useState([]);
@@ -26,7 +27,7 @@ function ExclusiveOffers() {
     fetchOffers();
   }, []);
 
-  if (loading) return <div className={styles.loading}>جاري التحميل...</div>;
+  if (loading) return <div className='loading'><ClipLoader color="#bfa13a" size={48} /></div>;
   if (offers.length === 0) return '';
 
   return (

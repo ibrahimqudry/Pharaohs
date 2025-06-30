@@ -2,24 +2,27 @@ import { useEffect, useState } from "react";
 import { db } from "../../../firebase/config";
 import { doc, getDoc, getDocs, collection } from "firebase/firestore";
 import styles from './PharaohsEvents.module.css';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 function PharaohsEvents() {
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchBestEvents = async () => {
       // 1. Get the best events IDs
       const bestEventsDoc = await getDoc(doc(db, "homepage", "bestEvents"));
-      if (!bestEventsDoc.exists()) return;
+      if (!bestEventsDoc.exists()) { setLoading(false); return; }
 
       const { eventIds } = bestEventsDoc.data();
-      if (!eventIds || eventIds.length === 0) return;
+      if (!eventIds || eventIds.length === 0) { setLoading(false); return; }
 
       // 2. Fetch all events and filter by best event IDs
       const eventsSnapshot = await getDocs(collection(db, "events"));
       const allEvents = eventsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       const filteredEvents = allEvents.filter(event => eventIds.includes(event.id));
       setEvents(filteredEvents);
+      setLoading(false);
     };
 
     fetchBestEvents();
@@ -34,8 +37,10 @@ function PharaohsEvents() {
         </div>
 
         <div className={styles.eventsGrid}>
-          {events.map((event) => (
-            <div key={event.id} className={styles.eventCard}>
+          {loading ? (
+            <div className="loading"><ClipLoader color="#bfa13a" size={48} /></div>
+          ) : events.map((event) => (
+            <div key={event.id} className={`${styles.eventCard} card`}>
               <div className={styles.eventImage}>
                 <img src={event.image} alt={event.title} />
               </div>
@@ -43,7 +48,7 @@ function PharaohsEvents() {
                 <div className={styles.eventDate}>{event.date}</div>
                 <h3 className={styles.eventTitle}>{event.title}</h3>
                 <p className={styles.eventDescription}>{event.description}</p>
-                <a href={event.detailsLink || "/events"} className={styles.eventButton}>التفاصيل</a>
+                <a href={event.detailsLink || "/events"} className={`${styles.eventButton} dmGold`}>التفاصيل</a>
               </div>
             </div>
           ))}

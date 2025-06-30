@@ -10,7 +10,7 @@ function Testimonials() {
         </div>
 
         <div className={styles.testimonialsGrid}>
-          <div className={styles.testimonialCard}>
+          <div className={`${styles.testimonialCard} card`}>
             <div className={styles.testimonialContent}>
               <div className={styles.quoteIcon}>
                 <i className="fas fa-quote-right"></i>
@@ -35,7 +35,7 @@ function Testimonials() {
             </div>
           </div>
 
-          <div className={styles.testimonialCard}>
+          <div className={`${styles.testimonialCard} card`}>
             <div className={styles.testimonialContent}>
               <div className={styles.quoteIcon}>
                 <i className="fas fa-quote-right"></i>
@@ -59,7 +59,8 @@ function Testimonials() {
               </div>
             </div>
           </div>
-          <div className={styles.testimonialCard}>
+          
+          <div className={`${styles.testimonialCard} card`}>
             <div className={styles.testimonialContent}>
               <div className={styles.quoteIcon}>
                 <i className="fas fa-quote-right"></i>

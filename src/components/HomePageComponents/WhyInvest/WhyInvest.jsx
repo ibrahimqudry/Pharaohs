@@ -25,7 +25,7 @@ function WhyInvest() {
         <h2 className={styles.sectionTitle}>لماذا تستثمر مع الفراعنة؟</h2>
         <div className={styles.grid}>
           {reasons.map((reason, index) => (
-            <div key={index} className={styles.reasonCard}>
+            <div key={index} className={`${styles.reasonCard} card`}>
               <div className={styles.reasonIcon}>{reason.icon}</div>
               <h3 className={styles.reasonTitle}>{reason.title}</h3>
               <p className={styles.reasonDescription}>{reason.description}</p>
