@@ -80,6 +80,7 @@ export default function HomeEditor() {
 
   const handleEditSlide = (slide) => {
     setEditingSlide(slide);
+    setEditingOffer(null);
   };
 
   const handleUpdateSlide = async () => {
@@ -123,6 +124,9 @@ export default function HomeEditor() {
       try {
         await deleteDoc(doc(db, 'heroSlides', id));
         setHeroSlides(heroSlides.filter(s => s.id !== id));
+        if (editingSlide && editingSlide.id === id) {
+          setEditingSlide(null);
+        }
         alert('تم حذف السلايد بنجاح');
       } catch (error) {
         console.error('Error deleting slide:', error);
@@ -133,6 +137,7 @@ export default function HomeEditor() {
 
   const handleEditOffer = (offer) => {
     setEditingOffer(offer);
+    setEditingSlide(null);
   };
 
   const handleUpdateOffer = async () => {
@@ -178,6 +183,9 @@ export default function HomeEditor() {
       try {
         await deleteDoc(doc(db, 'offers', id));
         setOffers(offers.filter(o => o.id !== id));
+        if (editingOffer && editingOffer.id === id) {
+          setEditingOffer(null);
+        }
         alert('تم حذف العرض بنجاح');
       } catch (error) {
         console.error('Error deleting offer:', error);
@@ -196,19 +204,12 @@ export default function HomeEditor() {
 
   const saveVipProjects = async (projectIds) => {
     try {
-      // Reference to the VIP projects collection
-      const vipRef = doc(db, "homepage", "vipProjects");
-
-      // Update the document with selected project IDs
-      await setDoc(vipRef, {
-        projectIds: projectIds
-      }, { merge: true });
-
-      // Show success message
-      alert("تم حفظ المشاريع المميزة بنجاح");
+      const vipRef = doc(db, 'homepage', 'vipProjects');
+      await setDoc(vipRef, { projectIds }, { merge: true });
+      alert('تم حفظ المشاريع المميزة بنجاح');
     } catch (error) {
-      console.error("Error saving VIP projects:", error);
-      alert("حدث خطأ أثناء حفظ المشاريع المميزة");
+      console.error('Error saving VIP projects:', error);
+      alert('حدث خطأ أثناء حفظ المشاريع المميزة');
     }
   };
 
@@ -222,19 +223,12 @@ export default function HomeEditor() {
 
   const saveBestEvents = async (eventIds) => {
     try {
-      // Reference to the Best Events collection
-      const bestEventsRef = doc(db, "homepage", "bestEvents");
-
-      // Update the document with selected event IDs
-      await setDoc(bestEventsRef, {
-        eventIds: eventIds
-      }, { merge: true });
-
-      // Show success message
-      alert("تم حفظ أفضل الفعاليات بنجاح");
+      const bestEventsRef = doc(db, 'homepage', 'bestEvents');
+      await setDoc(bestEventsRef, { eventIds }, { merge: true });
+      alert('تم حفظ أفضل الفعاليات بنجاح');
     } catch (error) {
-      console.error("Error saving Best Events:", error);
-      alert("حدث خطأ أثناء حفظ أفضل الفعاليات");
+      console.error('Error saving Best Events:', error);
+      alert('حدث خطأ أثناء حفظ أفضل الفعاليات');
     }
   };
 
@@ -246,7 +240,7 @@ export default function HomeEditor() {
         <div className={styles.projectsList}>
           <h3 className={styles.subsectionTitle}>قائمة السلايدات</h3>
           <div className={styles.projectsTable}>
-            <table>
+            <table className={styles.dataTable}>
               <thead>
                 <tr>
                   <th>العنوان</th>
@@ -289,14 +283,16 @@ export default function HomeEditor() {
                 type="text"
                 value={editingSlide.title}
                 onChange={(e) => setEditingSlide({ ...editingSlide, title: e.target.value })}
+                placeholder="أدخل العنوان"
               />
             </div>
             <div className={styles.formGroup}>
               <label>الوصف</label>
-              <input
-                type="text"
+              <textarea
                 value={editingSlide.description}
                 onChange={(e) => setEditingSlide({ ...editingSlide, description: e.target.value })}
+                placeholder="أدخل الوصف"
+                rows="3"
               />
             </div>
             <div className={styles.formGroup}>
@@ -305,6 +301,7 @@ export default function HomeEditor() {
                 type="text"
                 value={editingSlide.image}
                 onChange={(e) => setEditingSlide({ ...editingSlide, image: e.target.value })}
+                placeholder="أدخل رابط الصورة"
               />
             </div>
             <div className={styles.formGroup}>
@@ -313,6 +310,7 @@ export default function HomeEditor() {
                 type="text"
                 value={editingSlide.link}
                 onChange={(e) => setEditingSlide({ ...editingSlide, link: e.target.value })}
+                placeholder="أدخل الرابط"
               />
             </div>
             <div className={styles.formActions}>
@@ -331,7 +329,7 @@ export default function HomeEditor() {
             </div>
           </div>
         ) : (
-          <div className={styles.addForm}>
+          <div className={styles.editForm}>
             <h3 className={styles.subsectionTitle}>إضافة سلايد جديد</h3>
             <div className={styles.formGroup}>
               <label>العنوان</label>
@@ -339,14 +337,16 @@ export default function HomeEditor() {
                 type="text"
                 value={newSlide.title}
                 onChange={(e) => setNewSlide({ ...newSlide, title: e.target.value })}
+                placeholder="أدخل العنوان"
               />
             </div>
             <div className={styles.formGroup}>
               <label>الوصف</label>
-              <input
-                type="text"
+              <textarea
                 value={newSlide.description}
                 onChange={(e) => setNewSlide({ ...newSlide, description: e.target.value })}
+                placeholder="أدخل الوصف"
+                rows="3"
               />
             </div>
             <div className={styles.formGroup}>
@@ -355,6 +355,7 @@ export default function HomeEditor() {
                 type="text"
                 value={newSlide.image}
                 onChange={(e) => setNewSlide({ ...newSlide, image: e.target.value })}
+                placeholder="أدخل رابط الصورة"
               />
             </div>
             <div className={styles.formGroup}>
@@ -363,11 +364,12 @@ export default function HomeEditor() {
                 type="text"
                 value={newSlide.link}
                 onChange={(e) => setNewSlide({ ...newSlide, link: e.target.value })}
+                placeholder="أدخل الرابط"
               />
             </div>
             <div className={styles.formActions}>
               <button
-                className={styles.saveButton}
+                className={styles.addButton}
                 onClick={handleAddSlide}
               >
                 إضافة السلايد
@@ -383,7 +385,7 @@ export default function HomeEditor() {
         <div className={styles.projectsList}>
           <h3 className={styles.subsectionTitle}>قائمة العروض</h3>
           <div className={styles.projectsTable}>
-            <table>
+            <table className={styles.dataTable}>
               <thead>
                 <tr>
                   <th>العنوان</th>
@@ -428,14 +430,16 @@ export default function HomeEditor() {
                 type="text"
                 value={editingOffer.title}
                 onChange={(e) => setEditingOffer({ ...editingOffer, title: e.target.value })}
+                placeholder="أدخل العنوان"
               />
             </div>
             <div className={styles.formGroup}>
               <label>الوصف</label>
-              <input
-                type="text"
+              <textarea
                 value={editingOffer.description}
                 onChange={(e) => setEditingOffer({ ...editingOffer, description: e.target.value })}
+                placeholder="أدخل الوصف"
+                rows="3"
               />
             </div>
             <div className={styles.formGroup}>
@@ -444,6 +448,7 @@ export default function HomeEditor() {
                 type="text"
                 value={editingOffer.price}
                 onChange={(e) => setEditingOffer({ ...editingOffer, price: e.target.value })}
+                placeholder="أدخل السعر"
               />
             </div>
             <div className={styles.formGroup}>
@@ -452,6 +457,7 @@ export default function HomeEditor() {
                 type="text"
                 value={editingOffer.image}
                 onChange={(e) => setEditingOffer({ ...editingOffer, image: e.target.value })}
+                placeholder="أدخل رابط الصورة"
               />
             </div>
             <div className={styles.formGroup}>
@@ -460,6 +466,7 @@ export default function HomeEditor() {
                 type="text"
                 value={editingOffer.link}
                 onChange={(e) => setEditingOffer({ ...editingOffer, link: e.target.value })}
+                placeholder="أدخل الرابط"
               />
             </div>
             <div className={styles.formActions}>
@@ -478,7 +485,7 @@ export default function HomeEditor() {
             </div>
           </div>
         ) : (
-          <div className={styles.addForm}>
+          <div className={styles.editForm}>
             <h3 className={styles.subsectionTitle}>إضافة عرض جديد</h3>
             <div className={styles.formGroup}>
               <label>العنوان</label>
@@ -486,14 +493,16 @@ export default function HomeEditor() {
                 type="text"
                 value={newOffer.title}
                 onChange={(e) => setNewOffer({ ...newOffer, title: e.target.value })}
+                placeholder="أدخل العنوان"
               />
             </div>
             <div className={styles.formGroup}>
               <label>الوصف</label>
-              <input
-                type="text"
+              <textarea
                 value={newOffer.description}
                 onChange={(e) => setNewOffer({ ...newOffer, description: e.target.value })}
+                placeholder="أدخل الوصف"
+                rows="3"
               />
             </div>
             <div className={styles.formGroup}>
@@ -502,6 +511,7 @@ export default function HomeEditor() {
                 type="text"
                 value={newOffer.price}
                 onChange={(e) => setNewOffer({ ...newOffer, price: e.target.value })}
+                placeholder="أدخل السعر"
               />
             </div>
             <div className={styles.formGroup}>
@@ -510,6 +520,7 @@ export default function HomeEditor() {
                 type="text"
                 value={newOffer.image}
                 onChange={(e) => setNewOffer({ ...newOffer, image: e.target.value })}
+                placeholder="أدخل رابط الصورة"
               />
             </div>
             <div className={styles.formGroup}>
@@ -518,11 +529,12 @@ export default function HomeEditor() {
                 type="text"
                 value={newOffer.link}
                 onChange={(e) => setNewOffer({ ...newOffer, link: e.target.value })}
+                placeholder="أدخل الرابط"
               />
             </div>
             <div className={styles.formActions}>
               <button
-                className={styles.saveButton}
+                className={styles.addButton}
                 onClick={handleAddOffer}
               >
                 إضافة العرض
@@ -532,9 +544,9 @@ export default function HomeEditor() {
         )}
       </div>
 
-      {/* VIP projects */}
-      <div className={styles.section}>
-        <h3>اختر المشاريع المميزة</h3>
+      {/* VIP Projects Section */}
+      <div className={styles.editorSection}>
+        <h2 className={styles.sectionTitle}>اختر المشاريع المميزة</h2>
         <div className={styles.projectsGrid}>
           {allProjects.map(project => (
             <div key={project.id} className={styles.projectCard}>
@@ -551,18 +563,21 @@ export default function HomeEditor() {
             </div>
           ))}
         </div>
-        <button
-          className={styles.saveButton}
-          onClick={() => saveVipProjects(selectedVipProjects)}
-        >
-          حفظ المشاريع المميزة
-        </button>
+        <div className={styles.formActions}>
+          <button
+            className={styles.saveButton}
+            onClick={() => saveVipProjects(selectedVipProjects)}
+          >
+            حفظ المشاريع المميزة
+          </button>
+        </div>
       </div>
-      {/* Best Events */}
-      <div className={styles.section}>
-        <h3>اختر أفضل الفعاليات</h3>
+
+      {/* Best Events Section */}
+      <div className={styles.editorSection}>
+        <h2 className={styles.sectionTitle}>اختر أفضل الفعاليات</h2>
         <div className={styles.projectsGrid}>
-          {allEvents && allEvents.map(event => (
+          {allEvents.map(event => (
             <div key={event.id} className={styles.projectCard}>
               <input
                 type="checkbox"
@@ -577,12 +592,14 @@ export default function HomeEditor() {
             </div>
           ))}
         </div>
-        <button
-          className={styles.saveButton}
-          onClick={() => saveBestEvents(selectedBestEvents)}
-        >
-          حفظ أفضل الفعاليات
-        </button>
+        <div className={styles.formActions}>
+          <button
+            className={styles.saveButton}
+            onClick={() => saveBestEvents(selectedBestEvents)}
+          >
+            حفظ أفضل الفعاليات
+          </button>
+        </div>
       </div>
     </div>
   );

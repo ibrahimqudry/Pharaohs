@@ -34,7 +34,8 @@ function Header() {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (selectRef.current && !selectRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
+        setIsMoreDropdownOpen(false);
+        setIsProjectsDropdownOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
