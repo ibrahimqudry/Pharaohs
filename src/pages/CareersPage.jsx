@@ -1,27 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import styles from './CareersPage.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faFilter, 
-  faBriefcase, 
-  faBuilding, 
-  faGraduationCap, 
-  faMapMarkerAlt, 
-  faCalendarAlt, 
-  faMoneyBillWave, 
-  faCheckCircle, 
-  faPaperPlane 
+import {
+  faFilter,
+  faBriefcase,
+  faBuilding,
+  faGraduationCap,
+  faMapMarkerAlt,
+  faCalendarAlt,
+  faMoneyBillWave,
+  faCheckCircle,
+  faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons';
 import { db } from '../firebase/config';
 import { collection, getDocs } from 'firebase/firestore';
+import emailjs from '@emailjs/browser';
 
 export default function CareersPage() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedJob, setSelectedJob] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
+    emailjs.init('yETOfPjnXx2i8GKty');
     const fetchJobs = async () => {
       try {
         const jobsCollection = collection(db, 'jobs');
@@ -36,12 +39,43 @@ export default function CareersPage() {
     fetchJobs();
   }, []);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const email = e.target.email.value;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      alert('الرجاء إدخال بريد إلكتروني صالح');
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      // Send email via EmailJS
+      await emailjs.sendForm(
+        'service_3e343ys',
+        'template_mdsgph9',
+        e.target,
+        'yETOfPjnXx2i8GKty' 
+      );
+
+      alert('تم إرسال طلبك بنجاح!');
+      e.target.reset();
+      setSelectedJob(null); // Reset selected job after submission
+    } catch (error) {
+      console.error('Error:', error);
+      alert('حدث خطأ أثناء إرسال الطلب. حاول مرة أخرى.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   if (loading) {
     return <div>جاري التحميل...</div>;
   }
 
-  const filteredJobs = activeFilter === 'all' 
-    ? jobs 
+  const filteredJobs = activeFilter === 'all'
+    ? jobs
     : jobs.filter(job => job.category === activeFilter);
 
   return (
@@ -59,41 +93,41 @@ export default function CareersPage() {
             <span>تصفية الوظائف</span>
           </div>
           <div className={styles.filterButtons}>
-            <button 
+            <button
               className={`${styles.filterButton} ${activeFilter === 'all' ? styles.active : ''}`}
               onClick={() => setActiveFilter('all')}
             >
               الكل
             </button>
-            <button 
+            <button
               className={`${styles.filterButton} ${activeFilter === 'هندسة' ? styles.active : ''}`}
               onClick={() => setActiveFilter('هندسة')}
             >
               <FontAwesomeIcon icon={faBuilding} className={styles.buttonIcon} />
               هندسة
             </button>
-            <button 
+            <button
               className={`${styles.filterButton} ${activeFilter === 'تسويق' ? styles.active : ''}`}
               onClick={() => setActiveFilter('تسويق')}
             >
               <FontAwesomeIcon icon={faBriefcase} className={styles.buttonIcon} />
               تسويق
             </button>
-            <button 
+            <button
               className={`${styles.filterButton} ${activeFilter === 'مبيعات' ? styles.active : ''}`}
               onClick={() => setActiveFilter('مبيعات')}
             >
               <FontAwesomeIcon icon={faMoneyBillWave} className={styles.buttonIcon} />
               مبيعات
             </button>
-            <button 
+            <button
               className={`${styles.filterButton} ${activeFilter === 'مالية' ? styles.active : ''}`}
               onClick={() => setActiveFilter('مالية')}
             >
               <FontAwesomeIcon icon={faMoneyBillWave} className={styles.buttonIcon} />
               مالية
             </button>
-            <button 
+            <button
               className={`${styles.filterButton} ${activeFilter === 'تصميم' ? styles.active : ''}`}
               onClick={() => setActiveFilter('تصميم')}
             >
@@ -107,8 +141,8 @@ export default function CareersPage() {
         <div className={styles.jobsContainer}>
           <div className={styles.jobsList}>
             {filteredJobs.map(job => (
-              <div 
-                key={job.id} 
+              <div
+                key={job.id}
                 className={`${styles.jobCard} ${selectedJob && selectedJob.id === job.id ? styles.active : ''}`}
                 onClick={() => setSelectedJob(job)}
               >
@@ -219,27 +253,54 @@ export default function CareersPage() {
         <div id="applicationForm" className={styles.applicationForm}>
           <h2 className={styles.formTitle}>تقدم لوظيفة في الفراعنة</h2>
           <p className={styles.formDescription}>املأ النموذج التالي للتقدم للوظيفة المناسبة لك</p>
-          
-          <form className={styles.form}>
+
+          <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.formRow}>
               <div className={styles.formGroup}>
                 <label htmlFor="name">الاسم الكامل</label>
-                <input type="text" id="name" name="name" required />
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  placeholder="أدخل اسمك الكامل"
+                />
               </div>
               <div className={styles.formGroup}>
                 <label htmlFor="email">البريد الإلكتروني</label>
-                <input type="email" id="email" name="email" required />
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  placeholder="أدخل بريدك الإلكتروني"
+                />
               </div>
             </div>
 
             <div className={styles.formRow}>
               <div className={styles.formGroup}>
                 <label htmlFor="phone">رقم الهاتف</label>
-                <input type="tel" id="phone" name="phone" required />
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  required
+                  placeholder="أدخل رقم هاتفك"
+                />
               </div>
               <div className={styles.formGroup}>
                 <label htmlFor="position">الوظيفة المطلوبة</label>
-                <select id="position" name="position" required>
+                <select
+                  id="position"
+                  name="position"
+                  required
+                  value={selectedJob ? selectedJob.title : ''}
+                  onChange={(e) => {
+                    const job = jobs.find(j => j.title === e.target.value);
+                    setSelectedJob(job || null);
+                  }}
+                >
                   <option value="">اختر الوظيفة</option>
                   {jobs.map(job => (
                     <option key={job.id} value={job.title}>{job.title}</option>
@@ -250,24 +311,32 @@ export default function CareersPage() {
 
             <div className={styles.formGroup}>
               <label htmlFor="experience">الخبرات السابقة</label>
-              <textarea id="experience" name="experience" rows="4" required></textarea>
-            </div>
-
-            <div className={styles.formGroup}>
-              <label htmlFor="cv" className={styles.fileLabel}>
-                السيرة الذاتية (PDF أو Word)
-                <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx" required />
-              </label>
+              <textarea
+                id="experience"
+                name="experience"
+                rows="4"
+                required
+                placeholder="صف خبراتك السابقة"
+              ></textarea>
             </div>
 
             <div className={styles.formGroup}>
               <label htmlFor="message">رسالة تعريفية</label>
-              <textarea id="message" name="message" rows="4"></textarea>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                placeholder="اكتب رسالتك التعريفية (اختياري)"
+              ></textarea>
             </div>
 
-            <button type="submit" className={styles.submitButton}>
+            <button
+              type="submit"
+              className={styles.submitButton}
+              disabled={isSubmitting}
+            >
               <FontAwesomeIcon icon={faPaperPlane} className={styles.submitIcon} />
-              إرسال الطلب
+              {isSubmitting ? 'جاري الإرسال...' : 'إرسال الطلب'}
             </button>
           </form>
         </div>
@@ -275,31 +344,39 @@ export default function CareersPage() {
         {/* Join Our Team */}
         <div className={styles.joinTeam}>
           <h2 className={styles.joinTitle}>انضم إلى فريق النجاح</h2>
-          <p className={styles.joinDescription}>في شركة الفراعنة للتطوير العقاري، نؤمن بأن موظفينا هم أساس نجاحنا. نحن نسعى دائماً لاستقطاب المواهب المتميزة والكفاءات العالية للانضمام إلى فريقنا.</p>
-          
+          <p className={styles.joinDescription}>
+            في شركة الفراعنة للتطوير العقاري، نؤمن بأن موظفينا هم أساس نجاحنا. نحن نسعى دائماً لاستقطاب المواهب المتميزة والكفاءات العالية للانضمام إلى فريقنا.
+          </p>
+
           <div className={styles.benefitsGrid}>
             <div className={styles.benefitCard}>
               <div className={styles.benefitIcon}>
                 <FontAwesomeIcon icon={faGraduationCap} />
               </div>
               <h3 className={styles.benefitTitle}>التطوير المهني</h3>
-              <p className={styles.benefitText}>نوفر فرص تدريب وتطوير مستمرة لموظفينا لتعزيز مهاراتهم وتطوير مساراتهم المهنية.</p>
+              <p className={styles.benefitText}>
+                نوفر فرص تدريب وتطوير مستمرة لموظفينا لتعزيز مهاراتهم وتطوير مساراتهم المهنية.
+              </p>
             </div>
-            
+
             <div className={styles.benefitCard}>
               <div className={styles.benefitIcon}>
                 <FontAwesomeIcon icon={faBriefcase} />
               </div>
               <h3 className={styles.benefitTitle}>بيئة عمل محفزة</h3>
-              <p className={styles.benefitText}>نحرص على توفير بيئة عمل إيجابية ومحفزة تشجع على الإبداع والابتكار وتحقيق الذات.</p>
+              <p className={styles.benefitText}>
+                نحرص على توفير بيئة عمل إيجابية ومحفزة تشجع على الإبداع والابتكار وتحقيق الذات.
+              </p>
             </div>
-            
+
             <div className={styles.benefitCard}>
               <div className={styles.benefitIcon}>
                 <FontAwesomeIcon icon={faMoneyBillWave} />
               </div>
               <h3 className={styles.benefitTitle}>حزمة مزايا تنافسية</h3>
-              <p className={styles.benefitText}>نقدم رواتب تنافسية وحزمة مزايا شاملة تشمل التأمين الصحي والمكافآت والحوافز.</p>
+              <p className={styles.benefitText}>
+                نقدم رواتب تنافسية وحزمة مزايا شاملة تشمل التأمين الصحي والمكافآت والحوافز.
+              </p>
             </div>
           </div>
         </div>
