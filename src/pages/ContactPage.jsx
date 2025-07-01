@@ -80,7 +80,7 @@ function ContactPage() {
         {/* Contact Information Section */}
         <section className={styles.contactSection}>
           <div className={styles.contactGrid}>
-            <div className={styles.contactInfo}>
+            <div className={`card ${styles.contactInfo}`}>
               <h2 className={styles.sectionTitle}>معلومات الاتصال</h2>
               <div className={styles.infoItem}>
                 <FontAwesomeIcon icon={faPhone} className={styles.infoIcon} />
@@ -110,19 +110,19 @@ function ContactPage() {
               <div className={styles.socialSection}>
                 <h3>تابعنا على وسائل التواصل الاجتماعي</h3>
                 <div className={styles.socialLinks}>
-                  <a href="#" className={styles.socialLink} aria-label="Facebook">
+                  <a href="#" className={`dmGold ${styles.socialLink}`} aria-label="Facebook">
                     <FontAwesomeIcon icon={faFacebookF} />
                   </a>
-                  <a href="#" className={styles.socialLink} aria-label="Instagram">
+                  <a href="#" className={`dmGold ${styles.socialLink}`} aria-label="Instagram">
                     <FontAwesomeIcon icon={faInstagram} />
                   </a>
-                  <a href="#" className={styles.socialLink} aria-label="YouTube">
+                  <a href="#" className={`dmGold ${styles.socialLink}`} aria-label="YouTube">
                     <FontAwesomeIcon icon={faYoutube} />
                   </a>
-                  <a href="#" className={styles.socialLink} aria-label="Twitter">
+                  <a href="#" className={`dmGold ${styles.socialLink}`} aria-label="Twitter">
                     <FontAwesomeIcon icon={faTwitter} />
                   </a>
-                  <a href="#" className={styles.socialLink} aria-label="LinkedIn">
+                  <a href="#" className={`dmGold ${styles.socialLink}`} aria-label="LinkedIn">
                     <FontAwesomeIcon icon={faLinkedinIn} />
                   </a>
                 </div>
@@ -130,7 +130,7 @@ function ContactPage() {
             </div>
 
             {/* Contact Form */}
-            <div className={styles.contactForm}>
+            <div className={`card ${styles.contactForm}`}>
               <h2 className={styles.sectionTitle}>أرسل لنا رسالة</h2>
               <form onSubmit={handleSubmit}>
                 <div className={styles.formGroup}>
@@ -193,7 +193,7 @@ function ContactPage() {
           <h2 className={styles.sectionTitle}>فروعنا</h2>
           <div className={styles.branchesGrid}>
             {branches.map((branch, index) => (
-              <div key={index} className={styles.branchCard}>
+              <div key={index} className={`card ${styles.branchCard}`}>
                 <h3 className={styles.branchName}>{branch.name}</h3>
                 <div className={styles.branchDetails}>
                   <p><FontAwesomeIcon icon={faMapMarkerAlt} /> {branch.address}</p>
@@ -204,7 +204,7 @@ function ContactPage() {
                   href={branch.mapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={styles.mapLink}
+                  className={`dmGold ${styles.mapLink}`}
                 >
                   عرض على الخريطة
                 </a>
