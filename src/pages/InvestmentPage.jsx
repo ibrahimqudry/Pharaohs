@@ -16,6 +16,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { db } from '../firebase/config';
 import { collection, getDocs } from 'firebase/firestore';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 export default function InvestmentPage() {
   const [activeAccordion, setActiveAccordion] = useState(null);
@@ -61,7 +62,11 @@ export default function InvestmentPage() {
   }, []);
 
   if (loading) {
-    return <div>جاري التحميل...</div>;
+    return (
+      <div className="loading">
+        <ClipLoader size={40} color="#bfa046" />
+      </div>
+    );
   }
 
   return (
@@ -78,13 +83,13 @@ export default function InvestmentPage() {
           <h2 className={styles.sectionTitle}>فرص استثمارية متاحة</h2>
           <div className={styles.opportunitiesGrid}>
             {investmentOpportunities.map((opportunity) => (
-              <div key={opportunity.id} className={styles.opportunityCard}>
+              <div key={opportunity.id} className={`card ${styles.opportunityCard}`}>
                 <div className={styles.opportunityIcon}>
                   <FontAwesomeIcon icon={iconMap[opportunity.icon]} />
                 </div>
                 <h3 className={styles.opportunityTitle}>{opportunity.title}</h3>
                 <p className={styles.opportunityDescription}>{opportunity.description}</p>
-                <div className={styles.opportunityDetails}>
+                <div className={`dmBackground ${styles.opportunityDetails}`}>
                   <div className={styles.detailItem}>
                     <span className={styles.detailLabel}>الحد الأدنى للاستثمار:</span>
                     <span className={styles.detailValue}>{opportunity.minInvestment}</span>
@@ -109,7 +114,7 @@ export default function InvestmentPage() {
           <h2 className={styles.sectionTitle}>لماذا تستثمر مع الفراعنة؟</h2>
           <div className={styles.benefitsGrid}>
             {investmentBenefits.map((benefit, index) => (
-              <div key={index} className={styles.benefitCard}>
+              <div key={index} className={`card ${styles.benefitCard}`}>
                 <div className={styles.benefitIcon}>
                   <FontAwesomeIcon icon={iconMap[benefit.icon]} />
                 </div>
@@ -123,11 +128,11 @@ export default function InvestmentPage() {
         {/* FAQs Section */}
         <section className={styles.faqSection}>
           <h2 className={styles.sectionTitle}>الأسئلة الشائعة</h2>
-          <div className={styles.faqContainer}>
+          <div className={`container ${styles.faqContainer}`}>
             {faqs.map((faq, index) => (
               <div key={index} className={styles.faqItem}>
                 <div
-                  className={`${styles.faqQuestion} ${activeAccordion === index ? styles.active : ''}`}
+                  className={`${styles.faqQuestion} ${activeAccordion === index ? styles.active : 'dm'}`}
                   onClick={() => toggleAccordion(index)}
                 >
                   <span><FontAwesomeIcon icon={faQuestionCircle} className={styles.questionIcon} /> {faq.question}</span>
