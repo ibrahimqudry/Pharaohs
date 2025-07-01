@@ -36,7 +36,7 @@ function VipReviewsPage() {
 
   const handleWhatsAppClick = () => {
     const phoneNumber = '+201149136352';
-    const message = encodeURIComponent('مرحبا، أرغب في حجز وحدة');
+    const message = encodeURIComponent(`مرحبا، أرغب في التواصل`);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -59,7 +59,7 @@ function VipReviewsPage() {
               <ClipLoader color="#bfa13a" size={60} />
             </div>
           ) : vipReviews.map(review => (
-            <div key={review.id} className={styles.reviewCard}>
+            <div key={review.id} className={`card ${styles.reviewCard}`}>
               <div className={styles.reviewHeader}>
                 <div className={styles.reviewerInfo}>
                   <div className={styles.reviewerImage}>
