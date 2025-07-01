@@ -23,7 +23,11 @@
 .logoText {
   font-size: 2rem;
   font-weight: bold;
-  color: var(--color-gold);
+  background: var(--color-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
   margin-bottom: 0.25rem;
 }
 
@@ -48,7 +52,11 @@
   font-size: 1.25rem;
   font-weight: bold;
   margin-bottom: 1rem;
-  color: var(--color-gold);
+  background: var(--color-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
   position: relative;
   display: inline-block;
 }

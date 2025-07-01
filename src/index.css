@@ -126,7 +126,11 @@ body.dark-mode .themeIcon {
 }
 
 body.dark-mode .dmGold {
-  color: gold;
+  background: var(--color-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 
 /* Fix any cards or containers that might need specific styling */

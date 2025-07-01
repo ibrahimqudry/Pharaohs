@@ -9,6 +9,7 @@
 /* Reset and base styles */
 :root {
   --color-gold: #D4AF37;
+  --color-gold-gradient: linear-gradient(90deg, #D4AF37 0%, #FFD700 100%);
   --color-black: #1A1A1A;
   --color-white: #FFFFFF;
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -37,18 +38,19 @@ body {
 /* Button styles */
 .gold-button {
   display: inline-block;
-  background-color: var(--color-gold);
+  background-image: var(--color-gold-gradient);
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-image 0.3s, color 0.3s;
+  border: none;
 }
 
 .gold-button:hover {
-  background-color: #B4941F;
+  background-image: linear-gradient(90deg, #B4941F 0%, #FFD700 100%);
   color: #1A1A1A;
   border: 1px solid #B4941F;
 }

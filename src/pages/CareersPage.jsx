@@ -337,7 +337,7 @@ export default function CareersPage() {
 
             <button
               type="submit"
-              className={styles.submitButton}
+              className={`gold-button ${styles.submitButton}`}
               disabled={isSubmitting}
             >
               <FontAwesomeIcon icon={faPaperPlane} className={styles.submitIcon} />

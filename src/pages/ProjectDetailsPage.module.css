@@ -293,7 +293,7 @@
 .inquiryButton {
   display: inline-block;
   padding: 1rem 2rem;
-  background: #b8860b;
+  background: var(--color-gold-gradient);
   color: white;
   text-align: center;
   border-radius: 4px;

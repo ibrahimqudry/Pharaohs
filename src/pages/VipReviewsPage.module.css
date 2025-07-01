@@ -186,7 +186,7 @@
 }
 
 .detailsButton {
-  background: var(--color-gold);
+  background: var(--color-gold-gradient);
   color: #fff;
   border: none;
   border-radius: 20px;

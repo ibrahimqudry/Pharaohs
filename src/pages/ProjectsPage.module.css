@@ -58,7 +58,7 @@
 }
 
 .filterButton.active {
-  background-color: var(--color-gold);
+  background: var(--color-gold-gradient);
   color: white;
   border-color: var(--color-gold);
 }
@@ -235,7 +235,7 @@
   padding: 3rem;
   background-color: #f8f9fa;
   border-radius: 8px;
-  margin-top: 2rem;
+  margin-block: 2rem;
 }
 
 .soldMark, .saleMark {

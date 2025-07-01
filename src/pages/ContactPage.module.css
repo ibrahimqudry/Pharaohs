@@ -215,7 +215,11 @@
 
 .mapLink {
   display: inline-block;
-  color: var(--color-gold);
+  background: var(--color-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
   text-decoration: none;
   font-weight: 500;
   transition: all 0.3s;

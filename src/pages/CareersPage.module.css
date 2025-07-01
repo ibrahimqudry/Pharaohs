@@ -79,7 +79,7 @@
 }
 
 .filterButton.active {
-  background-color: var(--color-gold);
+  background: var(--color-gold-gradient);
   color: white;
   border-color: var(--color-gold);
 }
@@ -147,7 +147,9 @@
   color: #666;
 }
 
-.jobDepartment, .jobLocation, .jobDate {
+.jobDepartment,
+.jobLocation,
+.jobDate {
   display: flex;
   align-items: center;
 }
@@ -172,7 +174,7 @@
   position: absolute;
   top: 1.5rem;
   left: 1.5rem;
-  background-color: var(--color-gold);
+  background: var(--color-gold-gradient);
   color: white;
   padding: 0.35rem 0.75rem;
   border-radius: 4px;
@@ -229,7 +231,7 @@
 
 .jobTypeDetail {
   display: inline-block;
-  background-color: var(--color-gold);
+  background: var(--color-gold-gradient);
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -316,7 +318,7 @@
   padding: 3rem;
   background-color: #f8f9fa;
   border-radius: 8px;
-  margin-top: 1rem;
+  margin-block: 1rem;
   color: #666;
 }
 
@@ -417,8 +419,6 @@
 }
 
 .submitButton {
-  background-color: var(--color-gold);
-  color: white;
   border: none;
   border-radius: 4px;
   padding: 0.75rem 1.5rem;
