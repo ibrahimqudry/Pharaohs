@@ -28,7 +28,8 @@ function Header() {
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const dropdownRef = useRef(null);
+  const projectsDropdownRef = useRef(null);
+  const moreDropdownRef = useRef(null);
 
   // Fetch projects from Firebase
   useEffect(() => {
@@ -52,15 +53,33 @@ function Header() {
     fetchProjects();
   }, []);
 
-  // Handle clicks outside dropdowns
+  // Handle clicks and keypresses outside dropdowns
   useEffect(() => {
+    let timeoutId;
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        const isOutsideProjects = projectsDropdownRef.current && !projectsDropdownRef.current.contains(event.target);
+        const isOutsideMore = moreDropdownRef.current && !moreDropdownRef.current.contains(event.target);
+        if (isOutsideProjects && isOutsideMore) {
+          setDropdowns({ projects: false, more: false });
+        }
+      }, 100);
+    };
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
         setDropdowns({ projects: false, more: false });
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+
+    document.addEventListener('pointerdown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('pointerdown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   // Toggle mobile menu and close dropdowns
@@ -69,7 +88,7 @@ function Header() {
     setDropdowns({ projects: false, more: false });
   };
 
-  // Toggle dropdowns
+  // Toggle dropdowns, closing the other
   const toggleDropdown = (dropdown) =>
     setDropdowns(prev => ({
       projects: dropdown === 'projects' ? !prev.projects : false,
@@ -100,16 +119,16 @@ function Header() {
 
   // Render dropdown
   const renderDropdown = (type, items, label) => {
-    // Only show dropdown in mobile if menu is open
     const isMobile = window.innerWidth <= 768;
     const shouldShowDropdown = !isMobile || (isMenuOpen && dropdowns[type]);
     return (
-      <li className={styles.dropdown} ref={dropdownRef}>
+      <li className={styles.dropdown} ref={type === 'projects' ? projectsDropdownRef : moreDropdownRef}>
         <button
           className={`${styles.dropdownToggle} ${styles.navLink} ${darkMode ? 'dm' : ''}`}
           onClick={() => toggleDropdown(type)}
           aria-expanded={dropdowns[type]}
           aria-haspopup="true"
+          aria-controls={`${type}-dropdown`}
         >
           {label}
           <span
@@ -121,6 +140,7 @@ function Header() {
           <ul
             className={`${styles.dropdownMenu} ${darkMode ? 'dm' : ''} ${dropdowns[type] ? styles.show : ''}`}
             role="menu"
+            id={`${type}-dropdown`}
           >
             {type === 'projects' ? (
               isLoading ? (
