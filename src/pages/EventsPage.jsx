@@ -4,16 +4,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faMapMarkerAlt, faFilter, faBuilding, faUsers, faCertificate, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { db } from '../firebase/config';
 import { collection, getDocs } from 'firebase/firestore';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 function EventsPage() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchEvents = async () => {
       const eventsCollection = collection(db, "events");
       const data = await getDocs(eventsCollection);
       setEvents(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+      setLoading(false);
     };
     fetchEvents();
   }, []);
@@ -29,6 +32,14 @@ function EventsPage() {
     window.open(whatsappUrl, '_blank');
   };
 
+  if (loading) {
+    return (
+      <div className="loading">
+        <ClipLoader size={40} color="#bfa046" />
+      </div>
+    );
+  }
+
   return (
     <main className="pt-24 pb-16">
       <div className="container mx-auto px-4">
@@ -38,41 +49,41 @@ function EventsPage() {
         </div>
 
         {/* Filters */}
-        <div className={styles.filtersContainer}>
+        <div className={`dm ${styles.filtersContainer}`}>
           <div className={styles.filtersTitle}>
             <FontAwesomeIcon icon={faFilter} className={styles.filterIcon} />
             <span>تصفية الفعاليات</span>
           </div>
           <div className={styles.filterButtons}>
             <button
-              className={`${styles.filterButton} ${activeFilter === 'all' ? styles.active : ''}`}
+              className={`${styles.filterButton} ${activeFilter === 'all' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('all')}
             >
               الكل
             </button>
             <button
-              className={`${styles.filterButton} ${activeFilter === 'معرض' ? styles.active : ''}`}
+              className={`${styles.filterButton} ${activeFilter === 'معرض' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('معرض')}
             >
               <FontAwesomeIcon icon={faBuilding} className={styles.buttonIcon} />
               معارض
             </button>
             <button
-              className={`${styles.filterButton} ${activeFilter === 'ندوة' ? styles.active : ''}`}
+              className={`${styles.filterButton} ${activeFilter === 'ندوة' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('ندوة')}
             >
               <FontAwesomeIcon icon={faUsers} className={styles.buttonIcon} />
               ندوات
             </button>
             <button
-              className={`${styles.filterButton} ${activeFilter === 'مؤتمر' ? styles.active : ''}`}
+              className={`${styles.filterButton} ${activeFilter === 'مؤتمر' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('مؤتمر')}
             >
               <FontAwesomeIcon icon={faCertificate} className={styles.buttonIcon} />
               مؤتمرات
             </button>
             <button
-              className={`${styles.filterButton} ${activeFilter === 'جولة' ? styles.active : ''}`}
+              className={`${styles.filterButton} ${activeFilter === 'جولة' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('جولة')}
             >
               <FontAwesomeIcon icon={faMapMarkerAlt} className={styles.buttonIcon} />
@@ -84,7 +95,7 @@ function EventsPage() {
         {/* Events Grid */}
         <div className={styles.eventsGrid}>
           {filteredEvents.map(event => (
-            <div key={event.id} className={styles.eventCard}>
+            <div key={event.id} className={`card ${styles.eventCard}`}>
               <div className={styles.eventImage}>
                 <img src={event.image} alt={event.title} />
                 <div className={styles.eventType}>{event.type}</div>
@@ -101,7 +112,7 @@ function EventsPage() {
                 </div>
                 <p className={styles.eventDescription}>{event.description}</p>
 
-                <div className={styles.eventHighlights}>
+                <div className={`dm ${styles.eventHighlights}`}>
                   <h4 className={styles.highlightsTitle}>مميزات الفعالية:</h4>
                   <ul className={styles.highlightsList}>
                     {event.highlights.map((highlight, index) => (
