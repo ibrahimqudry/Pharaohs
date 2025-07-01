@@ -13,6 +13,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-image: url('/public/background3.png');
+  background-position: center;
+  background-repeat: repeat;
+  /* background-size: contain; */
+  /* background-blend-mode: overlay; */
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -21,14 +35,6 @@ a {
 
 a:hover {
   color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {
@@ -49,7 +55,7 @@ button {
 }
 
 button:hover {
-  border-color: #646cff;
+  border-color: var(--color-gold);
 }
 
 button:focus,
@@ -64,7 +70,7 @@ button:focus-visible {
   }
 
   a:hover {
-    color: #747bff;
+    color: var(--color-gold);
   }
 
   button {
@@ -72,20 +78,42 @@ button:focus-visible {
   }
 }
 
-/* Dark Mode Styles - Comprehensive */
 body.dark-mode {
   background-color: #121212;
   color: #f5f5f5;
+  background-image: url('/backgrounddm.png');
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: overlay;
 }
 
-body.dark-mode .header {
-  background: #121212;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+/* Fix any cards or containers that might need specific styling */
+body.dark-mode .card,
+body.dark-mode .container,
+body.dark-mode .dm,
+body.dark-mode section {
+  background-color: #121212;
+  color: #f5f5f5;
+  background-image: url('/backgrounddm.png');
+  background-position: center;
+  background-repeat: repeat;
+  background-blend-mode: overlay;
 }
 
-body.dark-mode .navLinks {
-  background: #121212;
+body.dark-mode .header-dm {
+  background-color: #121212;
+  background-image: none;
 }
+
+body.dark-mode .toggle-dm span {
+  background-color: gold;
+}
+
+body.dark-mode .toggle-dm span:hover {
+  background-color: white;
+}
+
+
 
 body.dark-mode .navLink,
 body.dark-mode .dropdownToggle,
@@ -135,15 +163,16 @@ body.dark-mode .dmGold {
 
 /* Fix any cards or containers that might need specific styling */
 body.dark-mode .card,
-body.dark-mode .container,
+/* body.dark-mode .container, */
 body.dark-mode .dm,
-body.dark-mode section {
+/* body.dark-mode section  */
+{
   background-color: #121212;
   color: #f5f5f5;
 }
 
 body.dark-mode .dmBackground {
-  background-color: goldenrod;
+  background-color: rgb(120, 119, 119);
 }
 
 body.dark-mode .card {

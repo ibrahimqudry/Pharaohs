@@ -11,7 +11,7 @@ import {
 function Footer() {
   return (
     <footer className={styles.footer}>
-      <div className="container">
+      <div className="footerContainer">
         <div className={styles.footerLogo}>
           <div className={styles.logoText}>الفراعنة</div>
           <p className={styles.logoTagline}>نبني مستقبلك في أسوان الجديدة</p>

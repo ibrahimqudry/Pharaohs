@@ -173,8 +173,8 @@ function Header() {
   );
 
   return (
-    <header className={`${styles.header} ${darkMode ? 'dm' : ''}`}>
-      <nav className={`${styles.nav} container`} aria-label="التنقل الرئيسي">
+    <header className={`${styles.header} ${darkMode ? 'header-dm' : ''}`}>
+      <nav className={`header-dm ${styles.nav} container`} aria-label="التنقل الرئيسي">
         {/* Logo and Theme Toggle */}
         <div className={styles.logoAndToggle}>
           <NavLink
@@ -196,7 +196,7 @@ function Header() {
 
         {/* Mobile Menu Toggle */}
         <button
-          className={`${styles.toggleButton} ${isMenuOpen ? styles.active : ''}`}
+          className={`toggle-dm ${styles.toggleButton} ${isMenuOpen ? styles.active : ''}`}
           onClick={toggleMenu}
           aria-expanded={isMenuOpen}
           aria-controls="nav-menu"
