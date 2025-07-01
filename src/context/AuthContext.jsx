@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = (password) => {
-    if (password === 'pharaohsAdmin') {
+    if (password === import.meta.env.VITE_ADMIN_PASSWORD) {
       setIsAuthenticated(true);
       localStorage.setItem('pharaohsAuth', 'true');
       // Set expiry for 12 hours from now

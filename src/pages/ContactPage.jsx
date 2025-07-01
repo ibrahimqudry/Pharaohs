@@ -15,7 +15,7 @@ function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    emailjs.init('yETOfPjnXx2i8GKty');
+    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
   }, []);
 
   const branches = [
@@ -56,11 +56,11 @@ function ContactPage() {
     try {
       // Send email via EmailJS
       await emailjs.sendForm(
-        'service_3e343ys',
-        'template_ssb13ig',
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_CONTACT_TEMPLATE_ID,
         e.target,
-        'yETOfPjnXx2i8GKty'
-      );
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
 
       alert('تم إرسال رسالتك بنجاح!');
       e.target.reset();
