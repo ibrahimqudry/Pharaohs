@@ -15,6 +15,7 @@ import {
 import { db } from '../firebase/config';
 import { collection, getDocs } from 'firebase/firestore';
 import emailjs from '@emailjs/browser';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 export default function CareersPage() {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -56,7 +57,7 @@ export default function CareersPage() {
         'service_3e343ys',
         'template_mdsgph9',
         e.target,
-        'yETOfPjnXx2i8GKty' 
+        'yETOfPjnXx2i8GKty'
       );
 
       alert('تم إرسال طلبك بنجاح!');
@@ -71,7 +72,11 @@ export default function CareersPage() {
   };
 
   if (loading) {
-    return <div>جاري التحميل...</div>;
+    return (
+      <div className="loading">
+        <ClipLoader size={40} color="#bfa046" />
+      </div>
+    );
   }
 
   const filteredJobs = activeFilter === 'all'
@@ -87,48 +92,48 @@ export default function CareersPage() {
         </div>
 
         {/* Filters */}
-        <div className={styles.filtersContainer}>
+        <div className={`dm ${styles.filtersContainer}`}>
           <div className={styles.filtersTitle}>
             <FontAwesomeIcon icon={faFilter} className={styles.filterIcon} />
             <span>تصفية الوظائف</span>
           </div>
           <div className={styles.filterButtons}>
             <button
-              className={`${styles.filterButton} ${activeFilter === 'all' ? styles.active : ''}`}
+              className={`${styles.filterButton} ${activeFilter === 'all' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('all')}
             >
               الكل
             </button>
             <button
-              className={`${styles.filterButton} ${activeFilter === 'هندسة' ? styles.active : ''}`}
+              className={`${styles.filterButton} ${activeFilter === 'هندسة' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('هندسة')}
             >
               <FontAwesomeIcon icon={faBuilding} className={styles.buttonIcon} />
               هندسة
             </button>
             <button
-              className={`${styles.filterButton} ${activeFilter === 'تسويق' ? styles.active : ''}`}
+              className={`${styles.filterButton} ${activeFilter === 'تسويق' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('تسويق')}
             >
               <FontAwesomeIcon icon={faBriefcase} className={styles.buttonIcon} />
               تسويق
             </button>
             <button
-              className={`${styles.filterButton} ${activeFilter === 'مبيعات' ? styles.active : ''}`}
+              className={`${styles.filterButton} ${activeFilter === 'مبيعات' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('مبيعات')}
             >
               <FontAwesomeIcon icon={faMoneyBillWave} className={styles.buttonIcon} />
               مبيعات
             </button>
             <button
-              className={`${styles.filterButton} ${activeFilter === 'مالية' ? styles.active : ''}`}
+              className={`${styles.filterButton} ${activeFilter === 'مالية' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('مالية')}
             >
               <FontAwesomeIcon icon={faMoneyBillWave} className={styles.buttonIcon} />
               مالية
             </button>
             <button
-              className={`${styles.filterButton} ${activeFilter === 'تصميم' ? styles.active : ''}`}
+              className={`${styles.filterButton} ${activeFilter === 'تصميم' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('تصميم')}
             >
               <FontAwesomeIcon icon={faGraduationCap} className={styles.buttonIcon} />
@@ -143,7 +148,7 @@ export default function CareersPage() {
             {filteredJobs.map(job => (
               <div
                 key={job.id}
-                className={`${styles.jobCard} ${selectedJob && selectedJob.id === job.id ? styles.active : ''}`}
+                className={`careerCard ${styles.jobCard} ${selectedJob && selectedJob.id === job.id ? styles.active : ''}`}
                 onClick={() => setSelectedJob(job)}
               >
                 <h2 className={styles.jobTitle}>{job.title}</h2>
@@ -167,13 +172,13 @@ export default function CareersPage() {
             ))}
 
             {filteredJobs.length === 0 && (
-              <div className={styles.noResults}>
+              <div className={`careerCard ${styles.noResults}`}>
                 <p>لا توجد وظائف متاحة بهذا التصنيف حالياً</p>
               </div>
             )}
           </div>
 
-          <div className={styles.jobDetails}>
+          <div className={`careerCard ${styles.jobDetails}`}>
             {selectedJob ? (
               <div className={styles.jobDetailsContent}>
                 <div className={styles.jobHeader}>
@@ -250,7 +255,7 @@ export default function CareersPage() {
         </div>
 
         {/* Application Form */}
-        <div id="applicationForm" className={styles.applicationForm}>
+        <div id="applicationForm" className={`careerForm ${styles.applicationForm}`}>
           <h2 className={styles.formTitle}>تقدم لوظيفة في الفراعنة</h2>
           <p className={styles.formDescription}>املأ النموذج التالي للتقدم للوظيفة المناسبة لك</p>
 
@@ -349,7 +354,7 @@ export default function CareersPage() {
           </p>
 
           <div className={styles.benefitsGrid}>
-            <div className={styles.benefitCard}>
+            <div className={`careerCard ${styles.benefitCard}`}>
               <div className={styles.benefitIcon}>
                 <FontAwesomeIcon icon={faGraduationCap} />
               </div>
@@ -359,7 +364,7 @@ export default function CareersPage() {
               </p>
             </div>
 
-            <div className={styles.benefitCard}>
+            <div className={`careerCard ${styles.benefitCard}`}>
               <div className={styles.benefitIcon}>
                 <FontAwesomeIcon icon={faBriefcase} />
               </div>
@@ -369,7 +374,7 @@ export default function CareersPage() {
               </p>
             </div>
 
-            <div className={styles.benefitCard}>
+            <div className={`careerCard ${styles.benefitCard}`}>
               <div className={styles.benefitIcon}>
                 <FontAwesomeIcon icon={faMoneyBillWave} />
               </div>

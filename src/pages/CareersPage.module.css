@@ -386,6 +386,10 @@
   transition: border-color 0.3s ease;
 }
 
+.formGroup select {
+  cursor: pointer;
+}
+
 .formGroup input:focus,
 .formGroup select:focus,
 .formGroup textarea:focus {

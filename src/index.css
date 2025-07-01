@@ -124,7 +124,8 @@ body.dark-mode .bookButton,
 body.dark-mode .themeIcon {
   color: white;
 }
-body.dark-mode .dmGold{
+
+body.dark-mode .dmGold {
   color: gold;
 }
 
@@ -139,7 +140,46 @@ body.dark-mode section {
 
 body.dark-mode .card {
   border: 1px solid white;
-  border-radius: 5%;
+  border-radius: 2.5%;
+}
+
+body.dark-mode .careerCard,
+body.dark-mode .careerForm {
+  background-color: #121212;
+  color: #f5f5f5;
+  border: 1px solid white;
+  border-radius:1%;
+}
+
+/* Existing dark mode styles for careerForm */
+body.dark-mode .careerForm input,
+body.dark-mode .careerForm label,
+body.dark-mode .careerForm textarea,
+body.dark-mode .careerForm select {
+  color: white;
+}
+
+/* Placeholder styles for dark mode */
+body.dark-mode .careerForm input::placeholder,
+body.dark-mode .careerForm textarea::placeholder,
+body.dark-mode .careerForm select:where(:not([multiple]))::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  /* Slightly transparent white for placeholder */
+  opacity: 1;
+  /* Ensure consistent opacity across browsers */
+}
+
+/* Focus styles for dark mode */
+body.dark-mode .careerForm input:focus,
+body.dark-mode .careerForm textarea:focus {
+  outline: none;
+  /* Remove default outline */
+  border-color: var(--color-gold, #d4a017);
+  /* Gold border on focus, matching Header.module.css */
+  box-shadow: 0 0 5px rgba(212, 160, 23, 0.5);
+  /* Subtle gold glow */
+  background: rgba(255, 255, 255, 0.1);
+  /* Slightly lighter background for contrast */
 }
 
 /* Ensure form elements are visible */
