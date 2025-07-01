@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGem, faCheckCircle, faUsers, faHandshake, faChartLine, faStar } from '@fortawesome/free-solid-svg-icons';
 import { db } from '../firebase/config';
 import { doc, getDoc } from 'firebase/firestore';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 function AboutPage() {
   const [aboutData, setAboutData] = useState(null);
@@ -40,7 +41,11 @@ function AboutPage() {
   }, []);
 
   if (loading || !aboutData) {
-    return <div>جاري التحميل...</div>;
+    return (
+      <div className='loading'>
+        <ClipLoader size={40} color="#bfa046" />
+      </div>
+    );
   }
 
   return (
@@ -60,7 +65,7 @@ function AboutPage() {
         <div className={styles.goalsContainer}>
           {aboutData.goals && aboutData.goals.length > 0 ? (
             aboutData.goals.map((goal, idx) => (
-              <div key={idx} className={styles.goalCard}>
+              <div key={idx} className={`card ${styles.goalCard}`}>
                 <div className={styles.goalIcon}>
                   <FontAwesomeIcon icon={faChartLine} />
                 </div>
@@ -111,7 +116,7 @@ function AboutPage() {
         <div className={styles.valuesContainer}>
           {aboutData.values && aboutData.values.length > 0 ? (
             aboutData.values.map((value, idx) => (
-              <div key={idx} className={styles.valueCard}>
+              <div key={idx} className={`card ${styles.valueCard}`}>
                 <div className={styles.valueIcon}>
                   <FontAwesomeIcon icon={faStar} />
                 </div>
@@ -126,12 +131,12 @@ function AboutPage() {
       </section>
 
       {/* قسم ملاك الشركة */}
-      <section className={styles.ownersSection}>
+      <section className={`dm ${styles.ownersSection}`}>
         <h2 className={styles.ownersTitle}>ملاك الشركة</h2>
         <div className={styles.ownersGrid}>
           {aboutData.owners && aboutData.owners.length > 0 ? (
             aboutData.owners.map((owner, idx) => (
-              <div key={idx} className={styles.ownerCard}>
+              <div key={idx} className={`card ${styles.ownerCard}`}>
                 <img src={owner.image} alt={owner.name} className={styles.ownerImage} />
                 <h3 className={styles.ownerName}>{owner.name}</h3>
                 <p className={styles.ownerRole}>{owner.role}</p>
