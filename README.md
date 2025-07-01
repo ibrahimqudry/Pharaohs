@@ -2,15 +2,14 @@
 
 ![Pharaohs Banner](./public/logo.png)
 
-A sophisticated web platform for **Pharaohs**, a premier real estate company in Aswan, Egypt, specializing in luxury properties and investment opportunities. This React-based application offers a seamless user experience with a bilingual (Arabic/English) interface, a fully customized admin dashboard, and robust client engagement features.
+A sophisticated web platform for **Pharaohs**, a premier real estate company in Aswan, Egypt, specializing in luxury properties and investment opportunities. This React-based application offers a seamless user experience, a fully customized admin dashboard, and robust client engagement features.
 
 ## ✨ Features
 
 - **Property Showcase**: Elegant display of luxury real estate projects, with a dedicated section for VIP properties fetched dynamically from Firebase.
-- **Bilingual Support**: Fully responsive interface supporting Arabic (RTL) and English (LTR) for accessibility across diverse audiences.
 - **Admin Dashboard**: Secure, customizable dashboard for managing properties, user applications, and content, accessible only via protected routes (`/admin`, `/admin/dashboard`).
 - **Contact Forms**: Integrated with EmailJS for seamless client inquiries and feedback.
-- **Careers Portal**: Application tracking system for job seekers, with styled forms (via `CareerFormStyles.module.css`) and Firebase storage.
+- **Careers Portal**: Application tracking system for job seekers, with styled forms and Firebase storage.
 - **Dark Mode**: Toggleable light/dark themes with `ThemeContext.js`, applying `/backgrounddm.png` for dark mode on public routes.
 - **Responsive Navigation**: Mobile-friendly header with dropdowns for "Projects" and "More" (via `Header.jsx`), ensuring single-dropdown functionality for intuitive UX.
 - **WhatsApp Integration**: Direct booking via WhatsApp for client convenience.
@@ -25,9 +24,9 @@ A sophisticated web platform for **Pharaohs**, a premier real estate company in 
 ![CSS Modules](https://img.shields.io/badge/CSS_Modules-000000?style=for-the-badge)
 
 - **Frontend**: React, Vite, React Router for SPA navigation
-- **Backend**: Firebase Firestore for property and application data, Firebase Authentication for admin access
+- **Backend**: Firebase Firestore for property and application data, Custom React Auth Context for Admin Authentication
 - **Styling**: CSS Modules (`Header.module.css`, `CareerFormStyles.module.css`), global `index.css` for dark mode
-- **Icons**: React Icons (`FaMoon`, `FaSun`) for theme toggling
+- **Icons**: React Icons (`FaMoon`, `FaSun`) for theme toggling and more
 - **Loading**: React Spinners (`ClipLoader`) for project loading states
 - **Communication**: EmailJS for contact forms, WhatsApp API for bookings
 
@@ -42,7 +41,7 @@ A sophisticated web platform for **Pharaohs**, a premier real estate company in 
 ### Steps
 ```bash
 # Clone the repository
-git clone https://github.com/EBRAHIM/Pharaohs.git
+git clone https://github.com/ibrahimqudry/Pharaohs.git
 
 # Navigate to the project directory
 cd Pharaohs
@@ -69,6 +68,9 @@ VITE_FIREBASE_APP_ID=your_app_id
 VITE_EMAILJS_SERVICE_ID=your_service_id
 VITE_EMAILJS_TEMPLATE_ID=your_template_id
 VITE_EMAILJS_PUBLIC_KEY=your_public_key
+
+# Admin Dashboard Credentials
+VITE_ADMIN_PASSWORD=your_admin_password
 ```
 
 ### Run the Application
@@ -100,10 +102,9 @@ Pharaohs/
 │   │   └── ThemeContext.js  # Dark/light mode context
 │   ├── firebase/
 │   │   └── config.js        # Firebase configuration
-│   ├── styles/
-│   │   ├── Header.module.css       # Header-specific styles
-│   │   ├── CareerFormStyles.module.css # Careers form styles
-│   │   └── index.css               # Global styles (dark mode)
+│   ├── pages/
+│   │   ├── CareersPage.jsx  # Careers page
+│   │   └── Home.jsx         # Home Page     
 │   ├── App.jsx              # Main app with routing
 │   └── main.jsx             # Entry point
 ├── .env                     # Environment variables
