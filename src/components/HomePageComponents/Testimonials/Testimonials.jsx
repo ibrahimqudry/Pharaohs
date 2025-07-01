@@ -1,6 +1,23 @@
 import styles from './Testimonials.module.css';
 
 function Testimonials() {
+  const testimonialsData = [
+    {
+      image: '/images/sheikh-idrisi.jpg',
+      name: 'السيد إدريس الشريف الإدريسي',
+      title: 'رئيس الرابطة العالمية للسادة الأشراف الأدارسة',
+      text: 'أشاد سماحة السيد إدريس الشريف الإدريسي، رئيس الرابطة العالمية للسادة الأشراف الأدارسة، بالدور البارز الذي تقوم به مجموعة الفراعنة في مجال الاستثمار والتطوير العقاري في مصر.  وأكد على أهمية مساهمة الشباب في النهضة العمرانية، مشيرًا إلى أن جهودهم تمثل نموذجًا يُحتذى به في بناء مستقبل مشرق للبلاد.',
+      rating: 5
+    },
+    {
+      image: '/images/dr-ayman.jpg',
+      name: 'الدكتور أيمن عثمان',
+      title: 'رئيس جامعة أسوان الأسبق',
+      text: 'في كلمته، أشاد الدكتور أيمن عثمان، رئيس جامعة أسوان الأسبق، بدور الجامعة في الإشراف على تنفيذ مشاريع شركة الفراعنة بعد توقيع بروتوكول التعاون.  وأكد على أهمية مساهمة الشباب في النهضة العمرانية، مشيرًا إلى أن جهودهم تمثل نموذجًا يُحتذى به في بناء مستقبل مشرق للبلاد.',
+      rating: 5
+    },
+    // ... إضافة المزيد من العناصر
+  ];
   return (
     <section className={styles.testimonials}>
       <div className="container py-16">
@@ -10,80 +27,30 @@ function Testimonials() {
         </div>
 
         <div className={styles.testimonialsGrid}>
-          <div className={`${styles.testimonialCard} card`}>
-            <div className={styles.testimonialContent}>
-              <div className={styles.quoteIcon}>
-                <i className="fas fa-quote-right"></i>
+          {testimonialsData.map((testimonial, index) => (
+            <div key={index} className={`${styles.testimonialCard} card`}>
+              <div className={styles.testimonialContent}>
+                <div className={styles.quoteIcon}>
+                  <i className="fas fa-quote-right"></i>
+                </div>
+                <p className={styles.testimonialText}>{testimonial.text}</p>
+                <div className={styles.testimonialRating}>
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <i key={i} className="fas fa-star"></i>
+                  ))}
+                </div>
               </div>
-              <p className={styles.testimonialText}>استثمرت في فيلا بمشروع الفراعنة وكانت تجربة رائعة. الجودة ممتازة والتسليم كان في الموعد المحدد تمامًا.</p>
-              <div className={styles.testimonialRating}>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-              </div>
-            </div>
-            <div className={styles.testimonialAuthor}>
-              <div className={styles.authorImage}>
-                <img src="/images/client1.jpg" alt="أحمد محمود" />
-              </div>
-              <div className={styles.authorInfo}>
-                <h4 className={styles.authorName}>أحمد محمود</h4>
-                <p className={styles.authorTitle}>مستثمر عقاري</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={`${styles.testimonialCard} card`}>
-            <div className={styles.testimonialContent}>
-              <div className={styles.quoteIcon}>
-                <i className="fas fa-quote-right"></i>
-              </div>
-              <p className={styles.testimonialText}>شقتي في مشروع الفراعنة تجاوزت توقعاتي. التصميم عصري والخدمات متكاملة والموقع استراتيجي.</p>
-              <div className={styles.testimonialRating}>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
+              <div className={styles.testimonialAuthor}>
+                <div className={styles.authorImage}>
+                  <img src={testimonial.image} alt={testimonial.name} />
+                </div>
+                <div className={styles.authorInfo}>
+                  <h4 className={styles.authorName}>{testimonial.name}</h4>
+                  <p className={styles.authorTitle}>{testimonial.title}</p>
+                </div>
               </div>
             </div>
-            <div className={styles.testimonialAuthor}>
-              <div className={styles.authorImage}>
-                <img src="/images/client2.jpg" alt="نورا أحمد" />
-              </div>
-              <div className={styles.authorInfo}>
-                <h4 className={styles.authorName}>نورا أحمد</h4>
-                <p className={styles.authorTitle}>مستثمرة عقارية</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className={`${styles.testimonialCard} card`}>
-            <div className={styles.testimonialContent}>
-              <div className={styles.quoteIcon}>
-                <i className="fas fa-quote-right"></i>
-              </div>
-              <p className={styles.testimonialText}>اشتريت قطعة أرض من شركة الفراعنة وكانت المعاملة احترافية من البداية للنهاية. أنصح بالتعامل معهم.</p>
-              <div className={styles.testimonialRating}>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-              </div>
-            </div>
-            <div className={styles.testimonialAuthor}>
-              <div className={styles.authorImage}>
-                <img src="/images/client3.jpg" alt=" محمد علي" />
-              </div>
-              <div className={styles.authorInfo}>
-                <h4 className={styles.authorName}> محمد علي</h4>
-                <p className={styles.authorTitle}> رجل أعمال </p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
 
         <div className={styles.buttonContainer}>
@@ -94,3 +61,4 @@ function Testimonials() {
   );
 }
 export default Testimonials;
+

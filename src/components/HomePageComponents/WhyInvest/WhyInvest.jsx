@@ -3,19 +3,19 @@ import styles from './WhyInvest.module.css';
 function WhyInvest() {
   const reasons = [
     {
-      icon: '🏗️',
-      title: 'خبرة 20 عام',
-      description: 'في مجال التطوير العقاري'
-    },
-    {
       icon: '📈',
-      title: 'عائد استثماري مضمون',
-      description: 'يصل إلى 20% سنوياً'
+      title: 'لأعلي عوائد استثمار',
+      description: 'يصل إلى 20% سنوياً',
     },
     {
-      icon: '📍',
-      title: 'موقع استراتيجي',
-      description: 'في قلب أسوان الجديدة'
+      icon: '⏱️',
+      title: 'أقل وقت التسليم',
+      description: 'تسليم في وقت قياسي',
+    },
+    {
+      icon: '💸',
+      title: 'افضل العروض وطرق السداد',
+      description: 'مرونة في خيارات الدفع',
     },
   ];
 
