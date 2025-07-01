@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from './EditorStyles.module.css';
 import { db } from '../../firebase/config';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 export default function AboutEditor() {
   const [aboutData, setAboutData] = useState(null);
@@ -50,7 +51,11 @@ export default function AboutEditor() {
   };
 
   if (loading || !aboutData) {
-    return <div>جاري التحميل...</div>;
+    return (
+      <div className="loading">
+        <ClipLoader size={40} color="#bfa046" />
+      </div>
+    );
   }
 
   return (

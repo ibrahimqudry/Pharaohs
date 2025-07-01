@@ -8,8 +8,15 @@ export function AuthProvider({ children }) {
   // Check if user was previously authenticated
   useEffect(() => {
     const authStatus = localStorage.getItem('pharaohsAuth');
-    if (authStatus === 'true') {
-      setIsAuthenticated(true);
+    const authExpiry = localStorage.getItem('pharaohsAuthExpiry');
+    if (authStatus === 'true' && authExpiry) {
+      const now = Date.now();
+      if (now < parseInt(authExpiry, 10)) {
+        setIsAuthenticated(true);
+      } else {
+        localStorage.removeItem('pharaohsAuth');
+        localStorage.removeItem('pharaohsAuthExpiry');
+      }
     }
   }, []);
 
@@ -17,6 +24,9 @@ export function AuthProvider({ children }) {
     if (password === 'pharaohsAdmin') {
       setIsAuthenticated(true);
       localStorage.setItem('pharaohsAuth', 'true');
+      // Set expiry for 12 hours from now
+      const expiry = Date.now() + 12 * 60 * 60 * 1000;
+      localStorage.setItem('pharaohsAuthExpiry', expiry.toString());
       return true;
     }
     return false;
@@ -25,6 +35,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem('pharaohsAuth');
+    localStorage.removeItem('pharaohsAuthExpiry');
   };
 
   return (

@@ -20,11 +20,11 @@ export default function AdminDashboard() {
   const handleLogout = () => {
     navigate('/');
   };
-  
+
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
-  
+
   const closeSidebar = () => {
     setSidebarOpen(false);
   };
@@ -105,11 +105,11 @@ export default function AdminDashboard() {
             </button>
           </nav>
           <div className={styles.sidebarFooter}>
-            <button 
+            <button
               onClick={() => {
                 handleLogout();
                 closeSidebar();
-              }} 
+              }}
               className={styles.logoutButton}
             >
               تسجيل الخروج

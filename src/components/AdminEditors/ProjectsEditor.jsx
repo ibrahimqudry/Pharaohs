@@ -6,67 +6,6 @@ import { db } from '../../firebase/config';
 
 export default function ProjectsEditor() {
 
-
-  const insertDummyProjects = async () => {
-    const dummyProjects = [
-      {
-        title: "مشروع النيل",
-        location: "أسوان الجديدة",
-        types: ["شقق", "سكني"],
-        description: "وحدات سكنية فاخرة بإطلالة مباشرة على النيل",
-        longDescription: "مشروع سكني راقي يضم وحدات سكنية فاخرة بتصاميم عصرية",
-        sliderImages: [
-          "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
-          "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg"
-        ],
-        price: "يبدأ من 1.5 مليون جنيه",
-        status: "متاح",
-        completion: "2024",
-        image: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
-        isSold: false,
-        onSale: false,
-        progress: 60
-      },
-      {
-        title: "واحة الأعمال",
-        location: "أسوان الجديدة",
-        types: ["تجاري"],
-        description: "مجمع إداري وتجاري متكامل",
-        longDescription: "يضم مكاتب ومحلات تجارية بمساحات مختلفة",
-        sliderImages: [
-          "https://images.pexels.com/photos/1029599/pexels-photo-1029599.jpeg"
-        ],
-        price: "يبدأ من 1.2 مليون جنيه",
-        status: "خصم 15%",
-        completion: "2023",
-        image: "https://images.pexels.com/photos/1029599/pexels-photo-1029599.jpeg",
-        isSold: false,
-        onSale: true,
-        progress: 100
-      }
-    ];
-
-    try {
-      for (const project of dummyProjects) {
-        await addDoc(collection(db, 'projects'), project);
-      }
-      alert('تم إضافة المشاريع التجريبية بنجاح');
-      // Refresh the projects list
-      const projectsCollection = collection(db, 'projects');
-      const projectsSnapshot = await getDocs(projectsCollection);
-      const projectsList = projectsSnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setProjects(projectsList);
-    } catch (error) {
-      console.error('Error inserting dummy projects:', error);
-      alert('حدث خطأ أثناء إضافة المشاريع التجريبية');
-    }
-  };
-
-
-
   const initialProjectState = {
     title: '',
     location: '',
@@ -295,7 +234,7 @@ export default function ProjectsEditor() {
           onChange={(e) => setProject({ ...project, image: e.target.value })}
         />
       </div>
-      
+
       <div className={styles.formGroup}>
         <label>رابط قائمة تشغيل يوتيوب</label>
         <input
@@ -355,7 +294,6 @@ export default function ProjectsEditor() {
 
   return (
     <div className={styles.editorWrapper}>
-      <button onClick={insertDummyProjects}>add random</button>
       <div className={styles.projectsList}>
         <h2 className={styles.sectionTitle}>قائمة المشاريع</h2>
         <div className={styles.projectsTable}>
