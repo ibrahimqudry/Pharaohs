@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import styles from './ProjectDetailsPage.module.css';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 export default function ProjectDetailsPage() {
   const { id } = useParams();
@@ -43,7 +44,11 @@ export default function ProjectDetailsPage() {
     }
   };
 
-  if (loading) return <div className={styles.loading}>جاري التحميل...</div>;
+  if (loading) return (
+    <div className="loading">
+      <ClipLoader size={40} color="#bfa046" />
+    </div>
+  );
   if (!project) return <div className={styles.notFound}>المشروع غير موجود</div>;
 
   return (

@@ -1,9 +1,10 @@
 import styles from './ProjectsPage.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBuilding, faHome, faLandmark, faFilter, faMapMarkerAlt} from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faHome, faLandmark, faFilter, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 function ProjectsPage() {
   const [projects, setProjects] = useState([]);
@@ -30,11 +31,19 @@ function ProjectsPage() {
 
   const [activeFilter, setActiveFilter] = useState('all');
 
-  
+
 
   const filteredProjects = activeFilter === 'all'
     ? projects
     : projects.filter(project => project.types.includes(activeFilter));
+
+  if (loading) {
+    return (
+      <div className='loading'>
+        <ClipLoader size={40} color="#bfa046" />
+      </div>
+    );
+  }
 
   return (
     <main className="pt-24 pb-16">
@@ -45,41 +54,41 @@ function ProjectsPage() {
         </div>
 
         {/* Filters */}
-        <div className={styles.filtersContainer}>
+        <div className={`dm ${styles.filtersContainer}`}>
           <div className={styles.filtersTitle}>
             <FontAwesomeIcon icon={faFilter} className={styles.filterIcon} />
             <span>تصفية المشاريع</span>
           </div>
           <div className={styles.filterButtons}>
             <button
-              className={`${styles.filterButton} ${activeFilter === 'all' ? styles.active : ''}`}
+              className={`${styles.filterButton} ${activeFilter === 'all' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('all')}
             >
               الكل
             </button>
             <button
-              className={`${styles.filterButton} ${activeFilter === 'شقق' ? styles.active : ''}`}
+              className={`${styles.filterButton} ${activeFilter === 'شقق' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('شقق')}
             >
               <FontAwesomeIcon icon={faBuilding} className={styles.buttonIcon} />
               شقق
             </button>
             <button
-              className={`${styles.filterButton} ${activeFilter === 'فلل' ? styles.active : ''}`}
+              className={`${styles.filterButton} ${activeFilter === 'فلل' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('فلل')}
             >
               <FontAwesomeIcon icon={faHome} className={styles.buttonIcon} />
               فلل
             </button>
             <button
-              className={`${styles.filterButton} ${activeFilter === 'تجاري' ? styles.active : ''}`}
+              className={`${styles.filterButton} ${activeFilter === 'تجاري' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('تجاري')}
             >
               <FontAwesomeIcon icon={faLandmark} className={styles.buttonIcon} />
               تجاري
             </button>
             <button
-              className={`${styles.filterButton} ${activeFilter === 'أراضي' ? styles.active : ''}`}
+              className={`${styles.filterButton} ${activeFilter === 'أراضي' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('أراضي')}
             >
               <FontAwesomeIcon icon={faMapMarkerAlt} className={styles.buttonIcon} />
@@ -91,7 +100,7 @@ function ProjectsPage() {
         {/* Projects Grid */}
         <div className={styles.projectsGrid}>
           {filteredProjects.map(project => (
-            <div key={project.id} className={styles.projectCard}>
+            <div key={project.id} className={`card ${styles.projectCard}`}>
               <div className={styles.projectImage}>
                 <img src={project.image} alt={project.title} />
                 {project.isSold && (
