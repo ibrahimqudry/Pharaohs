@@ -99,78 +99,84 @@ function Header() {
   );
 
   // Render dropdown
-  const renderDropdown = (type, items, label) => (
-    <li className={styles.dropdown} ref={dropdownRef}>
-      <button
-        className={`${styles.dropdownToggle} ${styles.navLink} ${darkMode ? 'dm' : ''}`}
-        onClick={() => toggleDropdown(type)}
-        aria-expanded={dropdowns[type]}
-        aria-haspopup="true"
-      >
-        {label}
-        <span
-          className={`${styles.arrow} ${dropdowns[type] ? styles.arrowOpen : ''}`}
-          aria-hidden="true"
-        ></span>
-      </button>
-      <ul
-        className={`${styles.dropdownMenu} ${darkMode ? 'dm' : ''} ${dropdowns[type] ? styles.show : ''
-          }`}
-        role="menu"
-      >
-        {type === 'projects' ? (
-          isLoading ? (
-            <li className="loading"><ClipLoader color="#bfa13a" size={32} /></li>
-          ) : error ? (
-            <li>{error}</li>
-          ) : projects.length === 0 ? (
-            <li>لا توجد مشاريع متاحة</li>
-          ) : (
-            <>
-              <li>
-                <NavLink
-                  to="/projects"
-                  className={({ isActive }) =>
-                    `${styles.dropdownLink} ${isActive ? styles.active : ''}`
-                  }
-                  onClick={toggleMenu}
-                >
-                  جميع المشاريع
-                </NavLink>
-              </li>
-              {projects.map(project => (
-                <li key={project.id}>
+  const renderDropdown = (type, items, label) => {
+    // Only show dropdown in mobile if menu is open
+    const isMobile = window.innerWidth <= 768;
+    const shouldShowDropdown = !isMobile || (isMenuOpen && dropdowns[type]);
+    return (
+      <li className={styles.dropdown} ref={dropdownRef}>
+        <button
+          className={`${styles.dropdownToggle} ${styles.navLink} ${darkMode ? 'dm' : ''}`}
+          onClick={() => toggleDropdown(type)}
+          aria-expanded={dropdowns[type]}
+          aria-haspopup="true"
+        >
+          {label}
+          <span
+            className={`${styles.arrow} ${dropdowns[type] ? styles.arrowOpen : ''}`}
+            aria-hidden="true"
+          ></span>
+        </button>
+        {shouldShowDropdown && (
+          <ul
+            className={`${styles.dropdownMenu} ${darkMode ? 'dm' : ''} ${dropdowns[type] ? styles.show : ''}`}
+            role="menu"
+          >
+            {type === 'projects' ? (
+              isLoading ? (
+                <li className="loading"><ClipLoader color="#bfa13a" size={32} /></li>
+              ) : error ? (
+                <li>{error}</li>
+              ) : projects.length === 0 ? (
+                <li>لا توجد مشاريع متاحة</li>
+              ) : (
+                <>
+                  <li>
+                    <NavLink
+                      to="/projects"
+                      className={({ isActive }) =>
+                        `${styles.dropdownLink} ${isActive ? styles.active : ''}`
+                      }
+                      onClick={toggleMenu}
+                    >
+                      جميع المشاريع
+                    </NavLink>
+                  </li>
+                  {projects.map(project => (
+                    <li key={project.id}>
+                      <NavLink
+                        to={`/projects/${project.id}`}
+                        className={({ isActive }) =>
+                          `${styles.dropdownLink} ${isActive ? styles.active : ''}`
+                        }
+                        onClick={toggleMenu}
+                      >
+                        {project.title}
+                      </NavLink>
+                    </li>
+                  ))}
+                </>
+              )
+            ) : (
+              items.map(({ to, label }) => (
+                <li key={to}>
                   <NavLink
-                    to={`/projects/${project.id}`}
+                    to={to}
                     className={({ isActive }) =>
                       `${styles.dropdownLink} ${isActive ? styles.active : ''}`
                     }
                     onClick={toggleMenu}
                   >
-                    {project.title}
+                    {label}
                   </NavLink>
                 </li>
-              ))}
-            </>
-          )
-        ) : (
-          items.map(({ to, label }) => (
-            <li key={to}>
-              <NavLink
-                to={to}
-                className={({ isActive }) =>
-                  `${styles.dropdownLink} ${isActive ? styles.active : ''}`
-                }
-                onClick={toggleMenu}
-              >
-                {label}
-              </NavLink>
-            </li>
-          ))
+              ))
+            )}
+          </ul>
         )}
-      </ul>
-    </li>
-  );
+      </li>
+    );
+  };
 
   return (
     <header className={`${styles.header} ${darkMode ? 'header-dm' : ''}`}>
@@ -209,7 +215,7 @@ function Header() {
 
         {/* Navigation Links */}
         <div
-          className={`${styles.navLinks} ${isMenuOpen ? styles.active : ''}`}
+          className={`dm ${styles.navLinks} ${isMenuOpen ? styles.active : ''}`}
           id="nav-menu"
           role="navigation"
         >
