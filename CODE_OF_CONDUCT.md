@@ -34,16 +34,16 @@ Maintainers have the right and responsibility to remove, edit, or reject contrib
 This Code of Conduct applies to all spaces related to the Pharaohs project, including:
 
 - GitHub repository ([ibrahimqudry/Pharaohs](https://github.com/ibrahimqudry/Pharaohs)).
-- Code contributions, including React components (`Header.jsx`, `App.jsx`), styles (`Header.module.css`, `index.css`, `CareerFormStyles.module.css`), and Firebase integrations.
+- Code contributions, including React components (`Header.jsx`, `App.jsx`), styles (`Header.module.css`, `index.css`, `CareersPage.module.css`), and Firebase integrations.
 - Issue trackers, pull requests, and comments.
-- Communication channels (e.g., email: Pharaohshr1@gmail.com WhatsApp: [+201149136352](https://wa.me/+201149136352)).
+- Communication channels (e.g., email:ibrahimqudry@gmail.com WhatsApp: [+201149136352](https://wa.me/+201149136352)).
 - Any other spaces where the project is represented.
 
 It also applies when an individual represents the project in public spaces, such as conferences or social media.
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at [Pharaohshr1@gmail.com](mailto:Pharaohshr1@gmail.com) or via WhatsApp at [+201149136352](https://wa.me/+201149136352). All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting me at [ibrahimqudry@gmail.com](mailto:ibrahimqudry@gmail.com) or via WhatsApp at [+201149136352](https://wa.me/+201149136352). All complaints will be reviewed and investigated promptly and fairly.
 
 All maintainers are obligated to respect the privacy and security of the reporter of any incident.
 
@@ -59,7 +59,7 @@ Maintainers will follow these Community Impact Guidelines in determining the con
 
 This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 2.1, available at [https://www.contributor-covenant.org/version/2/1/code_of_conduct.html](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html).
 
-For questions or feedback, contact us at [Pharaohshr1@gmail.com](mailto:Pharaohshr1@gmail.com).
+For questions or feedback, contact us at [ibrahimqudry@gmail.com](mailto:ibrahimqudry@gmail.com).
 
 ---
 
