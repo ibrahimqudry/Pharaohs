@@ -165,15 +165,11 @@ Please follow the [Code of Conduct](./CODE_OF_CONDUCT.md) and ensure code adhere
 - Open an issue on GitHub with a detailed description, screenshots, and steps to reproduce.
 - Include browser, device, and console logs if applicable.
 
-## 📜 License
-
-MIT License. See [LICENSE](./LICENSE) for details.
-
 ## 📬 Contact
 
-- **Email**: support@pharaohs-aswan.com
+- **Email**: ibrahimqudry@gmail.com
 - **WhatsApp**: [+201149136352](https://wa.me/+201149136352)
-- **GitHub**: [EBRAHIM/Pharaohs](https://github.com/EBRAHIM/Pharaohs)
+- **GitHub**: [ibrahimqudry/Pharaohs](https://github.com/ibrahimqudry/Pharaohs)
 
 ---
 
