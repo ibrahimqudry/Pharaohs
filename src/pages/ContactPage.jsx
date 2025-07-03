@@ -87,13 +87,15 @@ function ContactPage() {
                 <FontAwesomeIcon icon={faPhone} className={styles.infoIcon} />
                 <div>
                   <h3>للتواصل</h3>
-                  <a  href="tel:01080071544" className={`dmGold ${styles.contactLink}`}>01080071544</a>
+                  <a href="tel:01080071544" className={`dmGold ${styles.contactLink}`}>01080071544</a>
                 </div>
               </div>
               <div className={styles.infoItem}>
                 <FontAwesomeIcon icon={faEnvelope} className={styles.infoIcon} />
                 <div>
                   <h3>البريد الإلكتروني</h3>
+                  <a href="mailto:pharaohsdevelopment1@gmail.com" className={`dmGold ${styles.contactLink}`}>pharaohsdevelopment1@gmail.com</a>
+                  <br /><br />
                   <a href="mailto:Pharaohshr1@gmail.com" className={`dmGold ${styles.contactLink}`}>Pharaohshr1@gmail.com</a>
                 </div>
               </div>
@@ -102,19 +104,19 @@ function ContactPage() {
                 <div>
                   <h3>الفروع</h3>
                   <p className={styles.mapLink} >
-                    <a className='dmGold' href="https://www.google.com/maps/search/?api=1&query=اسوان+الجديدة+-+الحي+التاني+-+بجانب+الجهاز+القديم+-+خلف+كلية+الدراسات+الاسلامية" target="_blank" rel="noopener noreferrer">
+                    <a className='dmGold' href="https://maps.app.goo.gl/XFRquurV1Z78GPdJ7?g_st=ac" target="_blank" rel="noopener noreferrer">
                       الفرع الإداري : اسوان الجديدة - الحي التاني
                     </a>
                   </p>
                   <p className={styles.mapLink}>
-                    <a className='dmGold' href="https://www.google.com/maps/search/?api=1&query=ادفو+-+شارع+المركز+-+مول+ابو+الشيخ+-+بجوار+النساجون+الشرقيون" target="_blank" rel="noopener noreferrer">
-                      فرع ادفو: شارع المركز - مول ابو الشيخ
+                    <a className='dmGold' href="https://maps.app.goo.gl/xpsCHsbw76ChMF4z9?g_st=ac" target="_blank" rel="noopener noreferrer">
+                      فرع ادفو : شارع المركز - مول ابو الشيخ
                     </a>
                   </p>
                   <p className={styles.mapLink}>
 
-                    <a className='dmGold' href="https://www.google.com/maps/search/?api=1&query=أسوان+-+كورنيش+النيل+-+مول+الرياض+-+أعلى+هايبر+الراية" target="_blank" rel="noopener noreferrer">
-                      فرع أسوان: كورنيش النيل - مول الرياض
+                    <a className='dmGold' href="https://maps.app.goo.gl/Hcun2YKbgqNQekN39?g_st=ac" target="_blank" rel="noopener noreferrer">
+                      فرع أسوان : كورنيش النيل - مول الرياض
                     </a>
                   </p>
                 </div>
