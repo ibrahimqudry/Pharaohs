@@ -31,8 +31,6 @@ function ProjectsPage() {
 
   const [activeFilter, setActiveFilter] = useState('all');
 
-
-
   const filteredProjects = activeFilter === 'all'
     ? projects
     : projects.filter(project => project.types.includes(activeFilter));
@@ -117,14 +115,6 @@ function ProjectsPage() {
 
               <div className={styles.projectContent}>
                 <h2 className={styles.projectTitle}>{project.title}</h2>
-
-                {/* Progress Bar
-                {project.progress && (
-                  <div className={styles.progressContainer}>
-                    <div className={styles.progressBar} style={{width: `${project.progress}%`}}></div>
-                    <span className={styles.progressText}>{project.progress}% تم الانتهاء</span>
-                  </div>
-                )} */}
 
                 <div className={styles.projectLocation}>
                   <FontAwesomeIcon icon={faMapMarkerAlt} className={styles.locationIcon} />
