@@ -5,7 +5,7 @@ import {
   faFacebookF,
   faInstagram,
   faYoutube,
-  faTwitter,
+  faTiktok,
   faLinkedinIn,
 } from '@fortawesome/free-brands-svg-icons';
 import { faMapMarkerAlt, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
@@ -82,27 +82,41 @@ function ContactPage() {
           <div className={styles.contactGrid}>
             <div className={`card ${styles.contactInfo}`}>
               <h2 className={styles.sectionTitle}>معلومات الاتصال</h2>
+
               <div className={styles.infoItem}>
                 <FontAwesomeIcon icon={faPhone} className={styles.infoIcon} />
                 <div>
-                  <h3>اتصل بنا</h3>
-                  <p>123-456-789</p>
-                  <p>123-456-790</p>
+                  <h3>للتواصل</h3>
+                  <a  href="tel:01080071544" className={`dmGold ${styles.contactLink}`}>01080071544</a>
                 </div>
               </div>
               <div className={styles.infoItem}>
                 <FontAwesomeIcon icon={faEnvelope} className={styles.infoIcon} />
                 <div>
                   <h3>البريد الإلكتروني</h3>
-                  <p>info@pharaohs.com</p>
-                  <p>sales@pharaohs.com</p>
+                  <a href="mailto:Pharaohshr1@gmail.com" className={`dmGold ${styles.contactLink}`}>Pharaohshr1@gmail.com</a>
                 </div>
               </div>
               <div className={styles.infoItem}>
                 <FontAwesomeIcon icon={faMapMarkerAlt} className={styles.infoIcon} />
                 <div>
-                  <h3>العنوان الرئيسي</h3>
-                  <p>شارع كورنيش النيل، أسوان الجديدة، مصر</p>
+                  <h3>الفروع</h3>
+                  <p className={styles.mapLink} >
+                    <a className='dmGold' href="https://www.google.com/maps/search/?api=1&query=اسوان+الجديدة+-+الحي+التاني+-+بجانب+الجهاز+القديم+-+خلف+كلية+الدراسات+الاسلامية" target="_blank" rel="noopener noreferrer">
+                      الفرع الإداري : اسوان الجديدة - الحي التاني
+                    </a>
+                  </p>
+                  <p className={styles.mapLink}>
+                    <a className='dmGold' href="https://www.google.com/maps/search/?api=1&query=ادفو+-+شارع+المركز+-+مول+ابو+الشيخ+-+بجوار+النساجون+الشرقيون" target="_blank" rel="noopener noreferrer">
+                      فرع ادفو: شارع المركز - مول ابو الشيخ
+                    </a>
+                  </p>
+                  <p className={styles.mapLink}>
+
+                    <a className='dmGold' href="https://www.google.com/maps/search/?api=1&query=أسوان+-+كورنيش+النيل+-+مول+الرياض+-+أعلى+هايبر+الراية" target="_blank" rel="noopener noreferrer">
+                      فرع أسوان: كورنيش النيل - مول الرياض
+                    </a>
+                  </p>
                 </div>
               </div>
 
@@ -110,19 +124,19 @@ function ContactPage() {
               <div className={styles.socialSection}>
                 <h3>تابعنا على وسائل التواصل الاجتماعي</h3>
                 <div className={styles.socialLinks}>
-                  <a href="#" className={`dmGold ${styles.socialLink}`} aria-label="Facebook">
+                  <a href="https://www.facebook.com/alfranaa.realestate" className={`dmGoldBackground ${styles.socialLink}`} aria-label="Facebook">
                     <FontAwesomeIcon icon={faFacebookF} />
                   </a>
-                  <a href="#" className={`dmGold ${styles.socialLink}`} aria-label="Instagram">
+                  <a href="https://www.instagram.com/alfranaa_for_realestate?igsh=MXJwN2dxdnRsZjF3cQ==" className={`dmGoldBackground ${styles.socialLink}`} aria-label="Instagram">
                     <FontAwesomeIcon icon={faInstagram} />
                   </a>
-                  <a href="#" className={`dmGold ${styles.socialLink}`} aria-label="YouTube">
+                  <a href="https://youtube.com/@pharaohsdevelopment?feature=shared" className={`dmGoldBackground ${styles.socialLink}`} aria-label="YouTube">
                     <FontAwesomeIcon icon={faYoutube} />
                   </a>
-                  <a href="#" className={`dmGold ${styles.socialLink}`} aria-label="Twitter">
-                    <FontAwesomeIcon icon={faTwitter} />
+                  <a href="https://www.tiktok.com/@pharaohsdevelopment1?_t=ZS-8wD7sDC7Oqr&_r=1" className={`dmGoldBackground ${styles.socialLink}`} aria-label="Twitter">
+                    <FontAwesomeIcon icon={faTiktok} />
                   </a>
-                  <a href="#" className={`dmGold ${styles.socialLink}`} aria-label="LinkedIn">
+                  <a href="https://www.linkedin.com/company/pharaohs-developments-group/" className={`dmGoldBackground ${styles.socialLink}`} aria-label="LinkedIn">
                     <FontAwesomeIcon icon={faLinkedinIn} />
                   </a>
                 </div>
@@ -188,30 +202,6 @@ function ContactPage() {
           </div>
         </section>
 
-        {/* Branches Section */}
-        <section className={styles.branchesSection}>
-          <h2 className={styles.sectionTitle}>فروعنا</h2>
-          <div className={styles.branchesGrid}>
-            {branches.map((branch, index) => (
-              <div key={index} className={`card ${styles.branchCard}`}>
-                <h3 className={styles.branchName}>{branch.name}</h3>
-                <div className={styles.branchDetails}>
-                  <p><FontAwesomeIcon icon={faMapMarkerAlt} /> {branch.address}</p>
-                  <p><FontAwesomeIcon icon={faPhone} /> {branch.phone}</p>
-                  <p><FontAwesomeIcon icon={faEnvelope} /> {branch.email}</p>
-                </div>
-                <a
-                  href={branch.mapUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`dmGold ${styles.mapLink}`}
-                >
-                  عرض على الخريطة
-                </a>
-              </div>
-            ))}
-          </div>
-        </section>
       </div>
     </main>
   );
