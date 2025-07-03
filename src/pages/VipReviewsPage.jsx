@@ -35,7 +35,7 @@ function VipReviewsPage() {
   }, []);
 
   const handleWhatsAppClick = () => {
-    const phoneNumber = '+201149136352';
+    const phoneNumber = '+201080071544';
     const message = encodeURIComponent(`مرحبا، أرغب في التواصل`);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
     window.open(whatsappUrl, '_blank');
