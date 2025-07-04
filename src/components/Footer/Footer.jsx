@@ -20,8 +20,8 @@ function Footer() {
           <div>
             <h3 className={styles.footerTitle}>تواصل معنا</h3>
             <p>أسوان الجديدة - مصر</p>
-            <p>هاتف: 123-456-789</p>
-            <p>البريد الإلكتروني: info@pharaohs.com</p>
+            <p>هاتف: +201080071544</p>
+            <p>البريد الإلكتروني: pharaohsdevelopment1@gmail.com</p>
           </div>
           <div>
             <h3 className={styles.footerTitle}>روابط سريعة</h3>

@@ -87,7 +87,7 @@ function ContactPage() {
                 <FontAwesomeIcon icon={faPhone} className={styles.infoIcon} />
                 <div>
                   <h3>للتواصل</h3>
-                  <a href="tel:01080071544" className={`dmGold ${styles.contactLink}`}>01080071544</a>
+                  <a href="tel:=+201080071544" className={`dmGold ${styles.contactLink}`}>+201080071544</a>
                 </div>
               </div>
               <div className={styles.infoItem}>

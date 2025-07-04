@@ -26,7 +26,7 @@ function Testimonials() {
     <section className={styles.testimonials}>
       <div className="container py-16">
         <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>ما يقوله عملاؤنا</h2>
+          <h2 className={styles.sectionTitle}>قالوا عن الفراعنة</h2>
           <div className={styles.titleDecoration}></div>
         </div>
 
