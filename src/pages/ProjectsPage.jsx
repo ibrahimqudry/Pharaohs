@@ -1,6 +1,6 @@
 import styles from './ProjectsPage.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBuilding, faHome, faLandmark, faFilter, faMapMarkerAlt ,faBucket} from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faHome, faLandmark, faFilter, faMapMarkerAlt, faBucket } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
@@ -97,7 +97,7 @@ function ProjectsPage() {
               onClick={() => setActiveFilter('اداري')}
             >
               <FontAwesomeIcon icon={faLandmark} className={styles.buttonIcon} />
-             اداري
+              اداري
             </button>
           </div>
         </div>
@@ -159,7 +159,7 @@ function ProjectsPage() {
         </div>
 
         {filteredProjects.length === 0 && (
-          <div className={styles.noResults}>
+          <div className={`dm ${styles.noResults}`}>
             <p>لا توجد مشاريع متاحة بهذا التصنيف حالياً</p>
           </div>
         )}
