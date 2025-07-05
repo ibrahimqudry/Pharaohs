@@ -200,7 +200,7 @@
 }
 
 .typeTag {
-  background: var(--color-gold-gradient);
+  background: #FF9800;
   color: #333;
   padding: 0.3rem 0.8rem;
   border-radius: 15px;

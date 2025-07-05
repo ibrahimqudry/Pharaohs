@@ -114,7 +114,7 @@ export default function ProjectDetailsPage() {
                 <span className={styles.infoLabel}>النوع:</span>
                 <div className={styles.typesList}>
                   {project.types && project.types.map((type, index) => (
-                    <span key={index} className={`dmGrayBackground ${styles.typeTag}`}>{type}</span>
+                    <span key={index} className={styles.typeTag}>{type}</span>
                   ))}
                 </div>
               </div>
