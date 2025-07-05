@@ -137,6 +137,7 @@ export default function ProjectsEditor() {
           <option value="تجاري">تجاري</option>
           <option value="أراضي">أراضي</option>
           <option value="سكني">سكني</option>
+          <option value="اداري">اداري</option>
         </select>
       </div>
 

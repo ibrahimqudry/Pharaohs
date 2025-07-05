@@ -1,6 +1,6 @@
 import styles from './ProjectsPage.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBuilding, faHome, faLandmark, faFilter, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faHome, faLandmark, faFilter, faMapMarkerAlt ,faBucket} from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
@@ -82,7 +82,7 @@ function ProjectsPage() {
               className={`${styles.filterButton} ${activeFilter === 'تجاري' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('تجاري')}
             >
-              <FontAwesomeIcon icon={faLandmark} className={styles.buttonIcon} />
+              <FontAwesomeIcon icon={faBucket} className={styles.buttonIcon} />
               تجاري
             </button>
             <button
@@ -91,6 +91,13 @@ function ProjectsPage() {
             >
               <FontAwesomeIcon icon={faMapMarkerAlt} className={styles.buttonIcon} />
               أراضي
+            </button>
+            <button
+              className={`${styles.filterButton} ${activeFilter === 'أراضي' ? styles.active : 'dm'}`}
+              onClick={() => setActiveFilter('أراضي')}
+            >
+              <FontAwesomeIcon icon={faLandmark} className={styles.buttonIcon} />
+             اداري
             </button>
           </div>
         </div>
