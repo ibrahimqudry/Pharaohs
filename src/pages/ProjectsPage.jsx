@@ -93,8 +93,8 @@ function ProjectsPage() {
               أراضي
             </button>
             <button
-              className={`${styles.filterButton} ${activeFilter === 'أراضي' ? styles.active : 'dm'}`}
-              onClick={() => setActiveFilter('أراضي')}
+              className={`${styles.filterButton} ${activeFilter === 'اداري' ? styles.active : 'dm'}`}
+              onClick={() => setActiveFilter('اداري')}
             >
               <FontAwesomeIcon icon={faLandmark} className={styles.buttonIcon} />
              اداري
