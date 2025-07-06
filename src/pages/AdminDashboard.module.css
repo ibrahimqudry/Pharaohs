@@ -17,7 +17,16 @@
   flex-direction: column;
   position: sticky;
   top: 0;
-  height: 90vh;
+  height: 75vh;
+}
+
+.sidebarNav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 /* Mobile sidebar toggle button */
@@ -115,15 +124,6 @@
   font-size: 1.25rem;
 }
 
-.sidebarNav {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem 0;
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
 .navButton {
   background: none;
   border: none;
@@ -146,6 +146,7 @@
 
 .sidebarFooter {
   padding: 1rem 1.5rem;
+  padding-top: 50px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
