@@ -133,7 +133,9 @@ function AboutPage() {
       {/* قسم ملاك الشركة */}
       <section className={`dm ${styles.ownersSection} ${styles.section}`}>
         <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>ملاك الشركة</h2>
+          <h2 className={styles.sectionTitle}>
+            {aboutData.owners.length === 1 ? 'مالك' : 'ملاك'} الشركة
+          </h2>
         </div>
         <div className={styles.ownersGrid}>
           {aboutData.owners && aboutData.owners.length > 0 ? (
