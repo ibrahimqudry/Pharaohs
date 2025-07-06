@@ -30,8 +30,6 @@ export default function EventsEditor() {
     type: "معرض",
     description: "",
     highlights: [""],
-    time: "",
-    registration: "",
     image: "",
     detailsLink: ""
   });
@@ -112,8 +110,6 @@ export default function EventsEditor() {
       type: "معرض",
       description: "",
       highlights: [""],
-      time: "",
-      registration: "",
       image: "",
       detailsLink: ""
     });
@@ -250,22 +246,6 @@ export default function EventsEditor() {
             </button>
           </div>
           <div className={styles.formGroup}>
-            <label>الوقت</label>
-            <input
-              type="text"
-              value={editingEvent.time}
-              onChange={(e) => setEditingEvent({ ...editingEvent, time: e.target.value })}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>رسوم التسجيل</label>
-            <input
-              type="text"
-              value={editingEvent.registration}
-              onChange={(e) => setEditingEvent({ ...editingEvent, registration: e.target.value })}
-            />
-          </div>
-          <div className={styles.formGroup}>
             <label>رابط الصورة</label>
             <input
               type="text"
@@ -372,22 +352,6 @@ export default function EventsEditor() {
             >
               إضافة نقطة
             </button>
-          </div>
-          <div className={styles.formGroup}>
-            <label>الوقت</label>
-            <input
-              type="text"
-              value={newEvent.time}
-              onChange={(e) => setNewEvent({ ...newEvent, time: e.target.value })}
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label>رسوم التسجيل</label>
-            <input
-              type="text"
-              value={newEvent.registration}
-              onChange={(e) => setNewEvent({ ...newEvent, registration: e.target.value })}
-            />
           </div>
           <div className={styles.formGroup}>
             <label>رابط الصورة</label>

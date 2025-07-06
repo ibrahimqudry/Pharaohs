@@ -47,7 +47,7 @@ function VipReviewsPage() {
         <div className={styles.pageHeader}>
           <h1 className={styles.pageTitle}>
             <FontAwesomeIcon icon={faCrown} className={styles.crownIcon} />
-            آراء كبار العملاء
+            قالوا عن الفراعنة
           </h1>
           <p className={styles.pageDescription}>تعرف على تجارب عملائنا المميزين مع مشاريع الفراعنة للتطوير العقاري</p>
         </div>

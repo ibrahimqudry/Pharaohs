@@ -121,7 +121,7 @@ function EventsPage() {
                   </ul>
                 </div>
 
-                <div className={styles.eventMeta}>
+                {/* <div className={styles.eventMeta}>
                   <div className={styles.eventTime}>
                     <span className={styles.metaLabel}>الموعد:</span>
                     <span className={styles.metaValue}>{event.time}</span>
@@ -130,7 +130,7 @@ function EventsPage() {
                     <span className={styles.metaLabel}>رسوم التسجيل:</span>
                     <span className={styles.metaValue}>{event.registration}</span>
                   </div>
-                </div>
+                </div> */}
 
                 <div className={styles.eventActions}>
                   <a href={event.detailsLink ? event.detailsLink : `/events/${event.id}`} className={styles.detailsButton}>
