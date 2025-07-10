@@ -35,7 +35,6 @@
 
 /* Filters */
 .filtersContainer {
-  background-color: #f8f9fa;
   border-radius: 8px;
   padding: 1.5rem;
   margin-bottom: 2.5rem;
@@ -110,14 +109,12 @@
 }
 
 .jobCard {
-  background-color: white;
-  border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 1px solid #eee;
   position: relative;
+  align-items: start;
 }
 
 .jobCard:hover {
@@ -184,17 +181,16 @@
 
 /* Job Details */
 .jobDetails {
-  background-color: white;
-  border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  height: fit-content;
   position: sticky;
   top: 100px;
+  align-items: start;
 }
 
 .jobDetailsContent {
   padding: 2rem;
+  width: 100%;
 }
 
 .jobHeader {
@@ -298,13 +294,10 @@
 }
 
 .noSelectionMessage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 2rem;
   text-align: center;
+  padding: 4rem 2rem;
   color: #888;
+  width: 100%;
 }
 
 .noSelectionIcon {
@@ -314,21 +307,20 @@
 }
 
 .noResults {
-  text-align: center;
   padding: 3rem;
-  background-color: #f8f9fa;
-  border-radius: 8px;
   margin-block: 1rem;
   color: #666;
 }
 
 /* Application Form */
 .applicationForm {
-  background-color: #f8f9fa;
   padding: 3rem;
+  border: 2px solid #e0e0e0;
   border-radius: 12px;
   margin-bottom: 4rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .formTitle {
@@ -352,6 +344,11 @@
   max-width: 800px;
   margin: 0 auto;
 }
+
+.form input::placeholder {
+  text-align: right;
+}
+
 
 .formRow {
   display: grid;
@@ -478,8 +475,6 @@
 }
 
 .benefitCard {
-  background-color: white;
-  border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;

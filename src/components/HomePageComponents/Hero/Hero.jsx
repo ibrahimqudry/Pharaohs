@@ -79,8 +79,8 @@ const Hero = () => {
             style={{ backgroundImage: `url(${slide.image})` }}
           >
             <div className={styles.heroContent}>
-              <h1 className={styles.title}>{slide.title}</h1>
-              <p className={styles.description}>{slide.description}</p>
+              <h1 className={`dmBlack ${styles.title}`}>{slide.title}</h1>
+              <p className={`dmBlack ${styles.description}`}>{slide.description}</p>
               <a href={slide.link} className={`gold-button`}>اعرف أكتر</a>
             </div>
           </div>

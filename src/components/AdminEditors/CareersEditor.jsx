@@ -211,14 +211,23 @@ export default function CareersEditor() {
               <option value="تدريب">تدريب</option>
             </select>
           </div>
-          <div className={styles.formGroup}>
-            <label>التخصص</label>
-            <input
-              type="text"
+          <div className={styles.formGroup} style={{ direction: 'rtl', textAlign: 'right' }}>
+            <label htmlFor="category">التخصص</label>
+            <select
+              id="category"
               value={editingJob.category}
               onChange={(e) => setEditingJob({ ...editingJob, category: e.target.value })}
-            />
+            >
+             <option value="">اختر التخصص</option>
+              <option value="هندسة">هندسة</option>
+              <option value="تسويق">تسويق</option>
+              <option value="مبيعات">مبيعات</option>
+              <option value="مالية">مالية</option>
+              <option value="تصميم">تصميم</option>
+              <option value="إدارة">إدارة</option>
+            </select>
           </div>
+
           <div className={styles.formGroup}>
             <label>الخبرة المطلوبة</label>
             <input
@@ -391,13 +400,21 @@ export default function CareersEditor() {
               <option value="تدريب">تدريب</option>
             </select>
           </div>
-          <div className={styles.formGroup}>
-            <label>التخصص</label>
-            <input
-              type="text"
+          <div className={styles.formGroup} style={{ direction: 'rtl', textAlign: 'right' }}>
+            <label htmlFor="new-category">التخصص</label>
+            <select
+              id="new-category"
               value={newJob.category}
               onChange={(e) => setNewJob({ ...newJob, category: e.target.value })}
-            />
+            >
+              <option value="">اختر التخصص</option>
+              <option value="هندسة">هندسة</option>
+              <option value="تسويق">تسويق</option>
+              <option value="مبيعات">مبيعات</option>
+              <option value="مالية">مالية</option>
+              <option value="تصميم">تصميم</option>
+              <option value="إدارة">إدارة</option>
+            </select>
           </div>
           <div className={styles.formGroup}>
             <label>الخبرة المطلوبة</label>

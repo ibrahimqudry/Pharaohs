@@ -18,7 +18,7 @@ const moreLinks = [
   { to: '/events', label: 'فعالياتنا' },
   { to: '/careers', label: 'الوظائف' },
   { to: '/investment', label: 'فرص الاستثمار' },
-  { to: '/vip-reviews', label: 'آراء العملاء' },
+  { to: '/vip-reviews', label: 'قالوا عن الفراعنة' },
 ];
 
 function Header() {

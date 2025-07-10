@@ -12,8 +12,8 @@ function HomePage() {
       <ExclusiveOffers />
       <Projects />
       <WhyInvest />
-      <Testimonials />
       <PharaohsEvents />
+      <Testimonials />
     </main>
   );
 }

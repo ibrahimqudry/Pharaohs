@@ -119,18 +119,9 @@ function VipReviewsPage() {
 
         {!loading && vipReviews.length === 0 && (
           <div className={styles.noResults}>
-            <p>لا توجد تقييمات متاحة بهذا التصنيف حالياً</p>
+            <p className='center'>لا توجد تقييمات متاحة بهذا التصنيف حالياً</p>
           </div>
         )}
-
-        <div className={styles.callToAction}>
-          <h2 className={styles.ctaTitle}>انضم إلى قائمة عملائنا المميزين</h2>
-          <p className={styles.ctaText}>استثمر الآن في مشاريع الفراعنة واستمتع بتجربة عقارية فريدة</p>
-          <div className={styles.ctaButtons}>
-            <a href="/projects" className={styles.ctaButton}>استعرض المشاريع</a>
-            <a className="gold-button" onClick={handleWhatsAppClick}>تواصل معنا</a>
-          </div>
-        </div>
       </div>
     </main>
   );

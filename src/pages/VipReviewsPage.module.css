@@ -39,11 +39,10 @@
 }
 
 .reviewCard {
-  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  align-items: start;
 }
 
 .reviewCard:hover {
@@ -130,7 +129,7 @@
 
 .reviewContent {
   position: relative;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .quoteIcon {
@@ -146,7 +145,6 @@
   font-size: 1rem;
   line-height: 1.8;
   color: #555;
-  margin-bottom: 1.5rem;
   text-align: justify;
 }
 

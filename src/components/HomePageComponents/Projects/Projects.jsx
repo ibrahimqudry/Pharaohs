@@ -45,21 +45,23 @@ const Projects = () => {
       <div className="container">
         <h2 className={styles.sectionTitle}>أبرز مشاريعنا</h2>
         <div className={styles.grid}>
-          {vipProjects.map((project, index) => (
-            <div key={index} className={`${styles.card} card`}>
-              <img src={project.image} alt={project.title} />
-              <div className={styles.cardContent}>
-                <h3 className={styles.reasonTitle}>{project.title}</h3>
-                <p className={styles.reasonDescription}>{project.description}</p>
+          {vipProjects.length !== 0 ? (
+            vipProjects.map((project, index) => (
+              <div key={index} className={`${styles.projectCard} projectCard`}>
+                <img src={project.image} alt={project.title} />
+                <div className={styles.projectCardContent}>
+                  <h3 className={styles.reasonTitle}>{project.title}</h3>
+                  <p className={styles.reasonDescription}>{project.description}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (<p className='center'>لا توجد أبرز مشاريع</p>)}
         </div>
         <div className={styles.buttonContainer}>
           <a href="/projects" className="gold-button">المزيد من المشاريع</a>
         </div>
       </div>
-    </section>
+    </section >
   );
 
 };

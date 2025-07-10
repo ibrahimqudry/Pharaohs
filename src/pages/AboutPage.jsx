@@ -74,13 +74,13 @@ function AboutPage() {
               </div>
             ))
           ) : (
-            <p>لا توجد أهداف حالياً.</p>
+            <p className='center'>لا توجد أهداف حالياً.</p>
           )}
         </div>
-      </section>
+      </section >
 
       {/* قسم رؤيتنا */}
-      <section className={styles.section}>
+      < section className={styles.section} >
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>رؤيتنا</h2>
         </div>
@@ -98,7 +98,7 @@ function AboutPage() {
                   </li>
                 ))
               ) : (
-                <li>لا توجد نقاط للرؤية حالياً.</li>
+                <li className='center'>لا توجد نقاط للرؤية حالياً.</li>
               )}
             </ul>
           </div>
@@ -106,10 +106,10 @@ function AboutPage() {
             <img src={aboutData.vision?.imgSrc ? aboutData.vision.imgSrc : "/images/vision.png"} alt="Vision logo" />
           </div>
         </div>
-      </section>
+      </section >
 
       {/* قسم قيمنا */}
-      <section className={styles.section}>
+      < section className={styles.section} >
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>قيمنا</h2>
         </div>
@@ -125,13 +125,13 @@ function AboutPage() {
               </div>
             ))
           ) : (
-            <p>لا توجد قيم حالياً.</p>
+            <p className='center'>لا توجد قيم حالياً.</p>
           )}
         </div>
-      </section>
+      </section >
 
       {/* قسم ملاك الشركة */}
-      <section className={`dm ${styles.ownersSection} ${styles.section}`}>
+      < section className={`dm ${styles.ownersSection} ${styles.section}`}>
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>
             {aboutData.owners.length === 1 ? 'مالك' : 'ملاك'} الشركة
@@ -148,11 +148,11 @@ function AboutPage() {
               </div>
             ))
           ) : (
-            <p>لا يوجد ملاك حالياً.</p>
+            <p className='center'>لا يوجد ملاك حالياً.</p>
           )}
         </div>
-      </section>
-    </div>
+      </section >
+    </div >
   );
 }
 

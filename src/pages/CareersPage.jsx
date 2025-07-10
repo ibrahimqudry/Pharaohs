@@ -11,6 +11,7 @@ import {
   faMoneyBillWave,
   faCheckCircle,
   faPaperPlane,
+  faMagnifyingGlass
 } from '@fortawesome/free-solid-svg-icons';
 import { db } from '../firebase/config';
 import { collection, getDocs } from 'firebase/firestore';
@@ -139,6 +140,13 @@ export default function CareersPage() {
               <FontAwesomeIcon icon={faGraduationCap} className={styles.buttonIcon} />
               تصميم
             </button>
+            <button
+              className={`${styles.filterButton} ${activeFilter === 'إدارة' ? styles.active : 'dm'}`}
+              onClick={() => setActiveFilter('إدارة')}
+            >
+              <FontAwesomeIcon icon={faMagnifyingGlass} className={styles.buttonIcon} />
+              إدارة
+            </button>
           </div>
         </div>
 
@@ -148,7 +156,7 @@ export default function CareersPage() {
             {filteredJobs.map(job => (
               <div
                 key={job.id}
-                className={`careerCard ${styles.jobCard} ${selectedJob && selectedJob.id === job.id ? styles.active : ''}`}
+                className={`card careerCard ${styles.jobCard} ${selectedJob && selectedJob.id === job.id ? styles.active : ''}`}
                 onClick={() => setSelectedJob(job)}
               >
                 <h2 className={styles.jobTitle}>{job.title}</h2>
@@ -172,13 +180,13 @@ export default function CareersPage() {
             ))}
 
             {filteredJobs.length === 0 && (
-              <div className={`careerCard ${styles.noResults}`}>
+              <div className={`card careerCard ${styles.noResults}`}>
                 <p>لا توجد وظائف متاحة بهذا التصنيف حالياً</p>
               </div>
             )}
           </div>
 
-          <div className={`careerCard ${styles.jobDetails}`}>
+          <div className={`card careerCard ${styles.jobDetails}`}>
             {selectedJob ? (
               <div className={styles.jobDetailsContent}>
                 <div className={styles.jobHeader}>
@@ -354,7 +362,7 @@ export default function CareersPage() {
           </p>
 
           <div className={styles.benefitsGrid}>
-            <div className={`careerCard ${styles.benefitCard}`}>
+            <div className={`card careerCard ${styles.benefitCard}`}>
               <div className={styles.benefitIcon}>
                 <FontAwesomeIcon icon={faGraduationCap} />
               </div>
@@ -364,7 +372,7 @@ export default function CareersPage() {
               </p>
             </div>
 
-            <div className={`careerCard ${styles.benefitCard}`}>
+            <div className={`card careerCard ${styles.benefitCard}`}>
               <div className={styles.benefitIcon}>
                 <FontAwesomeIcon icon={faBriefcase} />
               </div>
@@ -374,7 +382,7 @@ export default function CareersPage() {
               </p>
             </div>
 
-            <div className={`careerCard ${styles.benefitCard}`}>
+            <div className={`card careerCard ${styles.benefitCard}`}>
               <div className={styles.benefitIcon}>
                 <FontAwesomeIcon icon={faMoneyBillWave} />
               </div>

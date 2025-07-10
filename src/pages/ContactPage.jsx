@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './ContactPage.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -18,29 +18,6 @@ function ContactPage() {
     emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
   }, []);
 
-  const branches = [
-    {
-      name: 'المقر الرئيسي - أسوان',
-      address: 'شارع كورنيش النيل، أسوان الجديدة',
-      phone: '123-456-789',
-      email: 'aswan@pharaohs.com',
-      mapUrl: 'https://maps.google.com/?q=Aswan,Egypt',
-    },
-    {
-      name: 'فرع القاهرة',
-      address: 'شارع التحرير، وسط البلد، القاهرة',
-      phone: '123-456-790',
-      email: 'cairo@pharaohs.com',
-      mapUrl: 'https://maps.google.com/?q=Cairo,Egypt',
-    },
-    {
-      name: 'فرع الإسكندرية',
-      address: 'شارع 45، ميامي، الإسكندرية',
-      phone: '123-456-791',
-      email: 'alex@pharaohs.com',
-      mapUrl: 'https://maps.google.com/?q=Alexandria,Egypt',
-    },
-  ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -149,6 +126,7 @@ function ContactPage() {
             <div className={`card ${styles.contactForm}`}>
               <h2 className={styles.sectionTitle}>أرسل لنا رسالة</h2>
               <form onSubmit={handleSubmit}>
+
                 <div className={styles.formGroup}>
                   <label htmlFor="name">الاسم</label>
                   <input type="text" id="name" name="name" required placeholder="أدخل اسمك" />
@@ -192,6 +170,7 @@ function ContactPage() {
                     placeholder="اكتب رسالتك هنا"
                   ></textarea>
                 </div>
+
                 <button
                   type="submit"
                   className="gold-button"
@@ -199,6 +178,7 @@ function ContactPage() {
                 >
                   {isSubmitting ? 'جاري الإرسال...' : 'إرسال الرسالة'}
                 </button>
+
               </form>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './EventsPage.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt, faMapMarkerAlt, faFilter, faBuilding, faUsers, faCertificate, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faMapMarkerAlt, faFilter, faBuilding, faUsers, faCertificate, faInfoCircle, faMagnet, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { db } from '../firebase/config';
 import { collection, getDocs } from 'firebase/firestore';
 import ClipLoader from 'react-spinners/ClipLoader';
@@ -25,9 +25,9 @@ function EventsPage() {
     ? events
     : events.filter(event => event.type === activeFilter);
 
-  const handleWhatsAppClick = () => {
-    const phoneNumber = '+201149136352';
-    const message = encodeURIComponent('مرحبا، أرغب في التسجيل في الفعالية');
+  const handleWhatsAppClick = (title) => {
+    const phoneNumber = '+201080071544';
+    const message = encodeURIComponent(`مرحبا، أرغب في التسجيل في الفعالية: ${title}`);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -83,11 +83,25 @@ function EventsPage() {
               مؤتمرات
             </button>
             <button
+              className={`${styles.filterButton} ${activeFilter === 'ورشة' ? styles.active : 'dm'}`}
+              onClick={() => setActiveFilter('ورشة')}
+            >
+              <FontAwesomeIcon icon={faMagnet} className={styles.buttonIcon} />
+              ورش
+            </button>
+            <button
               className={`${styles.filterButton} ${activeFilter === 'جولة' ? styles.active : 'dm'}`}
               onClick={() => setActiveFilter('جولة')}
             >
               <FontAwesomeIcon icon={faMapMarkerAlt} className={styles.buttonIcon} />
               جولات
+            </button>
+            <button
+              className={`${styles.filterButton} ${activeFilter === 'يوم مفتوح' ? styles.active : 'dm'}`}
+              onClick={() => setActiveFilter('يوم مفتوح')}
+            >
+              <FontAwesomeIcon icon={faLockOpen} className={styles.buttonIcon} />
+              أيام مفتوحة
             </button>
           </div>
         </div>
@@ -121,23 +135,14 @@ function EventsPage() {
                   </ul>
                 </div>
 
-                {/* <div className={styles.eventMeta}>
-                  <div className={styles.eventTime}>
-                    <span className={styles.metaLabel}>الموعد:</span>
-                    <span className={styles.metaValue}>{event.time}</span>
-                  </div>
-                  <div className={styles.eventRegistration}>
-                    <span className={styles.metaLabel}>رسوم التسجيل:</span>
-                    <span className={styles.metaValue}>{event.registration}</span>
-                  </div>
-                </div> */}
-
                 <div className={styles.eventActions}>
-                  <a href={event.detailsLink ? event.detailsLink : `/events/${event.id}`} className={styles.detailsButton}>
-                    <FontAwesomeIcon icon={faInfoCircle} className={styles.actionIcon} />
-                    التفاصيل
-                  </a>
-                  <a onClick={handleWhatsAppClick} className="gold-button">التسجيل</a>
+                  {event.detailsLink ? (
+                    <a href={event.detailsLink} className={styles.detailsButton}>
+                      <FontAwesomeIcon icon={faInfoCircle} className={styles.actionIcon} />
+                      التفاصيل
+                    </a>
+                  ) : (<a></a>)}
+                  <a onClick={() => { handleWhatsAppClick(event.title) }} className="gold-button">التسجيل</a>
                 </div>
               </div>
             </div>
@@ -152,7 +157,7 @@ function EventsPage() {
 
 
       </div>
-    </main>
+    </main >
   );
 }
 

@@ -35,7 +35,7 @@
 
 /* Filters */
 .filtersContainer {
-  background-color: #f8f9fa;
+  background-color: transparent;
   border-radius: 8px;
   padding: 1.5rem;
   margin-bottom: 2.5rem;
@@ -92,26 +92,15 @@
 .eventsGrid {
   display: grid;
   gap: 2.5rem;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(520px, 580px));
+  justify-content: center;
   margin-bottom: 3rem;
 }
 
-@media (min-width: 992px) {
-  .eventsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 .eventCard {
-  background-color: white;
-  border-radius: 12px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
-  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .eventCard:hover {
@@ -120,14 +109,13 @@
 }
 
 .eventImage {
-  height: 220px;
+  width: 100%;
+  height: 250px;
   position: relative;
   overflow: hidden;
 }
 
 .eventImage img {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
 }
@@ -238,7 +226,8 @@
   border-bottom: 1px solid #eee;
 }
 
-.eventTime, .eventRegistration {
+.eventTime,
+.eventRegistration {
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;
@@ -284,7 +273,6 @@
 .noResults {
   text-align: center;
   padding: 3rem;
-  background-color: #f8f9fa;
   border-radius: 8px;
   margin-block: 2rem;
 }
@@ -356,7 +344,7 @@
   .form {
     flex-direction: column;
   }
-  
+
   .filterButtons {
     justify-content: center;
   }

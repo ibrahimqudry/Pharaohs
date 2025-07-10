@@ -14,7 +14,7 @@
 
 /* Filters */
 .filtersContainer {
-  background-color: #f8f9fa;
+  background-color: transparent;
   border-radius: 8px;
   padding: 1.5rem;
   margin-bottom: 2.5rem;
@@ -70,31 +70,17 @@
 /* Projects Grid */
 .projectsGrid {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 380px));
   gap: 2.5rem;
-  grid-template-columns: 1fr;
+  justify-content: center;
   margin-bottom: 3rem;
 }
 
-@media (min-width: 768px) {
-  .projectsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1200px) {
-  .projectsGrid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 .projectCard {
-  background-color: white;
-  border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  height: fit-content;
+  align-items: stretch;
 }
 
 .projectCard:hover {
@@ -132,7 +118,7 @@
 }
 
 .projectContent {
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 1rem;
 }
 
 .projectTitle {
@@ -239,7 +225,8 @@
   margin-block: 2rem;
 }
 
-.soldMark, .saleMark {
+.soldMark,
+.saleMark {
   position: absolute;
   top: 10px;
   right: 10px;

@@ -52,11 +52,9 @@
 .offerCard {
     max-width: 380px;
     width: 100%;
-    border-radius: 12px;
     overflow: hidden;
     box-shadow: var(--shadow-md);
     transition: all 0.3s ease;
-    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .offerCard:hover {

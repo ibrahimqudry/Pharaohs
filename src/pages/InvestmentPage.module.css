@@ -62,34 +62,20 @@
   gap: 2rem;
   grid-template-columns: repeat(auto-fit, minmax(320px, 380px));
   justify-content: center;
-  /* Center grid items horizontally */
   align-items: center;
-  /* Center grid items vertically */
   margin: 0 auto;
   padding: 2rem 1rem;
-  /* Add padding for spacing */
   max-width: 1280px;
-  /* Constrain max width for large screens */
   width: 100%;
 }
 
 .opportunityCard {
-  background-color: #ffffff;
-  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(0, 0, 0, 0.05);
   padding: 2rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* Center card content horizontally */
-  justify-content: center;
-  /* Center card content vertically */
   width: 100%;
   max-width: 380px;
-  /* Ensure consistent card width */
 }
 
 .opportunityCard:hover {
@@ -196,7 +182,6 @@
 /* Benefits Section */
 .benefitsSection {
   margin-bottom: 5rem;
-  background-color: #f8f9fa;
   padding: 4rem 0;
 }
 
@@ -216,33 +201,20 @@
   gap: 2rem;
   grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
   justify-content: center;
-  /* Center grid items horizontally */
   align-items: center;
-  /* Center grid items vertically */
   margin: 0 auto;
   padding: 2rem 1rem;
-  /* Add padding for spacing */
   max-width: 1280px;
-  /* Constrain max width for large screens */
   width: 100%;
 }
 
 .benefitCard {
-  background-color: #ffffff;
-  border-radius: 12px;
   padding: 2rem;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* Center card content horizontally */
-  justify-content: center;
-  /* Center card content vertically */
   width: 100%;
   max-width: 350px;
-  /* Ensure consistent card width */
   position: relative;
   overflow: hidden;
 }

@@ -39,19 +39,21 @@ function PharaohsEvents() {
         <div className={styles.eventsGrid}>
           {loading ? (
             <div className="loading"><ClipLoader color="#bfa13a" size={48} /></div>
-          ) : events.map((event) => (
-            <div key={event.id} className={`${styles.eventCard} card`}>
-              <div className={styles.eventImage}>
-                <img src={event.image} alt={event.title} />
-              </div>
-              <div className={styles.eventContent}>
-                <div className={styles.eventDate}>{event.date}</div>
-                <h3 className={styles.eventTitle}>{event.title}</h3>
-                <p className={styles.eventDescription}>{event.description}</p>
-                <a href={event.detailsLink || "/events"} className={`${styles.eventButton} dmGold`}>التفاصيل</a>
-              </div>
-            </div>
-          ))}
+          ) :
+            events.length !== 0 ?
+              (events.map((event) => (
+                <div key={event.id} className={`${styles.eventCard} card`}>
+                  <div className={styles.eventImage}>
+                    <img src={event.image} alt={event.title} />
+                  </div>
+                  <div className={styles.eventContent}>
+                    <div className={styles.eventDate}>{event.date}</div>
+                    <h3 className={styles.eventTitle}>{event.title}</h3>
+                    <p className={styles.eventDescription}>{event.description}</p>
+                    <a href={event.detailsLink || "/events"} className={`${styles.eventButton} dmGold`}>التفاصيل</a>
+                  </div>
+                </div>
+              ))) : (<p className="center">لا توجد أبرز فعاليات</p>)}
         </div>
 
         <div className={styles.buttonContainer}>
