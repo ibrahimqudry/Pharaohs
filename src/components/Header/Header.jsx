@@ -235,7 +235,7 @@ function Header() {
 
         {/* Navigation Links */}
         <div
-          className={`dm ${styles.navLinks} ${isMenuOpen ? styles.active : ''}`}
+          className={`dmBlackBackground ${styles.navLinks} ${isMenuOpen ? styles.active : ''}`}
           id="nav-menu"
           role="navigation"
         >

@@ -25,13 +25,6 @@ function EventsPage() {
     ? events
     : events.filter(event => event.type === activeFilter);
 
-  const handleWhatsAppClick = (title) => {
-    const phoneNumber = '+201080071544';
-    const message = encodeURIComponent(`مرحبا، أرغب في التسجيل في الفعالية: ${title}`);
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
-    window.open(whatsappUrl, '_blank');
-  };
-
   if (loading) {
     return (
       <div className="loading">
@@ -137,12 +130,11 @@ function EventsPage() {
 
                 <div className={styles.eventActions}>
                   {event.detailsLink ? (
-                    <a href={event.detailsLink} className={styles.detailsButton}>
+                    <a href={event.detailsLink} className="gold-button">
                       <FontAwesomeIcon icon={faInfoCircle} className={styles.actionIcon} />
                       التفاصيل
                     </a>
                   ) : (<a></a>)}
-                  <a onClick={() => { handleWhatsAppClick(event.title) }} className="gold-button">التسجيل</a>
                 </div>
               </div>
             </div>
