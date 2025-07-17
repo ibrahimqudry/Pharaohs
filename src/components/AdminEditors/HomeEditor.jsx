@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db } from '../../firebase/config';
-import { collection, setDoc, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, setDoc, getDocs, addDoc, updateDoc, deleteDoc, doc, getDoc } from 'firebase/firestore';
 import styles from './EditorStyles.module.css';
 
 export default function HomeEditor() {
@@ -76,6 +76,48 @@ export default function HomeEditor() {
       }
     };
     fetchEvents();
+  }, []);
+
+  useEffect(() => {
+    const fetchVipProjects = async () => {
+      try {
+        const vipDocRef = doc(db, 'homepage', 'vipProjects');
+        const vipDocSnap = await getDoc(vipDocRef);
+
+        if (vipDocSnap.exists()) {
+          const data = vipDocSnap.data();
+          const projectIds = data.projectIds || [];
+          setSelectedVipProjects(projectIds);
+        } else {
+          console.log('No VIP projects document found');
+        }
+      } catch (error) {
+        console.error('Error fetching VIP projects:', error);
+      }
+    };
+
+    fetchVipProjects();
+  }, []);
+
+  useEffect(() => {
+    const fetchVipProjects = async () => {
+      try {
+        const bestDocRef = doc(db, 'homepage', 'bestEvents');
+        const bestDocSnap = await getDoc(bestDocRef);
+
+        if (bestDocSnap.exists()) {
+          const data = bestDocSnap.data();
+          const eventIds = data.eventIds || [];
+          setSelectedBestEvents(eventIds);
+        } else {
+          console.log('No best events document found');
+        }
+      } catch (error) {
+        console.error('Error fetching best events:', error);
+      }
+    };
+
+    fetchVipProjects();
   }, []);
 
   const handleEditSlide = (slide) => {
@@ -557,7 +599,10 @@ export default function HomeEditor() {
                 onChange={() => handleVipProjectSelect(project.id)}
               />
               <label htmlFor={`project-${project.id}`}>
-                <img src={project.image} alt={project.title} />
+                <img
+                  src={project.image ? project.image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjOZugSlXrDIB3SLtuip9ZDU1iJScEqfby_Q&s'}
+                  alt={project.title}
+                />
                 <h4>{project.title}</h4>
               </label>
             </div>
@@ -586,7 +631,10 @@ export default function HomeEditor() {
                 onChange={() => handleBestEventSelect(event.id)}
               />
               <label htmlFor={`event-${event.id}`}>
-                <img src={event.image} alt={event.title} />
+                <img
+                  src={event.image ? event.image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjOZugSlXrDIB3SLtuip9ZDU1iJScEqfby_Q&s'}
+                  alt={event.title}
+                />
                 <h4>{event.title}</h4>
               </label>
             </div>

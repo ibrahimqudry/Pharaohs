@@ -62,7 +62,9 @@ export default function ProjectDetailsPage() {
             </button>
             <div className={styles.slideWrapper}>
               <img
-                src={project.sliderImages[currentSlide].replace(/`/g, '')}
+                src={project.sliderImages[currentSlide].replace(/`/g, '') ?
+                  project.sliderImages[currentSlide].replace(/`/g, '') : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjOZugSlXrDIB3SLtuip9ZDU1iJScEqfby_Q&s'
+                }
                 alt={`${project.title} - صورة ${currentSlide + 1}`}
                 className={styles.slideImage}
               />
@@ -81,7 +83,12 @@ export default function ProjectDetailsPage() {
         {/* Main Content Section */}
         <div className={styles.mainContent}>
           <div className={styles.imageContainer}>
-            <img src={project.image.replace(/`/g, '')} alt={project.title} className={styles.mainImage} />
+            <img
+              src={project.image.replace(/`/g, '') ?
+                project.image.replace(/`/g, '') : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjOZugSlXrDIB3SLtuip9ZDU1iJScEqfby_Q&s'
+              }
+              alt={project.title}
+              className={styles.mainImage} />
             {project.onSale && <div className={styles.saleTag}>عرض خاص</div>}
             {project.isSold && <div className={styles.soldTag}>تم البيع</div>}
           </div>

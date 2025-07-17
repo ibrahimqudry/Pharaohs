@@ -41,7 +41,9 @@ function ExclusiveOffers() {
           {offers.map((offer) => (
             <div key={offer.id} className={`${styles.offerCard} card`}>
               <div className={styles.offerImage}>
-                <img src={offer.image} alt={offer.title} />
+                <img 
+                src={offer.image ? offer.image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjOZugSlXrDIB3SLtuip9ZDU1iJScEqfby_Q&s'} 
+                alt={offer.title} />
               </div>
               <div className={styles.offerContent}>
                 <h3 className="text-2xl font-semibold mb-2">{offer.title}</h3>

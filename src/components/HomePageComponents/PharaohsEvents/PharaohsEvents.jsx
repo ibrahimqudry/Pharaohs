@@ -44,7 +44,9 @@ function PharaohsEvents() {
               (events.map((event) => (
                 <div key={event.id} className={`${styles.eventCard} card`}>
                   <div className={styles.eventImage}>
-                    <img src={event.image} alt={event.title} />
+                    <img 
+                    src={event.image ? event.image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjOZugSlXrDIB3SLtuip9ZDU1iJScEqfby_Q&s'} 
+                    alt={event.title} />
                   </div>
                   <div className={styles.eventContent}>
                     <div className={styles.eventDate}>{event.date}</div>

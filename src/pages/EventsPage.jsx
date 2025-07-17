@@ -104,7 +104,9 @@ function EventsPage() {
           {filteredEvents.map(event => (
             <div key={event.id} className={`card ${styles.eventCard}`}>
               <div className={styles.eventImage}>
-                <img src={event.image} alt={event.title} />
+                <img
+                  src={event.image ? event.image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjOZugSlXrDIB3SLtuip9ZDU1iJScEqfby_Q&s'}
+                  alt={event.title} />
                 <div className={styles.eventType}>{event.type}</div>
               </div>
               <div className={styles.eventContent}>

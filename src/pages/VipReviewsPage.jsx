@@ -97,8 +97,10 @@ function VipReviewsPage() {
                   </div>
                 )}
 
-                <div className={styles.reviewFooter}>
-                  {review.videoLink ? (
+
+
+                {review.videoLink || review.reviewDate ? <div className={styles.reviewFooter}>
+                  {review.videoLink ?
                     <a
                       href={review.videoLink}
                       className={styles.detailsButton}
@@ -107,11 +109,14 @@ function VipReviewsPage() {
                     >
                       شاهد
                     </a>
-                  ) : (
+                    :
                     <a></a>
-                  )}
-                  <span className={styles.reviewDate}>{review.date}</span>
-                </div>
+                  }
+                  {review.reviewDate ?
+                    <span className={styles.reviewDate}>{review.date}</span>
+                    : ''}
+                </div> : ''}
+
               </div>
             </div>
           ))}

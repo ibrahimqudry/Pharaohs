@@ -107,7 +107,10 @@ function ProjectsPage() {
           {filteredProjects.map(project => (
             <div key={project.id} className={`card ${styles.projectCard}`}>
               <div className={styles.projectImage}>
-                <img src={project.image} alt={project.title} />
+                <img
+                  src={project.image ?
+                    project.image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjOZugSlXrDIB3SLtuip9ZDU1iJScEqfby_Q&s'}
+                  alt={project.title} />
                 {project.isSold && (
                   <div className={styles.soldMark}>
                     <span>تم البيع</span>

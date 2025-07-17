@@ -141,7 +141,10 @@ function AboutPage() {
           {aboutData.owners && aboutData.owners.length > 0 ? (
             aboutData.owners.map((owner, idx) => (
               <div key={idx} className={`card ${styles.ownerCard}`}>
-                <img src={owner.image} alt={owner.name} className={styles.ownerImage} />
+                <img
+                  src={owner.image ? owner.image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjOZugSlXrDIB3SLtuip9ZDU1iJScEqfby_Q&s'}
+                  alt={owner.name}
+                  className={styles.ownerImage} />
                 <h3 className={styles.ownerName}>{owner.name}</h3>
                 <p className={styles.ownerRole}>{owner.role}</p>
                 <p className={styles.ownerDescription}>{owner.description}</p>

@@ -46,7 +46,9 @@ function Testimonials() {
               </div>
               <div className={styles.testimonialAuthor}>
                 <div className={styles.authorImage}>
-                  <img src={testimonial.image} alt={testimonial.name} />
+                  <img
+                    src={testimonial.image ? testimonial.image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjOZugSlXrDIB3SLtuip9ZDU1iJScEqfby_Q&s'}
+                    alt={testimonial.name} />
                 </div>
                 <div className={styles.authorInfo}>
                   <h4 className={styles.authorName}>{testimonial.name}</h4>

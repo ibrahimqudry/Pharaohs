@@ -48,7 +48,9 @@ const Projects = () => {
           {vipProjects.length !== 0 ? (
             vipProjects.map((project, index) => (
               <div key={index} className={`${styles.projectCard} projectCard`}>
-                <img src={project.image} alt={project.title} />
+                <img
+                  src={project.image ? project.image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjOZugSlXrDIB3SLtuip9ZDU1iJScEqfby_Q&s'}
+                  alt={project.title} />
                 <div className={styles.projectCardContent}>
                   <h3 className={styles.reasonTitle}>{project.title}</h3>
                   <p className={styles.reasonDescription}>{project.description}</p>
