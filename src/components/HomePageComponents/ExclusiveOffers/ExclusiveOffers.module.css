@@ -82,22 +82,3 @@
     justify-content: space-between;
     align-items: center;
 }
-
-.offerButton {
-    background-color: var(--color-gold);
-    color: var(--color-white);
-    padding: 0.75rem 1.5rem;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    display: inline-block;
-    box-shadow: var(--shadow-md);
-}
-
-.offerButton:hover {
-    background-color: #B4941F;
-    /* Using the same hover color as in your global styles */
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-}

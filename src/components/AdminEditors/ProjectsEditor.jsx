@@ -245,33 +245,35 @@ export default function ProjectsEditor() {
         />
       </div>
 
-      <div className={styles.formGroup}>
-        <label>تم البيع</label>
-        <input
-          type="checkbox"
-          checked={project.isSold}
-          onChange={(e) => setProject({ ...project, isSold: e.target.checked })}
-        />
-      </div>
+      <div className={styles.formRow}>
+        <div className={styles.formGroup}>
+          <label>تم البيع</label>
+          <input
+            type="checkbox"
+            checked={project.isSold}
+            onChange={(e) => setProject({ ...project, isSold: e.target.checked })}
+          />
+        </div>
 
-      <div className={styles.formGroup}>
-        <label>عرض خاص</label>
-        <input
-          type="checkbox"
-          checked={project.onSale}
-          onChange={(e) => setProject({ ...project, onSale: e.target.checked })}
-        />
-      </div>
+        <div className={styles.formGroup}>
+          <label>عرض خاص</label>
+          <input
+            type="checkbox"
+            checked={project.onSale}
+            onChange={(e) => setProject({ ...project, onSale: e.target.checked })}
+          />
+        </div>
 
-      <div className={styles.formGroup}>
-        <label>نسبة الإنجاز (%)</label>
-        <input
-          type="number"
-          min="0"
-          max="100"
-          value={project.progress}
-          onChange={(e) => setProject({ ...project, progress: parseInt(e.target.value) || 0 })}
-        />
+        <div className={styles.formGroup}>
+          <label>نسبة الإنجاز (%)</label>
+          <input
+            type="number"
+            min="0"
+            max="100"
+            value={project.progress}
+            onChange={(e) => setProject({ ...project, progress: parseInt(e.target.value) || 0 })}
+          />
+        </div>
       </div>
 
       <div className={styles.formActions}>

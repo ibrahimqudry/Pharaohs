@@ -138,7 +138,7 @@ function Header() {
         </button>
         {shouldShowDropdown && (
           <ul
-            className={`${styles.dropdownMenu} ${darkMode ? 'dm' : ''} ${dropdowns[type] ? styles.show : ''}`}
+            className={`${styles.dropdownMenu} ${darkMode ? 'dmBlackBackground' : ''} ${dropdowns[type] ? styles.show : ''}`}
             role="menu"
             id={`${type}-dropdown`}
           >
@@ -207,7 +207,6 @@ function Header() {
             to="/"
             className={styles.logo}
             aria-label="الفراعنة - الصفحة الرئيسية"
-            onClick={toggleMenu}
           >
             <img src="/logo.png" alt="الفراعنة" />
           </NavLink>
