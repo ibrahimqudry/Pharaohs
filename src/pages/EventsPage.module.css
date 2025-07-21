@@ -156,6 +156,9 @@
 }
 
 .eventTitle {
+  height: 60px;
+  display: flex;
+  align-items: center;
   font-size: 1.35rem;
   font-weight: 600;
   margin-bottom: 0.75rem;
@@ -177,6 +180,9 @@
 }
 
 .eventDescription {
+  display: flex;
+  align-items: center;
+  height: 150px;
   color: #555;
   margin-bottom: 1.25rem;
   line-height: 1.6;
@@ -184,6 +190,10 @@
 }
 
 .eventHighlights {
+  height: 210px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   background-color: #f8f9fa;
   padding: 1.25rem;
   border-radius: 8px;
